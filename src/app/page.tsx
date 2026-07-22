@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Activity, Zap, TrendingUp, ShieldCheck, CheckCircle2 } from "lucide-react";
 
@@ -22,12 +23,18 @@ export default function LandingPage() {
             <a href="#pricing" className="hover:text-accent transition-colors">Pricing</a>
           </div>
           <div className="flex items-center gap-4">
-            <button className="hidden md:block text-sm font-medium text-text-hi hover:text-accent transition-colors">
+            <Link 
+              href="/login" 
+              className="hidden md:block text-sm font-medium text-text-hi hover:text-accent transition-colors"
+            >
               Log in
-            </button>
-            <button className="bg-accent text-bg px-5 py-2.5 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity shadow-[0_0_20px_rgba(232,255,71,0.2)]">
+            </Link>
+            <Link 
+              href="/login" 
+              className="bg-accent text-bg px-5 py-2.5 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity shadow-[0_0_20px_rgba(232,255,71,0.2)]"
+            >
               Book a Demo
-            </button>
+            </Link>
           </div>
         </div>
       </nav>
@@ -54,12 +61,18 @@ export default function LandingPage() {
               Retenix analyzes attendance, streaks, engagement, plan staleness, and tenure risk to predict gym member churn before it happens.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="w-full sm:w-auto bg-accent text-bg px-8 py-4 rounded-xl text-base font-semibold hover:opacity-90 transition-opacity shadow-[0_0_30px_rgba(232,255,71,0.25)] flex items-center justify-center gap-2">
+              <Link 
+                href="/login" 
+                className="w-full sm:w-auto bg-accent text-bg px-8 py-4 rounded-xl text-base font-semibold hover:opacity-90 transition-opacity shadow-[0_0_30px_rgba(232,255,71,0.25)] flex items-center justify-center gap-2"
+              >
                 Start Free Trial <ArrowRight className="w-5 h-5" />
-              </button>
-              <button className="w-full sm:w-auto bg-surface border border-border text-text-hi px-8 py-4 rounded-xl text-base font-semibold hover:bg-surface-2 transition-colors">
+              </Link>
+              <Link 
+                href="/login" 
+                className="w-full sm:w-auto bg-surface border border-border text-text-hi px-8 py-4 rounded-xl text-base font-semibold hover:bg-surface-2 transition-colors inline-block"
+              >
                 View Live Demo
-              </button>
+              </Link>
             </div>
           </motion.div>
           
@@ -138,9 +151,12 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">Ready to retain your members?</h2>
           <p className="text-xl text-text-dim mb-10">Join forward-thinking gym owners using Retenix to boost MRR and member satisfaction.</p>
-          <button className="bg-accent text-bg px-10 py-4 rounded-xl text-lg font-semibold hover:opacity-90 transition-opacity shadow-[0_0_30px_rgba(232,255,71,0.25)]">
+          <Link 
+            href="/login" 
+            className="inline-block bg-accent text-bg px-10 py-4 rounded-xl text-lg font-semibold hover:opacity-90 transition-opacity shadow-[0_0_30px_rgba(232,255,71,0.25)]"
+          >
             Start Your 14-Day Free Trial
-          </button>
+          </Link>
         </div>
       </section>
 
