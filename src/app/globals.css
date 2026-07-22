@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #080810;
+  --color-surface: #0d0d16;
+  --color-surface-2: #13131c;
+  --color-surface-3: #1a1a26;
+  --color-border: #1e1e2c;
+  --color-border-2: #2a2a3a;
+  --color-accent: #E8FF47;
+  --color-accent-dim: rgba(232, 255, 71, 0.10);
+  --color-accent-border: rgba(232, 255, 71, 0.30);
+  --color-text-hi: #EEEEE8;
+  --color-text-mid: #9999ad;
+  --color-text-low: #8888a0;
+  --color-text-dim: #52526a;
+  --color-good: #5DCAA5;
+  --color-good-dim: rgba(93, 202, 165, 0.12);
+  --color-bad: #E24B4A;
+  --color-bad-dim: rgba(226, 75, 74, 0.12);
+  --color-warn: #E8C547;
+  --color-warn-dim: rgba(232, 197, 71, 0.12);
+  --color-info: #7BB6E8;
+  --color-info-dim: rgba(56, 142, 222, 0.12);
+
+  --font-display: "Unbounded", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text-hi);
+    font-family: var(--font-body);
+  }
+
+  ::selection {
+    background: rgba(232, 255, 71, 0.25);
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-2);
+    border-radius: 4px;
+  }
+}
