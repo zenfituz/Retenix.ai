@@ -9,6 +9,8 @@ import {
   LogOut, Sparkles, Menu, X, MoreHorizontal 
 } from "lucide-react";
 import { signOut } from "@/app/login/actions";
+import { LanguageSwitcher } from "@/components/shared/language-switcher";
+import { useLanguage } from "@/context/language-context";
 
 export type RoleType = "owner" | "trainer" | "superadmin" | "member";
 
@@ -16,42 +18,42 @@ interface NavItem {
   id: string;
   href: string;
   icon: any;
-  label: string;
+  labelKey: string;
 }
 
 const NAV_CONFIG: Record<RoleType, NavItem[]> = {
   owner: [
-    { id: "dashboard", href: "/owner/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-    { id: "members", href: "/owner/members", icon: Users, label: "A'zolar" },
-    { id: "trainers", href: "/owner/trainers", icon: Dumbbell, label: "Trenerlar" },
-    { id: "billing", href: "/owner/billing", icon: CreditCard, label: "Billing & Plans" },
-    { id: "copilot", href: "/owner/copilot", icon: Bot, label: "AI Copilot" },
-    { id: "profile", href: "/owner/profile", icon: User, label: "Profil" },
-    { id: "settings", href: "/owner/settings", icon: Settings, label: "Sozlamalar" },
+    { id: "dashboard", href: "/owner/dashboard", icon: LayoutDashboard, labelKey: "dashboard" },
+    { id: "members", href: "/owner/members", icon: Users, labelKey: "members" },
+    { id: "trainers", href: "/owner/trainers", icon: Dumbbell, labelKey: "trainers" },
+    { id: "billing", href: "/owner/billing", icon: CreditCard, labelKey: "billing" },
+    { id: "copilot", href: "/owner/copilot", icon: Bot, labelKey: "copilot" },
+    { id: "profile", href: "/owner/profile", icon: User, labelKey: "profile" },
+    { id: "settings", href: "/owner/settings", icon: Settings, labelKey: "settings" },
   ],
   trainer: [
-    { id: "dashboard", href: "/trainer/dashboard", icon: Calendar, label: "Bugun" },
-    { id: "clients", href: "/trainer/clients", icon: Users, label: "Mijozlarim" },
-    { id: "schedule", href: "/trainer/schedule", icon: Clock, label: "Jadval" },
-    { id: "copilot", href: "/trainer/copilot", icon: Bot, label: "AI Copilot" },
-    { id: "profile", href: "/trainer/profile", icon: User, label: "Profil" },
-    { id: "settings", href: "/trainer/settings", icon: Settings, label: "Sozlamalar" },
+    { id: "dashboard", href: "/trainer/dashboard", icon: Calendar, labelKey: "today" },
+    { id: "clients", href: "/trainer/clients", icon: Users, labelKey: "myClients" },
+    { id: "schedule", href: "/trainer/schedule", icon: Clock, labelKey: "schedule" },
+    { id: "copilot", href: "/trainer/copilot", icon: Bot, labelKey: "copilot" },
+    { id: "profile", href: "/trainer/profile", icon: User, labelKey: "profile" },
+    { id: "settings", href: "/trainer/settings", icon: Settings, labelKey: "settings" },
   ],
   superadmin: [
-    { id: "dashboard", href: "/superadmin/dashboard", icon: LayoutDashboard, label: "Platforma" },
-    { id: "gyms", href: "/superadmin/gyms", icon: Building2, label: "Zallar" },
-    { id: "billing", href: "/superadmin/billing", icon: CreditCard, label: "Billing" },
-    { id: "aiusage", href: "/superadmin/aiusage", icon: Cpu, label: "AI Usage" },
-    { id: "copilot", href: "/superadmin/copilot", icon: Bot, label: "AI Copilot" },
-    { id: "profile", href: "/superadmin/profile", icon: User, label: "Profil" },
-    { id: "settings", href: "/superadmin/settings", icon: Settings, label: "Sozlamalar" },
+    { id: "dashboard", href: "/superadmin/dashboard", icon: LayoutDashboard, labelKey: "platform" },
+    { id: "gyms", href: "/superadmin/gyms", icon: Building2, labelKey: "gyms" },
+    { id: "billing", href: "/superadmin/billing", icon: CreditCard, labelKey: "billing" },
+    { id: "aiusage", href: "/superadmin/aiusage", icon: Cpu, labelKey: "aiUsage" },
+    { id: "copilot", href: "/superadmin/copilot", icon: Bot, labelKey: "copilot" },
+    { id: "profile", href: "/superadmin/profile", icon: User, labelKey: "profile" },
+    { id: "settings", href: "/superadmin/settings", icon: Settings, labelKey: "settings" },
   ],
   member: [
-    { id: "home", href: "/member", icon: Home, label: "Bosh" },
-    { id: "plan", href: "/member/plan", icon: Dumbbell, label: "Plan" },
-    { id: "food", href: "/member/food", icon: Utensils, label: "Ovqat" },
-    { id: "top", href: "/member/top", icon: Trophy, label: "Top" },
-    { id: "profile", href: "/member/profile", icon: User, label: "Profil" },
+    { id: "home", href: "/member", icon: Home, labelKey: "home" },
+    { id: "plan", href: "/member/plan", icon: Dumbbell, labelKey: "plan" },
+    { id: "food", href: "/member/food", icon: Utensils, labelKey: "food" },
+    { id: "top", href: "/member/top", icon: Trophy, labelKey: "top" },
+    { id: "profile", href: "/member/profile", icon: User, labelKey: "profile" },
   ],
 };
 
@@ -70,6 +72,7 @@ export function AppShell({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const { t } = useLanguage();
   const nav = NAV_CONFIG[role] || NAV_CONFIG.owner;
   const plan = PLAN_CARDS[role];
   const [moreOpen, setMoreOpen] = useState(false);
@@ -83,17 +86,24 @@ export function AppShell({
       <aside className="hidden lg:flex w-60 flex-col shrink-0 bg-[#0a0a12] border-r border-border sticky top-0 h-screen overflow-y-auto">
         <div className="p-5 flex flex-col flex-1">
           {/* Logo & Brand */}
-          <Link href="/" className="flex items-center gap-2.5 mb-6 px-1">
-            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center font-display font-black text-bg text-sm shrink-0 shadow-[0_0_16px_rgba(232,255,71,0.2)]">
-              R
-            </div>
-            <span className="font-display font-bold text-base tracking-tight text-text-hi">
-              Retenix AI
-            </span>
-          </Link>
+          <div className="flex items-center justify-between mb-6 px-1">
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center font-display font-black text-bg text-sm shrink-0 shadow-[0_0_16px_rgba(232,255,71,0.2)]">
+                R
+              </div>
+              <span className="font-display font-bold text-base tracking-tight text-text-hi">
+                Retenix AI
+              </span>
+            </Link>
+          </div>
+
+          {/* Language Switcher */}
+          <div className="mb-4">
+            <LanguageSwitcher />
+          </div>
 
           {/* Role Badge */}
-          <div className="font-mono text-[10px] tracking-widest text-text-dim mb-4 px-1 uppercase">
+          <div className="font-mono text-[10px] tracking-widest text-text-dim mb-3 px-1 uppercase">
             {role}
           </div>
 
@@ -113,7 +123,7 @@ export function AppShell({
                   }`}
                 >
                   <Icon className={`w-4 h-4 shrink-0 ${active ? "text-accent" : "text-text-dim"}`} />
-                  <span>{item.label}</span>
+                  <span>{t(item.labelKey)}</span>
                 </Link>
               );
             })}
@@ -127,7 +137,7 @@ export function AppShell({
                 className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-bad hover:bg-bad-dim/20 transition-colors cursor-pointer"
               >
                 <LogOut className="w-4 h-4 shrink-0" />
-                <span>Chiqish (Sign Out)</span>
+                <span>{t("logout")}</span>
               </button>
             </form>
 
@@ -154,9 +164,12 @@ export function AppShell({
             </div>
             <span className="font-display font-bold text-sm text-text-hi">Retenix</span>
           </Link>
-          <span className="font-mono text-[10px] uppercase px-2 py-0.5 rounded bg-surface-2 border border-border text-text-mid">
-            {role}
-          </span>
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+            <span className="font-mono text-[10px] uppercase px-2 py-0.5 rounded bg-surface-2 border border-border text-text-mid">
+              {role}
+            </span>
+          </div>
         </header>
 
         {/* Content */}
@@ -179,7 +192,7 @@ export function AppShell({
               }`}
             >
               <Icon className="w-5 h-5" />
-              <span>{item.label}</span>
+              <span>{t(item.labelKey)}</span>
             </Link>
           );
         })}
@@ -210,7 +223,7 @@ export function AppShell({
                   className="flex items-center gap-3 p-3 rounded-xl bg-surface-2 text-sm text-text-hi"
                 >
                   <Icon className="w-5 h-5 text-accent" />
-                  <span>{item.label}</span>
+                  <span>{t(item.labelKey)}</span>
                 </Link>
               );
             })}
@@ -221,7 +234,7 @@ export function AppShell({
                 className="w-full flex items-center gap-3 p-3 rounded-xl bg-bad-dim/20 text-sm text-bad border border-bad/30 cursor-pointer"
               >
                 <LogOut className="w-5 h-5" />
-                <span>Chiqish (Sign Out)</span>
+                <span>{t("logout")}</span>
               </button>
             </form>
           </div>

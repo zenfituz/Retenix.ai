@@ -5,6 +5,7 @@ import { Building2, CreditCard, Users, TrendingUp, Activity, ArrowUpRight } from
 import { KpiCard } from "@/components/ui/kpi-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pill } from "@/components/ui/pill";
+import { ActivityLogPanel } from "@/components/shared/activity-log";
 
 const RECENT_GYMS = [
   { id: 1, name: "FitLife Toshkent", owner: "Rustam Toshmatov", status: "Active", revenue: "$1,200", plan: "Pro" },
@@ -58,36 +59,14 @@ export default function SuperadminDashboard() {
         />
       </div>
 
-      {/* Analytics & Gyms Section */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-        {/* Revenue Growth Histogram */}
-        <Card className="col-span-4 bg-surface border-border">
-          <CardHeader className="flex flex-row items-center justify-between pb-2 border-b border-border">
-            <CardTitle className="text-base font-display font-bold flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-accent" /> Platforma Oylik Daromad Dinamikasi
-            </CardTitle>
-            <span className="text-xs font-mono text-text-dim">2026 yil</span>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="h-60 flex items-end justify-between gap-3 pt-6 border-b border-border pb-4">
-              {[40, 55, 48, 65, 72, 80, 88, 92, 85, 96, 90, 100].map((height, i) => (
-                <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
-                  <div
-                    className="w-full bg-surface-3 group-hover:bg-accent transition-all rounded-t"
-                    style={{ height: `${height}%` }}
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="flex justify-between mt-3 text-[11px] font-mono text-text-dim">
-              <span>Yan</span><span>Fev</span><span>Mar</span><span>Apr</span><span>May</span><span>Iyun</span>
-              <span>Iyul</span><span>Avg</span><span>Sen</span><span>Okt</span><span>Noy</span><span>Dek</span>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Activity Log Panel */}
+      <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-7">
+        <div className="lg:col-span-4">
+          <ActivityLogPanel />
+        </div>
 
         {/* Recent Gyms */}
-        <Card className="col-span-3 bg-surface border-border">
+        <Card className="lg:col-span-3 bg-surface border-border">
           <CardHeader className="pb-2 border-b border-border">
             <CardTitle className="text-base font-display font-bold flex items-center gap-2">
               <Building2 className="w-4 h-4 text-accent" /> So'nggi Qo'shilgan Zallar

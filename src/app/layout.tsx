@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Unbounded, DM_Sans, JetBrains_Mono } from "next/font/google";
+import { LanguageProvider } from "@/context/language-context";
+import { ActivityLogProvider } from "@/context/activity-log-context";
 import "./globals.css";
 
 const unbounded = Unbounded({
@@ -33,7 +35,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`scroll-smooth ${unbounded.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
       <body className="antialiased font-body bg-bg text-text-hi min-h-screen selection:bg-accent/25 selection:text-bg">
-        {children}
+        <LanguageProvider>
+          <ActivityLogProvider>
+            {children}
+          </ActivityLogProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
