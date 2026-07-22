@@ -7,36 +7,42 @@ import { createClient } from '@/utils/supabase/server'
 export async function login(formData: FormData) {
   const supabase = await createClient()
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  }
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
 
-  const { error } = await supabase.auth.signInWithPassword(data)
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  })
 
   if (error) {
-    redirect('/login?message=Could not authenticate user')
+    redirect(`/login?message=${encodeURIComponent(error.message)}`)
   }
 
-  // Redirect to dashboard (middleware handles correct role routing)
+  // Redirect to root, middleware handles correct role routing
   redirect('/')
 }
 
 export async function signup(formData: FormData) {
   const supabase = await createClient()
 
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  }
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+  const role = (formData.get('role') as string) || 'owner'
 
-  const { error } = await supabase.auth.signUp(data)
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        role: role,
+      },
+    },
+  })
 
   if (error) {
-    redirect('/login?message=Could not create user')
+    redirect(`/login?message=${encodeURIComponent(error.message)}`)
   }
 
-  redirect('/login?message=Check email to continue sign in process')
+  redirect('/login?message=Muvaffaqiyatli ro\'yxatdan o\'tdingiz! Tizimga kiring.')
 }
