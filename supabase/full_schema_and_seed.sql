@@ -1,5 +1,5 @@
 -- ====================================================================
--- RETENIX AI - SUPABASE COMPLETE DATABASE SCHEMA & DEMO SEED
+-- RETENIX AI - SUPABASE COMPLETE DATABASE SCHEMA & DEMO SEED (IDEMPOTENT)
 -- Execute this script directly in your Supabase SQL Editor:
 -- Supabase Dashboard -> SQL Editor -> New Query -> Paste & Run
 -- ====================================================================
@@ -21,12 +21,14 @@ CREATE TABLE IF NOT EXISTS public.gym_staff (
     gym_id UUID REFERENCES public.gyms(id) ON DELETE CASCADE,
     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
     full_name TEXT NOT NULL,
-    email TEXT,
-    role TEXT NOT NULL CHECK (role IN ('owner', 'trainer', 'superadmin')),
-    rating NUMERIC(3,2) DEFAULT 4.90,
-    clients_count INT DEFAULT 0,
+    role TEXT NOT NULL CHECK (role IN ('owner', 'trainer', 'superadmin', 'admin')),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Add missing columns if gym_staff already existed
+ALTER TABLE public.gym_staff ADD COLUMN IF NOT EXISTS email TEXT;
+ALTER TABLE public.gym_staff ADD COLUMN IF NOT EXISTS rating NUMERIC(3,2) DEFAULT 4.90;
+ALTER TABLE public.gym_staff ADD COLUMN IF NOT EXISTS clients_count INT DEFAULT 0;
 
 -- 3. MEMBERSHIP PLANS
 CREATE TABLE IF NOT EXISTS public.membership_plans (
@@ -46,15 +48,17 @@ CREATE TABLE IF NOT EXISTS public.members (
     assigned_trainer_id UUID REFERENCES public.gym_staff(id) ON DELETE SET NULL,
     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
     full_name TEXT NOT NULL,
-    email TEXT,
     membership_plan_id UUID REFERENCES public.membership_plans(id) ON DELETE SET NULL,
-    status TEXT DEFAULT 'active' CHECK (status IN ('active', 'risk', 'new', 'inactive')),
-    streak_days INT DEFAULT 0,
-    xp_points INT DEFAULT 0,
-    churn_risk_score INT DEFAULT 15,
+    status TEXT DEFAULT 'active',
     joined_at TIMESTAMPTZ DEFAULT now(),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Add missing columns if members already existed
+ALTER TABLE public.members ADD COLUMN IF NOT EXISTS email TEXT;
+ALTER TABLE public.members ADD COLUMN IF NOT EXISTS streak_days INT DEFAULT 0;
+ALTER TABLE public.members ADD COLUMN IF NOT EXISTS xp_points INT DEFAULT 0;
+ALTER TABLE public.members ADD COLUMN IF NOT EXISTS churn_risk_score INT DEFAULT 15;
 
 -- 5. USER ACTIVITY LOGS TABLE (AUDIT TRAIL)
 CREATE TABLE IF NOT EXISTS public.activity_logs (
@@ -101,7 +105,7 @@ CREATE TABLE IF NOT EXISTS public.trainer_schedules (
     session_time TEXT NOT NULL,
     training_type TEXT NOT NULL,
     room_zone TEXT DEFAULT 'Zona A',
-    status TEXT DEFAULT 'Upcoming' CHECK (status IN ('Completed', 'Upcoming', 'Risk Alert')),
+    status TEXT DEFAULT 'Upcoming',
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -126,19 +130,39 @@ ALTER TABLE public.workout_plans ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.nutrition_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.trainer_schedules ENABLE ROW LEVEL SECURITY;
 
--- Allow public / authenticated access for demo testing
-CREATE POLICY "Public read gyms" ON public.gyms FOR SELECT USING (true);
-CREATE POLICY "Public read gym_staff" ON public.gym_staff FOR SELECT USING (true);
-CREATE POLICY "Public read members" ON public.members FOR SELECT USING (true);
-CREATE POLICY "Public read activity_logs" ON public.activity_logs FOR SELECT USING (true);
-CREATE POLICY "Public read workout_plans" ON public.workout_plans FOR SELECT USING (true);
-CREATE POLICY "Public read nutrition_logs" ON public.nutrition_logs FOR SELECT USING (true);
-CREATE POLICY "Public read trainer_schedules" ON public.trainer_schedules FOR SELECT USING (true);
-
--- Allow authenticated users to insert/update activity logs & plans
-CREATE POLICY "Allow all writes to activity_logs" ON public.activity_logs FOR ALL USING (true);
-CREATE POLICY "Allow all writes to members" ON public.members FOR ALL USING (true);
-CREATE POLICY "Allow all writes to workout_plans" ON public.workout_plans FOR ALL USING (true);
+DO $$ 
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public read gyms') THEN
+        CREATE POLICY "Public read gyms" ON public.gyms FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public read gym_staff') THEN
+        CREATE POLICY "Public read gym_staff" ON public.gym_staff FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public read members') THEN
+        CREATE POLICY "Public read members" ON public.members FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public read activity_logs') THEN
+        CREATE POLICY "Public read activity_logs" ON public.activity_logs FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public read workout_plans') THEN
+        CREATE POLICY "Public read workout_plans" ON public.workout_plans FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public read nutrition_logs') THEN
+        CREATE POLICY "Public read nutrition_logs" ON public.nutrition_logs FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public read trainer_schedules') THEN
+        CREATE POLICY "Public read trainer_schedules" ON public.trainer_schedules FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Allow all writes to activity_logs') THEN
+        CREATE POLICY "Allow all writes to activity_logs" ON public.activity_logs FOR ALL USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Allow all writes to members') THEN
+        CREATE POLICY "Allow all writes to members" ON public.members FOR ALL USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Allow all writes to workout_plans') THEN
+        CREATE POLICY "Allow all writes to workout_plans" ON public.workout_plans FOR ALL USING (true);
+    END IF;
+END $$;
 
 -- ====================================================================
 -- SAMPLE DEMO DATA INSERTION
