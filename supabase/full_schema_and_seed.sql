@@ -25,6 +25,9 @@ CREATE TABLE IF NOT EXISTS public.gym_staff (
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+-- Drop NOT NULL constraint on user_id to allow demo accounts without auth.users
+ALTER TABLE public.gym_staff ALTER COLUMN user_id DROP NOT NULL;
+
 -- Add missing columns if gym_staff already existed
 ALTER TABLE public.gym_staff ADD COLUMN IF NOT EXISTS email TEXT;
 ALTER TABLE public.gym_staff ADD COLUMN IF NOT EXISTS rating NUMERIC(3,2) DEFAULT 4.90;
@@ -53,6 +56,9 @@ CREATE TABLE IF NOT EXISTS public.members (
     joined_at TIMESTAMPTZ DEFAULT now(),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Drop NOT NULL constraint on user_id for members
+ALTER TABLE public.members ALTER COLUMN user_id DROP NOT NULL;
 
 -- Add missing columns if members already existed
 ALTER TABLE public.members ADD COLUMN IF NOT EXISTS email TEXT;
