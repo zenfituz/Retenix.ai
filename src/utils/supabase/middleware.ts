@@ -1,6 +1,20 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+function getRoleRedirectPath(role: string) {
+  switch (role) {
+    case 'member':
+      return '/member'
+    case 'trainer':
+      return '/trainer/dashboard'
+    case 'superadmin':
+      return '/superadmin/dashboard'
+    case 'owner':
+    default:
+      return '/owner/dashboard'
+  }
+}
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -31,28 +45,35 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Role-based routing
-  const pathname = request.nextUrl.pathname;
+  const pathname = request.nextUrl.pathname
+
+  // Detect role from app_metadata or user_metadata fallback
+  const role = user?.app_metadata?.role || user?.user_metadata?.role || 'owner'
+  const targetPath = getRoleRedirectPath(role)
+
+  // Redirect logged-in users away from /login
   if (user && pathname.startsWith('/login')) {
-    const role = user.app_metadata?.role || 'member';
-    return NextResponse.redirect(new URL(`/${role}/dashboard`, request.url))
+    return NextResponse.redirect(new URL(targetPath, request.url))
   }
   
+  // Protect private routes from unauthenticated users
   if (!user && !pathname.startsWith('/login') && pathname !== '/') {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
-  // Protect role-specific routes
+  // Role-based access control for protected sections
   if (user) {
-    const role = user.app_metadata?.role || 'member';
     if (pathname.startsWith('/owner') && role !== 'owner') {
-      return NextResponse.redirect(new URL(`/${role}/dashboard`, request.url))
+      return NextResponse.redirect(new URL(targetPath, request.url))
     }
     if (pathname.startsWith('/trainer') && role !== 'trainer') {
-      return NextResponse.redirect(new URL(`/${role}/dashboard`, request.url))
+      return NextResponse.redirect(new URL(targetPath, request.url))
     }
     if (pathname.startsWith('/superadmin') && role !== 'superadmin') {
-      return NextResponse.redirect(new URL(`/${role}/dashboard`, request.url))
+      return NextResponse.redirect(new URL(targetPath, request.url))
+    }
+    if (pathname.startsWith('/member') && role !== 'member') {
+      return NextResponse.redirect(new URL(targetPath, request.url))
     }
   }
 
