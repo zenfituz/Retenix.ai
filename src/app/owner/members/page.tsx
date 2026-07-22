@@ -7,11 +7,11 @@ import { Pill } from "@/components/ui/pill"
 import Link from "next/link"
 
 const members = [
-  { id: "1", name: "Alex Johnson", email: "alex@example.com", status: "Active", streak: 12, lastVisit: "2 hours ago" },
-  { id: "2", name: "Maria Garcia", email: "maria@example.com", status: "Risk", streak: 0, lastVisit: "2 weeks ago" },
-  { id: "3", name: "James Smith", email: "james@example.com", status: "New", streak: 3, lastVisit: "1 day ago" },
-  { id: "4", name: "Linda Williams", email: "linda@example.com", status: "Active", streak: 45, lastVisit: "Today" },
-  { id: "5", name: "Robert Brown", email: "robert@example.com", status: "Risk", streak: 1, lastVisit: "10 days ago" },
+  { id: "1", name: "Alex Johnson", email: "alex@example.com", status: "Active", streak: 12, lastVisit: "2 hours ago", trainer: "Jasur" },
+  { id: "2", name: "Maria Garcia", email: "maria@example.com", status: "Risk", streak: 0, lastVisit: "2 weeks ago", trainer: "Biriktirilmagan" },
+  { id: "3", name: "James Smith", email: "james@example.com", status: "New", streak: 3, lastVisit: "1 day ago", trainer: "Malika" },
+  { id: "4", name: "Linda Williams", email: "linda@example.com", status: "Active", streak: 45, lastVisit: "Today", trainer: "Rustam" },
+  { id: "5", name: "Robert Brown", email: "robert@example.com", status: "Risk", streak: 1, lastVisit: "10 days ago", trainer: "Biriktirilmagan" },
 ]
 
 export default function MembersList() {
@@ -57,6 +57,7 @@ export default function MembersList() {
             <tr>
               <th className="px-6 py-4 font-medium">Member</th>
               <th className="px-6 py-4 font-medium">Status</th>
+              <th className="px-6 py-4 font-medium">Trener</th>
               <th className="px-6 py-4 font-medium">Streak</th>
               <th className="px-6 py-4 font-medium">Last Visit</th>
               <th className="px-6 py-4 font-medium text-right">Actions</th>
@@ -80,6 +81,9 @@ export default function MembersList() {
                   <Pill variant={member.status === 'Active' ? 'success' : member.status === 'Risk' ? 'danger' : 'default'}>
                     {member.status}
                   </Pill>
+                </td>
+                <td className="px-6 py-4 text-zinc-400">
+                  {member.trainer}
                 </td>
                 <td className="px-6 py-4 text-white">
                   {member.streak} days

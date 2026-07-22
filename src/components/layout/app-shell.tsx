@@ -8,6 +8,7 @@ import {
   Calendar, Clock, Building2, Cpu, Home, Dumbbell, Utensils, Trophy, User, 
   LogOut, Sparkles, Menu, X, MoreHorizontal 
 } from "lucide-react";
+import { signOut } from "@/app/login/actions";
 
 export type RoleType = "owner" | "trainer" | "superadmin" | "member";
 
@@ -22,8 +23,10 @@ const NAV_CONFIG: Record<RoleType, NavItem[]> = {
   owner: [
     { id: "dashboard", href: "/owner/dashboard", icon: LayoutDashboard, label: "Dashboard" },
     { id: "members", href: "/owner/members", icon: Users, label: "A'zolar" },
+    { id: "trainers", href: "/owner/trainers", icon: Dumbbell, label: "Trenerlar" },
     { id: "billing", href: "/owner/billing", icon: CreditCard, label: "Billing & Plans" },
     { id: "copilot", href: "/owner/copilot", icon: Bot, label: "AI Copilot" },
+    { id: "profile", href: "/owner/profile", icon: User, label: "Profil" },
     { id: "settings", href: "/owner/settings", icon: Settings, label: "Sozlamalar" },
   ],
   trainer: [
@@ -31,6 +34,7 @@ const NAV_CONFIG: Record<RoleType, NavItem[]> = {
     { id: "clients", href: "/trainer/clients", icon: Users, label: "Mijozlarim" },
     { id: "schedule", href: "/trainer/schedule", icon: Clock, label: "Jadval" },
     { id: "copilot", href: "/trainer/copilot", icon: Bot, label: "AI Copilot" },
+    { id: "profile", href: "/trainer/profile", icon: User, label: "Profil" },
     { id: "settings", href: "/trainer/settings", icon: Settings, label: "Sozlamalar" },
   ],
   superadmin: [
@@ -39,6 +43,7 @@ const NAV_CONFIG: Record<RoleType, NavItem[]> = {
     { id: "billing", href: "/superadmin/billing", icon: CreditCard, label: "Billing" },
     { id: "aiusage", href: "/superadmin/aiusage", icon: Cpu, label: "AI Usage" },
     { id: "copilot", href: "/superadmin/copilot", icon: Bot, label: "AI Copilot" },
+    { id: "profile", href: "/superadmin/profile", icon: User, label: "Profil" },
     { id: "settings", href: "/superadmin/settings", icon: Settings, label: "Sozlamalar" },
   ],
   member: [
@@ -73,19 +78,19 @@ export function AppShell({
   const overflowItems = nav.length > 5 ? nav.slice(4) : [];
 
   return (
-    <div className="flex min-h-screen bg-bg text-text-hi">
+    <div className="flex min-h-screen bg-bg text-text-hi font-body">
       {/* ---------- Sidebar: Desktop (>= 1024px) ---------- */}
       <aside className="hidden lg:flex w-60 flex-col shrink-0 bg-[#0a0a12] border-r border-border sticky top-0 h-screen overflow-y-auto">
         <div className="p-5 flex flex-col flex-1">
           {/* Logo & Brand */}
-          <div className="flex items-center gap-2.5 mb-6 px-1">
+          <Link href="/" className="flex items-center gap-2.5 mb-6 px-1">
             <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center font-display font-black text-bg text-sm shrink-0 shadow-[0_0_16px_rgba(232,255,71,0.2)]">
               R
             </div>
             <span className="font-display font-bold text-base tracking-tight text-text-hi">
               Retenix AI
             </span>
-          </div>
+          </Link>
 
           {/* Role Badge */}
           <div className="font-mono text-[10px] tracking-widest text-text-dim mb-4 px-1 uppercase">
@@ -95,7 +100,7 @@ export function AppShell({
           {/* Navigation Items */}
           <nav className="flex flex-col gap-1 flex-1">
             {nav.map((item) => {
-              const active = pathname === item.href || pathname.startsWith(item.href + "/");
+              const active = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href + "/"));
               const Icon = item.icon;
               return (
                 <Link
@@ -116,13 +121,15 @@ export function AppShell({
 
           {/* User Section & Logout */}
           <div className="pt-4 border-t border-border mt-auto flex flex-col gap-3">
-            <Link
-              href="/login"
-              className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-bad hover:bg-bad-dim/20 transition-colors"
-            >
-              <LogOut className="w-4 h-4 shrink-0" />
-              <span>Chiqish</span>
-            </Link>
+            <form action={signOut}>
+              <button
+                type="submit"
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-bad hover:bg-bad-dim/20 transition-colors cursor-pointer"
+              >
+                <LogOut className="w-4 h-4 shrink-0" />
+                <span>Chiqish (Sign Out)</span>
+              </button>
+            </form>
 
             {/* Plan Card */}
             <div className="bg-surface-2 border border-border rounded-xl p-3">
@@ -141,12 +148,12 @@ export function AppShell({
       <div className="flex-1 min-w-0 flex flex-col min-h-screen">
         {/* Mobile Topbar (< 1024px) */}
         <header className="lg:hidden flex items-center justify-between px-4 py-3 bg-surface border-b border-border sticky top-0 z-40">
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-accent flex items-center justify-center font-display font-black text-bg text-xs">
               R
             </div>
             <span className="font-display font-bold text-sm text-text-hi">Retenix</span>
-          </div>
+          </Link>
           <span className="font-mono text-[10px] uppercase px-2 py-0.5 rounded bg-surface-2 border border-border text-text-mid">
             {role}
           </span>
@@ -161,7 +168,7 @@ export function AppShell({
       {/* ---------- Mobile Bottom Navigation (< 1024px) ---------- */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-md border-t border-border z-40 flex items-center justify-around py-2 px-1">
         {bottomItems.map((item) => {
-          const active = pathname === item.href || pathname.startsWith(item.href + "/");
+          const active = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href + "/"));
           const Icon = item.icon;
           return (
             <Link
@@ -207,14 +214,16 @@ export function AppShell({
                 </Link>
               );
             })}
-            <Link
-              href="/login"
-              onClick={() => setMoreOpen(false)}
-              className="flex items-center gap-3 p-3 rounded-xl bg-bad-dim/20 text-sm text-bad border border-bad/30"
-            >
-              <LogOut className="w-5 h-5" />
-              <span>Chiqish</span>
-            </Link>
+            <form action={signOut}>
+              <button
+                type="submit"
+                onClick={() => setMoreOpen(false)}
+                className="w-full flex items-center gap-3 p-3 rounded-xl bg-bad-dim/20 text-sm text-bad border border-bad/30 cursor-pointer"
+              >
+                <LogOut className="w-5 h-5" />
+                <span>Chiqish (Sign Out)</span>
+              </button>
+            </form>
           </div>
         </div>
       )}

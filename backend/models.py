@@ -30,8 +30,10 @@ class Member(Base):
     phone = Column(String, nullable=True)
     join_date = Column(DateTime, default=datetime.datetime.utcnow)
     status = Column(String, default="active")
+    trainer_id = Column(Integer, ForeignKey("gym_staff.id"), nullable=True)
     
     gym = relationship("Gym")
+    trainer = relationship("GymStaff")
 
     @property
     def churn_risk_score(self) -> float:

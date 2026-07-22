@@ -17,7 +17,8 @@ const getMember = (id: string) => ({
   streak: 12,
   visitsThisMonth: 18,
   lastVisit: "2 hours ago",
-  plan: "Premium Annual"
+  plan: "Premium Annual",
+  trainer: "Jasur"
 })
 
 export default function MemberDetail() {
@@ -59,6 +60,13 @@ export default function MemberDetail() {
               <div className="flex items-center text-zinc-300 text-sm">
                 <Calendar className="h-4 w-4 mr-3 text-zinc-500" />
                 Joined {member.joinDate}
+              </div>
+              <div className="flex items-center justify-between text-zinc-300 text-sm pt-2 border-t border-white/5">
+                <div className="flex items-center">
+                  <Activity className="h-4 w-4 mr-3 text-zinc-500" />
+                  Trener: {member.trainer}
+                </div>
+                <button className="text-xs text-[#E8FF47] hover:underline">O'zgartirish</button>
               </div>
             </div>
 

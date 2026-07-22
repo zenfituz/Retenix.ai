@@ -38,6 +38,21 @@ async def delete_member(db: AsyncSession, member_id: int):
         await db.commit()
     return db_member
 
+# Trainer CRUD
+async def get_trainers(db: AsyncSession, gym_id: int):
+    result = await db.execute(
+        select(models.GymStaff).filter(models.GymStaff.gym_id == gym_id, models.GymStaff.role == 'trainer')
+    )
+    return result.scalars().all()
+
+async def assign_trainer(db: AsyncSession, member_id: int, trainer_id: int):
+    db_member = await get_member(db, member_id)
+    if db_member:
+        db_member.trainer_id = trainer_id
+        await db.commit()
+        await db.refresh(db_member)
+    return db_member
+
 # MembershipPlan CRUD
 async def get_membership_plan(db: AsyncSession, plan_id: int):
     result = await db.execute(select(models.MembershipPlan).filter(models.MembershipPlan.id == plan_id))

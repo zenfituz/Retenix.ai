@@ -46,3 +46,9 @@ export async function signup(formData: FormData) {
 
   redirect('/login?message=Muvaffaqiyatli ro\'yxatdan o\'tdingiz! Tizimga kiring.')
 }
+
+export async function signOut() {
+  const supabase = await createClient()
+  await supabase.auth.signOut()
+  redirect('/login')
+}

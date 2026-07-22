@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List, Dict, Any
 from datetime import datetime
 from decimal import Decimal
 
@@ -24,6 +24,7 @@ class Member(MemberBase):
     gym_id: int
     join_date: datetime
     churn_risk_score: Optional[float] = None
+    trainer_id: Optional[int] = None
 
     class Config:
         from_attributes = True
@@ -35,6 +36,25 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     suggestion: str
+
+# Trainer Schemas
+class GymStaffBase(BaseModel):
+    name: str
+    role: str
+
+class Trainer(GymStaffBase):
+    id: int
+    gym_id: int
+
+    class Config:
+        from_attributes = True
+
+# Analytics Schema
+class AnalyticsResponse(BaseModel):
+    retention_rate: float
+    mrr: float
+    dau: int
+    churn_histogram: dict
 
 # MembershipPlan Schemas
 class MembershipPlanBase(BaseModel):

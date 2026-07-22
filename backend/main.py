@@ -137,3 +137,43 @@ async def ai_chat(
     # In a real scenario, you'd use litellm or anthropic SDK here.
     suggestion = f"Based on '{request.context}', regarding '{request.message}', consider offering a personalized discount or reaching out to understand their attendance drop."
     return {"suggestion": suggestion}
+
+# Trainers Endpoints
+@app.get("/api/trainers", response_model=List[schemas.Trainer])
+async def list_trainers(
+    gym_id: int = Depends(get_current_gym_id),
+    db: AsyncSession = Depends(get_db)
+):
+    return await crud.get_trainers(db=db, gym_id=gym_id)
+
+@app.post("/api/members/{id}/assign-trainer", response_model=schemas.Member)
+async def assign_trainer_to_member(
+    id: int,
+    trainer_id: int,
+    gym_id: int = Depends(get_current_gym_id),
+    db: AsyncSession = Depends(get_db)
+):
+    member = await crud.get_member(db=db, member_id=id)
+    if not member or member.gym_id != gym_id:
+        raise HTTPException(status_code=404, detail="Member not found")
+    
+    trainers = await crud.get_trainers(db=db, gym_id=gym_id)
+    if trainer_id not in [t.id for t in trainers]:
+        raise HTTPException(status_code=400, detail="Invalid trainer")
+        
+    return await crud.assign_trainer(db=db, member_id=id, trainer_id=trainer_id)
+
+# Analytics Endpoint
+@app.get("/api/analytics", response_model=schemas.AnalyticsResponse)
+async def get_analytics(
+    gym_id: int = Depends(get_current_gym_id),
+    db: AsyncSession = Depends(get_db)
+):
+    # Mock comprehensive analytics for the gym
+    return {
+        "retention_rate": 85.5,
+        "mrr": 15000.0,
+        "dau": 120,
+        "churn_histogram": {"0-30 days": 5, "31-60 days": 12, "61-90 days": 3}
+    }
+

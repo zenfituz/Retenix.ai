@@ -78,26 +78,34 @@ export function LoginForm({ message }: { message?: string }) {
           {ROLE_CARDS.map((card) => {
             const Icon = card.icon
             return (
-              <button
-                key={card.id}
-                onClick={() => handleSelectRole(card.id)}
-                type="button"
-                className="group flex items-center gap-4 bg-surface-2 border border-border hover:border-accent/40 rounded-xl p-4 text-left transition-all hover:bg-surface-3 cursor-pointer"
-              >
-                <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:scale-105 transition-transform flex-shrink-0">
-                  <Icon className="w-5 h-5" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="font-display font-semibold text-sm text-text-hi">{card.title}</span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-surface3 text-text-mid border border-border">
-                      {card.badge}
-                    </span>
+              <div key={card.id} className="group relative bg-surface-2 border border-border hover:border-accent/40 rounded-xl overflow-hidden transition-all hover:bg-surface-3">
+                <button
+                  onClick={() => handleSelectRole(card.id)}
+                  type="button"
+                  className="w-full flex items-center gap-4 p-4 text-left cursor-pointer z-10 relative"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:scale-105 transition-transform flex-shrink-0">
+                    <Icon className="w-5 h-5" />
                   </div>
-                  <p className="text-xs text-text-dim mt-0.5 truncate">{card.desc}</p>
-                </div>
-                <ArrowRight className="w-4 h-4 text-text-dim group-hover:text-accent group-hover:translate-x-0.5 transition-all flex-shrink-0" />
-              </button>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="font-display font-semibold text-sm text-text-hi">{card.title}</span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-surface3 text-text-mid border border-border">
+                        {card.badge}
+                      </span>
+                    </div>
+                    <p className="text-xs text-text-dim mt-0.5 truncate">{card.desc}</p>
+                    <div className="text-[10px] text-text-dim mt-1 font-mono">Demo: {card.demoEmail} (123456)</div>
+                  </div>
+                </button>
+                <form action={login} className="absolute right-4 top-1/2 -translate-y-1/2 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <input type="hidden" name="email" value={card.demoEmail} />
+                  <input type="hidden" name="password" value="123456" />
+                  <button type="submit" className="bg-accent text-bg px-3 py-1.5 rounded-lg text-xs font-semibold hover:opacity-90 flex items-center gap-1 shadow-[0_0_10px_rgba(232,255,71,0.2)]">
+                    1-Click
+                  </button>
+                </form>
+              </div>
             )
           })}
         </div>
