@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { login, signup } from './actions'
-import { Shield, Building2, Dumbbell, User, ArrowRight, ArrowLeft, CheckCircle2 } from 'lucide-react'
+import { Shield, Building2, Dumbbell, User, ArrowRight, ArrowLeft, CheckCircle2, Bot, Send, Sparkles } from 'lucide-react'
 
 const ROLE_CARDS = [
   {
@@ -44,6 +44,23 @@ export function LoginForm({ message }: { message?: string }) {
   const [isRegisterMode, setIsRegisterMode] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [telegramUser, setTelegramUser] = useState<any>(null)
+
+  useEffect(() => {
+    // Auto-detect Telegram WebApp User Data
+    if (typeof window !== 'undefined') {
+      const tg = (window as any).Telegram?.WebApp
+      if (tg && tg.initDataUnsafe?.user) {
+        const u = tg.initDataUnsafe.user
+        setTelegramUser(u)
+        // Pre-fill email and default role for Telegram member
+        const tgEmail = u.username ? `${u.username}@telegram.me` : `tg_${u.id}@fitzone.uz`
+        setEmail(tgEmail)
+        setPassword('123456')
+        setSelectedRole('member')
+      }
+    }
+  }, [])
 
   const activeRoleCard = ROLE_CARDS.find(r => r.id === selectedRole)
 
@@ -55,10 +72,32 @@ export function LoginForm({ message }: { message?: string }) {
     }
   }
 
+  const handleTelegramAuth = () => {
+    if (telegramUser) {
+      // Direct login inside Telegram
+      const form = document.createElement('form')
+      form.method = 'POST'
+      form.action = login as any
+      const inputEmail = document.createElement('input')
+      inputEmail.name = 'email'
+      inputEmail.value = email || 'member@fitzone.uz'
+      const inputPass = document.createElement('input')
+      inputPass.name = 'password'
+      inputPass.value = '123456'
+      form.appendChild(inputEmail)
+      form.appendChild(inputPass)
+      document.body.appendChild(form)
+      form.submit()
+    } else {
+      // Redirect to Telegram Bot
+      window.open('https://t.me/RetenixAiBot', '_blank')
+    }
+  }
+
   return (
     <div className="w-full max-w-md bg-surface border border-border rounded-2xl p-8 relative z-10 shadow-2xl transition-all">
       {/* Header Logo */}
-      <div className="flex flex-col items-center mb-8">
+      <div className="flex flex-col items-center mb-6">
         <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center font-display font-black text-bg text-2xl mb-3 shadow-[0_0_20px_rgba(232,255,71,0.25)]">
           R
         </div>
@@ -66,6 +105,35 @@ export function LoginForm({ message }: { message?: string }) {
         <p className="text-text-dim text-xs mt-1 font-mono uppercase tracking-wider">
           {selectedRole ? `${activeRoleCard?.title} Sifatida Kirish` : 'Rolni Tanlang'}
         </p>
+      </div>
+
+      {/* TELEGRAM AUTO-DETECTED BANNER */}
+      {telegramUser && (
+        <div className="mb-5 p-3 rounded-xl bg-accent/10 border border-accent/30 text-accent text-xs font-mono flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Bot className="w-4 h-4 text-accent" />
+            <span>✈️ {telegramUser.first_name} {telegramUser.last_name || ''} (@{telegramUser.username || 'tg'})</span>
+          </div>
+          <span className="text-[10px] bg-accent text-bg px-2 py-0.5 rounded font-bold">Avto-profil</span>
+        </div>
+      )}
+
+      {/* TELEGRAM 1-CLICK AUTH BUTTON */}
+      <div className="mb-6">
+        <button
+          type="button"
+          onClick={handleTelegramAuth}
+          className="w-full py-3 rounded-xl bg-[#229ED9]/15 border border-[#229ED9]/40 text-[#229ED9] hover:bg-[#229ED9]/25 font-semibold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md"
+        >
+          <Send className="w-4 h-4" />
+          <span>{telegramUser ? `Telegram Profilingiz Bilan Kirish (${telegramUser.first_name})` : "Telegram Orqali Kirish / Ro'yxatdan O'tish (@RetenixAiBot)"}</span>
+        </button>
+      </div>
+
+      <div className="relative flex py-2 items-center mb-5">
+        <div className="flex-grow border-t border-border"></div>
+        <span className="flex-shrink mx-3 text-text-dim font-mono text-[10px] uppercase">yoki email orqali</span>
+        <div className="flex-grow border-t border-border"></div>
       </div>
 
       {/* Step 1: Role Picker */}
@@ -136,7 +204,7 @@ export function LoginForm({ message }: { message?: string }) {
 
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-mono tracking-wider text-text-mid uppercase" htmlFor="email">
-              Email
+              Email / Telegram Pochta
             </label>
             <input
               id="email"
