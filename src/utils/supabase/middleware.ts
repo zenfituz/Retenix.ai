@@ -22,6 +22,7 @@ const PUBLIC_ROUTES = [
   '/about',
   '/contact',
   '/login',
+  '/telegram',
 ]
 
 function isPublicRoute(pathname: string) {
