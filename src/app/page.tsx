@@ -35,7 +35,7 @@ export default function LandingPage() {
             <div className="w-7 h-7 rounded-lg bg-accent flex items-center justify-center font-display font-black text-bg text-base shadow-[0_0_16px_rgba(232,255,71,0.3)]">
               R
             </div>
-            <span className="font-display font-bold text-base tracking-tight text-text-hi">Retenix AI</span>
+            <span className="font-display font-bold text-base tracking-tight text-text-hi">Retenix.ai</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-6 text-xs font-mono text-text-mid">
@@ -64,7 +64,7 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* ---------- Halsa-Inspired Hero Section ---------- */}
+      {/* ---------- Hero Section ---------- */}
       <section className="pt-28 pb-16 px-6 relative overflow-hidden">
         {/* Ambient Glows */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[650px] h-[400px] bg-accent/8 rounded-full blur-[140px] pointer-events-none" />
@@ -81,18 +81,18 @@ export default function LandingPage() {
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-2 border border-accent/30 shadow-[0_0_20px_rgba(232,255,71,0.1)]">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="text-[11px] font-mono text-accent uppercase tracking-widest">
-                5-FACTOR CHURN PREDICTION ENGINE 2.0
+                🔥 5-FAKTORLI AI RETENTION PLATFORMASI
               </span>
             </div>
 
-            {/* Typography Scale: Refined & Compact */}
+            {/* Typography Scale: Conversion Copy Headline */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold leading-[1.18] tracking-tight max-w-3xl mx-auto">
               Mijozlar ketib qolishini <span className="text-bad underline decoration-bad/30">kutmang</span>.<br />
               Ularni <span className="text-accent">Retenix.ai</span> bilan ushlab qoling.
             </h1>
 
             <p className="text-xs sm:text-sm text-text-dim max-w-xl mx-auto leading-relaxed font-body">
-              Retenix platformasi fitness zal a'zolarining kelish grafigi, streak uzilishi, ovqatlanish jurnali va to'lovlar tarixini tahlil qilib, mijoz ketib qolishini (churn) 14 kun oldindan aniq prognoz qiladi.
+              Retenix.ai — fitness zal a'zolari davomati, trenirovka uzilishi va to'lovlar tarixini 5 faktorli AI bilan tahlil qilib, mijoz ketib qolishini (churn) 14 kun oldindan aniqlaydi hamda zudlik bilan saqlab qoladi.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
@@ -111,7 +111,7 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
-          {/* ---------- Halsa-Style Realistic Interactive Dashboard Showcase ---------- */}
+          {/* ---------- Interactive Dashboard Showcase ---------- */}
           <motion.div 
             id="hero-dashboard"
             initial={{ opacity: 0, y: 30 }}
@@ -162,7 +162,7 @@ export default function LandingPage() {
                     <div className="p-3 rounded-xl bg-surface border border-border">
                       <div className="text-[9px] font-mono text-text-dim uppercase tracking-wider">SAQLANGAN MRR</div>
                       <div className="text-lg font-display font-bold text-accent mt-0.5">$2,450</div>
-                      <div className="text-[9px] font-mono text-accent mt-0.5">Retenix AI bilan</div>
+                      <div className="text-[9px] font-mono text-accent mt-0.5">Retenix.ai bilan</div>
                     </div>
 
                     <div className="p-3 rounded-xl bg-surface border border-border">
@@ -220,24 +220,24 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ---------- Evotrack-Style Metric Banner ---------- */}
+      {/* ---------- Metric Proof Banner ---------- */}
       <section className="py-8 bg-surface border-y border-border">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div>
             <div className="text-2xl md:text-3xl font-display font-bold text-accent">412+</div>
-            <div className="text-[10px] font-mono text-text-dim mt-0.5">Faol Hamkor Zallar</div>
+            <div className="text-[10px] font-mono text-text-dim mt-0.5">Boshqarilayotgan Zallar</div>
           </div>
           <div>
             <div className="text-2xl md:text-3xl font-display font-bold text-good">34,000+</div>
-            <div className="text-[10px] font-mono text-text-dim mt-0.5">Kuzatuvdagi A'zolar</div>
+            <div className="text-[10px] font-mono text-text-dim mt-0.5">Faol A'zolar</div>
           </div>
           <div>
             <div className="text-2xl md:text-3xl font-display font-bold text-info">94.8%</div>
-            <div className="text-[10px] font-mono text-text-dim mt-0.5">AI Churn Aniqligi</div>
+            <div className="text-[10px] font-mono text-text-dim mt-0.5">Prognoz Aniqligi</div>
           </div>
           <div>
-            <div className="text-2xl md:text-3xl font-display font-bold text-warn">$18.4K</div>
-            <div className="text-[10px] font-mono text-text-dim mt-0.5">Oylik Saqlangan MRR</div>
+            <div className="text-2xl md:text-3xl font-display font-bold text-warn">$18,400+</div>
+            <div className="text-[10px] font-mono text-text-dim mt-0.5">Saqlab Qolingan MRR</div>
           </div>
         </div>
       </section>
@@ -247,13 +247,13 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto space-y-10">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent font-mono text-[10px]">
-              AI CHURN SIGNAL ALGORITHM
+              🎯 RETENIX.AI ALGORITMI QANDAY ISHLAYDI?
             </span>
             <h2 className="text-2xl md:text-3xl font-display font-bold">
-              Retenix 5-Faktorli Tahlil Dvigateli
+              Mijoz Ketishining Oldini Oluvchi 5 Tahlil Faktori
             </h2>
             <p className="text-text-dim text-xs leading-relaxed max-w-lg mx-auto">
-              Har bir a'zoning xulq-atvori 5 ta alohida faktor bo'yicha doimiy skanerlanadi va zudlik bilan murabbiylarga xabar beriladi.
+              Har bir a'zoning xulq-atvori real-vaqtda tahlil qilinadi va murabbiylarga avtomatik choralar beriladi.
             </p>
           </div>
 
@@ -322,15 +322,15 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ---------- Interactive Role Showcase (Full Desktop Dashboards & Mobile Frame) ---------- */}
+      {/* ---------- Interactive Role Showcase ---------- */}
       <section id="showcase" className="py-16 bg-surface border-y border-border px-6">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <h2 className="text-2xl md:text-3xl font-display font-bold">
-              Har Bir Rol Uchun Maxsus Panellar
+              Zal Egasi, Murabbiy va A'zolar Uchun Maxsus Interfeyslar
             </h2>
             <p className="text-text-dim text-xs">
-              Gym Owner va Trainer uchun to'liq Desktop Dashboardlar, A'zolar uchun esa mobil Telegram Mini App.
+              Har bir foydalanuvchi o'ziga kerakli ma'lumot va vositalarni 1 soniyada topadi.
             </p>
 
             {/* Role Tabs */}
@@ -572,7 +572,7 @@ export default function LandingPage() {
                   </span>
                   <h4 className="text-lg font-display font-bold text-text-hi">Member App: Profil va Natijalar Ko'rinishi</h4>
                   <p className="text-xs text-text-dim leading-relaxed">
-                    A me'zolar telegram orqali turniket pass kodi, shaxsiy XP darajasi, trenirovka natijalari, olov stikerlari va haftalik reyting barchasini 1 ta joyda kuzatib borishadi.
+                    A'zolar Telegram orqali turniket pass kodi, shaxsiy XP darajasi, trenirovka natijalari, olov stikerlari va haftalik reyting barchasini 1 ta joyda kuzatib borishadi.
                   </p>
                   <Link 
                     href="/member" 
@@ -596,10 +596,10 @@ export default function LandingPage() {
               INTERAKTIV DAROMAD KALKULYATORI
             </span>
             <h2 className="text-2xl md:text-3xl font-display font-bold">
-              Retenix Zalingizga Qancha Daromad Olib Keladi?
+              Retenix.ai Zalingizga Qancha Qo'shimcha Daromad Olib Keladi?
             </h2>
             <p className="text-text-dim text-xs">
-              Zalingizdagi a'zolar soni va oylik a'zolik narxini suring:
+              Zaldagi a'zolar soni va oylik a'zolik narxini suring — Retenix.ai tejaydigan oylik sof daromadingizni hisoblang:
             </p>
           </div>
 
@@ -648,7 +648,7 @@ export default function LandingPage() {
                 +${monthlySavedRevenue.toLocaleString()} <span className="text-xs font-normal text-text-dim">/oy</span>
               </div>
               <div className="text-xs text-text-mid font-mono border-t border-accent/20 pt-2">
-                Retenix har oy o'rtacha <span className="text-good font-bold">{savedMembers} ta a'zongizni</span> zalni tark etishidan saqlab qoladi.
+                Retenix.ai har oy o'rtacha <span className="text-good font-bold">{savedMembers} ta a'zongizni</span> zalni tark etishidan saqlab qoladi.
               </div>
             </div>
           </div>
@@ -659,15 +659,15 @@ export default function LandingPage() {
       <section className="py-16 bg-surface border-t border-border px-6">
         <div className="max-w-3xl mx-auto space-y-6">
           <div className="text-center space-y-2">
-            <h2 className="text-2xl md:text-3xl font-display font-bold">Keng Tarqalgan Savollar (FAQ)</h2>
-            <p className="text-text-dim text-xs">Retenix AI platformasi bo'yicha ko'p beriladigan savollar</p>
+            <h2 className="text-2xl md:text-3xl font-display font-bold">Retenix.ai Haqida Keng Tarqalgan Savollar</h2>
+            <p className="text-text-dim text-xs">Platforma integratsiyasi, xavfsizligi hamda narxlar bo'yicha ko'p beriladigan savollar</p>
           </div>
 
           <div className="space-y-3">
             {[
               {
-                q: "Retenix mavjud zallarga qanday integratsiya qilinadi?",
-                a: "Retenix loyihangizdagi Excel/CSV ro'yxatlarni bir zumda import qiladi va Telegram Mini App bilan 10 daqiqada ulanadi."
+                q: "Retenix.ai mavjud zallarga qanday integratsiya qilinadi?",
+                a: "Retenix.ai loyihangizdagi Excel/CSV ro'yxatlarni bir zumda import qiladi va Telegram Mini App bilan 10 daqiqada ulanadi."
               },
               {
                 q: "5-factor Churn engine aniqligi qanday kafolatlanadi?",
@@ -706,10 +706,10 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-accent/5 pointer-events-none" />
         <div className="max-w-3xl mx-auto space-y-4 relative z-10">
           <h2 className="text-2xl md:text-4xl font-display font-bold">
-            Bugunoq Zalingiz Retention Darajasini Oshiring
+            Mijozlar Ketib Qolishini Bugunoq To'xtating
           </h2>
           <p className="text-text-dim text-xs max-w-md mx-auto">
-            Retenix AI platformasi bilan zalingiz daromadini oshiring va mijozlar ketib qolishining oldini oling.
+            14 kunlik bepul sinov davrini boshlang va zalingiz daromadini barqaror oshiring.
           </p>
           <Link 
             href="/login" 
@@ -727,7 +727,7 @@ export default function LandingPage() {
             <div className="w-5 h-5 rounded border border-accent/50 flex items-center justify-center font-display font-bold text-accent text-[10px]">
               R
             </div>
-            <span className="font-display font-bold text-xs text-text-hi">Retenix AI Platform</span>
+            <span className="font-display font-bold text-xs text-text-hi">Retenix.ai Platform</span>
           </div>
 
           <div className="flex flex-wrap items-center gap-5 text-xs text-text-dim font-mono">
@@ -738,7 +738,7 @@ export default function LandingPage() {
           </div>
 
           <div className="text-[11px] text-text-dim font-mono">
-            © {new Date().getFullYear()} Retenix. All rights reserved.
+            © {new Date().getFullYear()} Retenix.ai. All rights reserved.
           </div>
         </div>
       </footer>
