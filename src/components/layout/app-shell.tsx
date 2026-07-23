@@ -164,11 +164,21 @@ export function AppShell({
             </div>
             <span className="font-display font-bold text-sm text-text-hi">Retenix</span>
           </Link>
+
           <div className="flex items-center gap-2">
             <LanguageSwitcher />
-            <span className="font-mono text-[10px] uppercase px-2 py-0.5 rounded bg-surface-2 border border-border text-text-mid">
-              {role}
-            </span>
+            
+            {/* MOBILE QUICK SIGN OUT BUTTON IN TOPBAR */}
+            <form action={signOut}>
+              <button
+                type="submit"
+                className="p-2 rounded-lg bg-bad/10 border border-bad/30 text-bad hover:bg-bad/20 transition-colors cursor-pointer flex items-center gap-1 text-xs font-semibold"
+                title={t("logout")}
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="hidden sm:inline">{t("logout")}</span>
+              </button>
+            </form>
           </div>
         </header>
 
@@ -196,14 +206,24 @@ export function AppShell({
             </Link>
           );
         })}
-        {overflowItems.length > 0 && (
+        {overflowItems.length > 0 ? (
           <button
             onClick={() => setMoreOpen(!moreOpen)}
             className="flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium text-text-dim hover:text-text-mid cursor-pointer"
           >
             <MoreHorizontal className="w-5 h-5" />
-            <span>Ko'proq</span>
+            <span>{t("more")}</span>
           </button>
+        ) : (
+          <form action={signOut}>
+            <button
+              type="submit"
+              className="flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium text-bad hover:text-bad/80 cursor-pointer"
+            >
+              <LogOut className="w-5 h-5" />
+              <span>{t("logout")}</span>
+            </button>
+          </form>
         )}
       </nav>
 
