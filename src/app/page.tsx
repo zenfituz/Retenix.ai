@@ -84,10 +84,9 @@ export default function LandingPage() {
             <a href="#hero-dashboard" className="hover:text-accent transition-colors">Dashboard</a>
             <a href="#engine" className="hover:text-accent transition-colors">5-Factor Engine</a>
             <a href="#showcase" className="hover:text-accent transition-colors">Panellar</a>
+            <a href="#features" className="hover:text-accent transition-colors">Imkoniyatlar</a>
+            <a href="#pricing" className="hover:text-accent transition-colors">Narxlar</a>
             <a href="#roi-calculator" className="hover:text-accent transition-colors">Kalkulyator</a>
-            <Link href="/telegram" className="hover:text-accent transition-colors flex items-center gap-1 text-accent font-bold">🤖 Telegram Bot</Link>
-            <Link href="/features" className="hover:text-accent transition-colors">Imkoniyatlar</Link>
-            <Link href="/pricing" className="hover:text-accent transition-colors">Narxlar</Link>
           </div>
 
           <div className="flex items-center gap-3">
@@ -797,6 +796,175 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ---------- FEATURES SHOWCASE SECTION (#features) ---------- */}
+      <section id="features" className="py-20 px-6 bg-surface/50 border-t border-border relative">
+        <div className="max-w-7xl mx-auto space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="px-3.5 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent font-mono text-[10px] uppercase font-bold tracking-widest">
+              PLATFORMA IMMONIYATLARI
+            </span>
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-text-hi">
+              Zamonaviy Fitness Zal Uchun Barcha Imkoniyatlar
+            </h2>
+            <p className="text-text-dim text-xs sm:text-sm leading-relaxed">
+              Sizga mijozlarni saqlab qolish, turniketlarni raqamlashtirish va AI yordamida zal daromadini 30% ga oshirish uchun zarur bo'lgan barcha vositalar.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                icon: Activity,
+                title: "5-Factor AI Churn Engine",
+                desc: "Mijoz kelishi pasayishi, streak uzilishi va to'lov kechikishini 94.8% aniqlikda bashorat qiladi va avtomatik taklif beradi.",
+                badge: "AI Prediction"
+              },
+              {
+                icon: QrCode,
+                title: "Telegram Mini App & QR Pass",
+                desc: "A'zolar ilovasiz 1 ta tugma bilan Telegram-dan turniket QR kodini ko'rsatib kirishadi. AppStore shart emas.",
+                badge: "Turniket Pass"
+              },
+              {
+                icon: Bot,
+                title: "24/7 AI Virtual Murabbiy",
+                desc: "Har bir a'zo uchun shaxsiy kaloriya, oqsil va mashqlar rejasini 90 soniyada generatsiya qiladi hamda savollarga javob beradi.",
+                badge: "AI Coach"
+              },
+              {
+                icon: Dumbbell,
+                title: "Murabbiylar Boshqaruvi",
+                desc: "Trenerlar o'z mijozlarining mashq bajarish intizomini kuzatib boradilar va AI rejalarni 1-click bilan audit qiladilar.",
+                badge: "Trainer CRM"
+              },
+              {
+                icon: Users,
+                title: "Ko'p Roli Interfeys",
+                desc: "Zal egasi (Owner), Trener (Trainer) va Zal a'zosi (Member) uchun alohida moslashtirilgan interfeyslar va dashboardlar.",
+                badge: "Multi-Role"
+              },
+              {
+                icon: Zap,
+                title: "Interaktiv ROI & Analitika",
+                desc: "Kunlik DAU, MRR, retention o'sish dinamikasi hamda saqlab qolingan mijozlar hisob-kitobi real vaqtda yangilanadi.",
+                badge: "Analytics"
+              }
+            ].map((f, i) => {
+              const Icon = f.icon;
+              return (
+                <div key={i} className="p-6 rounded-2xl bg-surface border border-border hover:border-accent/40 transition-all duration-300 space-y-3 glass-card-hover group relative overflow-hidden">
+                  <div className="flex items-center justify-between">
+                    <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-surface-2 border border-border text-accent font-semibold">
+                      {f.badge}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-display font-bold text-text-hi">{f.title}</h3>
+                  <p className="text-xs text-text-dim leading-relaxed">{f.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- PRICING PLANS SECTION (#pricing) ---------- */}
+      <section id="pricing" className="py-20 px-6 relative">
+        <div className="max-w-7xl mx-auto space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="px-3.5 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent font-mono text-[10px] uppercase font-bold tracking-widest">
+              SHAFFOF TARIFLAR
+            </span>
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-text-hi">
+              Zalingiz Hajmiga Mos Oylik Tariflar
+            </h2>
+            <p className="text-text-dim text-xs sm:text-sm leading-relaxed">
+              14 kunlik bepul sinov davri. Hech qanday yashirin to'lovlar va to'lov kartasisiz boshlang.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 items-stretch">
+            {/* Starter Tier */}
+            <div className="p-8 rounded-3xl bg-surface border border-border space-y-6 flex flex-col justify-between glass-card-hover">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-display font-bold text-text-hi">Starter Plan</h3>
+                  <span className="text-xs font-mono text-text-mid bg-surface-2 border border-border px-3 py-1 rounded-full">Kichik Zallar</span>
+                </div>
+                <div className="flex items-baseline gap-1 font-display">
+                  <span className="text-4xl font-extrabold text-text-hi">$49</span>
+                  <span className="text-xs text-text-dim font-mono">/oyiga</span>
+                </div>
+                <p className="text-xs text-text-dim">500 ta a'zogacha bo'lgan kichik fitness va sport zallari uchun.</p>
+                <div className="border-t border-border pt-4 space-y-2.5 text-xs text-text-mid font-mono">
+                  <div className="flex items-center gap-2">✓ 1 ta Fitness Zal</div>
+                  <div className="flex items-center gap-2">✓ 500 ta A'zo Bazasi</div>
+                  <div className="flex items-center gap-2">✓ Basic AI Churn Alert</div>
+                  <div className="flex items-center gap-2">✓ Telegram Bot & QR Pass</div>
+                </div>
+              </div>
+              <Link href="/login" className="w-full py-3 rounded-xl bg-surface-2 border border-border text-text-hi font-bold text-xs text-center hover:border-accent/40 transition-colors">
+                Sinab Ko'rish →
+              </Link>
+            </div>
+
+            {/* Pro Business Tier (Popular) */}
+            <div className="p-8 rounded-3xl bg-surface-2 border-2 border-accent shadow-[0_0_35px_rgba(232,255,71,0.2)] space-y-6 flex flex-col justify-between relative transform md:-translate-y-2">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-accent text-bg font-mono font-bold text-[10px] uppercase tracking-wider shadow-lg">
+                ★ ENG OMMABOP TARIF
+              </div>
+              <div className="space-y-4 pt-2">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-display font-bold text-accent">Pro Business</h3>
+                  <span className="text-xs font-mono text-accent bg-accent/10 border border-accent/30 px-3 py-1 rounded-full">O'rta & Katta Zallar</span>
+                </div>
+                <div className="flex items-baseline gap-1 font-display">
+                  <span className="text-5xl font-extrabold text-accent">$99</span>
+                  <span className="text-xs text-text-dim font-mono">/oyiga</span>
+                </div>
+                <p className="text-xs text-text-dim">Rivojlanayotgan va mijozlarni saqlab qolishni istagan professional zallar uchun.</p>
+                <div className="border-t border-border pt-4 space-y-2.5 text-xs text-text-hi font-mono">
+                  <div className="flex items-center gap-2 text-accent font-bold">✓ 3 ta Fitness Zal</div>
+                  <div className="flex items-center gap-2">✓ 2,500 ta A'zo Bazasi</div>
+                  <div className="flex items-center gap-2">✓ Full 5-Factor AI Churn Engine</div>
+                  <div className="flex items-center gap-2">✓ 24/7 AI Trener Copilot</div>
+                  <div className="flex items-center gap-2">✓ Dedicated Trainer Dashboard</div>
+                </div>
+              </div>
+              <Link href="/login" className="w-full py-3.5 rounded-xl bg-accent text-bg font-bold text-xs text-center hover:opacity-90 shadow-[0_0_20px_rgba(232,255,71,0.3)]">
+                14-Kun Bepul Boshlash 🚀
+              </Link>
+            </div>
+
+            {/* Enterprise Tier */}
+            <div className="p-8 rounded-3xl bg-surface border border-border space-y-6 flex flex-col justify-between glass-card-hover">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-display font-bold text-text-hi">Enterprise</h3>
+                  <span className="text-xs font-mono text-text-mid bg-surface-2 border border-border px-3 py-1 rounded-full">Tarmoq Zallar</span>
+                </div>
+                <div className="flex items-baseline gap-1 font-display">
+                  <span className="text-4xl font-extrabold text-text-hi">$249</span>
+                  <span className="text-xs text-text-dim font-mono">/oyiga</span>
+                </div>
+                <p className="text-xs text-text-dim">Katta zal tarmoqlari va cheksiz filiallar uchun maxsus yechimlar.</p>
+                <div className="border-t border-border pt-4 space-y-2.5 text-xs text-text-mid font-mono">
+                  <div className="flex items-center gap-2">✓ Cheksiz Zallar & Filiallar</div>
+                  <div className="flex items-center gap-2">✓ Cheksiz A'zolar Bazasi</div>
+                  <div className="flex items-center gap-2">✓ Custom API Integratsiyasi</div>
+                  <div className="flex items-center gap-2">✓ 24/7 Shaxsiy Menejer</div>
+                </div>
+              </div>
+              <Link href="/login" className="w-full py-3 rounded-xl bg-surface-2 border border-border text-text-hi font-bold text-xs text-center hover:border-accent/40 transition-colors">
+                Bog'lanish →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ---------- Interactive ROI & Revenue Savings Calculator ---------- */}
       <section id="roi-calculator" className="py-16 px-6 relative">
         <div className="max-w-4xl mx-auto bg-surface border border-border rounded-2xl p-6 md:p-8 space-y-5 shadow-2xl">
@@ -940,8 +1108,8 @@ export default function LandingPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-5 text-xs text-text-dim font-mono">
-            <Link href="/features" className="hover:text-accent">Imkoniyatlar</Link>
-            <Link href="/pricing" className="hover:text-accent">Narxlar</Link>
+            <a href="#features" className="hover:text-accent">Imkoniyatlar</a>
+            <a href="#pricing" className="hover:text-accent">Narxlar</a>
             <Link href="/about" className="hover:text-accent">Biz Haqimizda</Link>
             <Link href="/contact" className="hover:text-accent">Bog'lanish</Link>
           </div>
