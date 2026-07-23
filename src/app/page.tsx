@@ -7,7 +7,7 @@ import {
   ArrowRight, Activity, Zap, TrendingUp, ShieldCheck, CheckCircle2, 
   Bot, QrCode, Building2, Users, ChevronDown, Sparkles, Star, Award, 
   BarChart3, Dumbbell, Shield, HelpCircle, Layers, Cpu, Play, Bell, AlertTriangle, 
-  ArrowUpRight, Flame, Smartphone, Calendar, Clock, Trophy, Check, User
+  ArrowUpRight, Flame, Smartphone, Calendar, Clock, Trophy, Check, User, Search, Filter, MessageSquare
 } from "lucide-react";
 
 export default function LandingPage() {
@@ -15,8 +15,13 @@ export default function LandingPage() {
   const [membersCount, setMembersCount] = useState(450);
   const [avgFee, setAvgFee] = useState(55);
 
-  // Role Preview State (Owner, Trainer, Member)
+  // Role Preview Main State (Owner, Trainer, Member)
   const [activeTab, setActiveTab] = useState<"owner" | "trainer" | "member">("owner");
+
+  // Interactive Sub-States for Deep Feature Exploration
+  const [ownerSubTab, setOwnerSubTab] = useState<"overview" | "churn" | "trainers">("overview");
+  const [trainerScheduleIdx, setTrainerScheduleIdx] = useState<number>(0);
+  const [memberAppTab, setMemberAppTab] = useState<"qr" | "profile" | "plan">("profile");
 
   // FAQ State
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -25,6 +30,43 @@ export default function LandingPage() {
   const estimatedChurnedMembers = Math.round(membersCount * 0.18);
   const savedMembers = Math.round(estimatedChurnedMembers * 0.65);
   const monthlySavedRevenue = savedMembers * avgFee;
+
+  // Trainer Schedule Data for interactive clicking
+  const trainerSessions = [
+    {
+      time: "09:00 - 10:00",
+      client: "Jasur Toshmatov",
+      type: "Personal Hypertrophy",
+      zone: "Zona A",
+      status: "Bajarildi",
+      variant: "success",
+      adherence: "94%",
+      streak: "14 kun",
+      notes: "Shtanga bilan skameykada siqish 80kg x 10 rep. Yaxshi texnika."
+    },
+    {
+      time: "11:00 - 12:00",
+      client: "Nilufar Mirzaeva",
+      type: "Fitness Assessment",
+      zone: "Zona B",
+      status: "Kutilmoqda",
+      variant: "default",
+      adherence: "85%",
+      streak: "6 kun",
+      notes: "Kardio zona va tana yog' foizini o'lchash seansi."
+    },
+    {
+      time: "15:00 - 16:00",
+      client: "Doniyor Raxmonov",
+      type: "Rehab & Recovery",
+      zone: "Zona A",
+      status: "Churn Alert (85%)",
+      variant: "danger",
+      adherence: "42%",
+      streak: "Uzilgan (14d)",
+      notes: "Mijoz 14 kundan beri kelmadi. AI Copilot chegirmali promo taklif qildi."
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-bg text-text-hi font-body selection:bg-accent/25 selection:text-bg overflow-x-hidden antialiased">
@@ -66,7 +108,6 @@ export default function LandingPage() {
 
       {/* ---------- Hero Section ---------- */}
       <section className="pt-28 pb-16 px-6 relative overflow-hidden">
-        {/* Ambient Glows */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[650px] h-[400px] bg-accent/8 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute top-16 right-10 w-[280px] h-[280px] bg-info/10 rounded-full blur-[120px] pointer-events-none" />
 
@@ -77,7 +118,6 @@ export default function LandingPage() {
             transition={{ duration: 0.45 }}
             className="space-y-4"
           >
-            {/* Pill Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-2 border border-accent/30 shadow-[0_0_20px_rgba(232,255,71,0.1)]">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="text-[11px] font-mono text-accent uppercase tracking-widest">
@@ -85,7 +125,6 @@ export default function LandingPage() {
               </span>
             </div>
 
-            {/* Typography Scale: Conversion Copy Headline */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold leading-[1.18] tracking-tight max-w-3xl mx-auto">
               Mijozlar ketib qolishini <span className="text-bad underline decoration-bad/30">kutmang</span>.<br />
               Ularni <span className="text-accent">Retenix.ai</span> bilan ushlab qoling.
@@ -111,7 +150,7 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
-          {/* ---------- Interactive Dashboard Showcase ---------- */}
+          {/* Hero Dashboard Showcase */}
           <motion.div 
             id="hero-dashboard"
             initial={{ opacity: 0, y: 30 }}
@@ -122,7 +161,6 @@ export default function LandingPage() {
             <div className="rounded-2xl border border-accent/20 bg-surface/90 p-2 backdrop-blur-2xl shadow-[0_0_60px_rgba(0,0,0,0.9)] relative">
               <div className="rounded-xl border border-border bg-[#0a0a14] overflow-hidden text-left shadow-2xl">
                 
-                {/* Top Window Bar */}
                 <div className="bg-surface border-b border-border px-4 py-2.5 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div className="w-2.5 h-2.5 rounded-full bg-bad/80" />
@@ -144,7 +182,6 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Dashboard Main Grid Area */}
                 <div className="p-4 space-y-4">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div className="p-3 rounded-xl bg-surface border border-border">
@@ -220,7 +257,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ---------- Metric Proof Banner ---------- */}
+      {/* ---------- Metric Banner ---------- */}
       <section className="py-8 bg-surface border-y border-border">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div>
@@ -322,7 +359,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ---------- Interactive Role Showcase ---------- */}
+      {/* ---------- HIGH-DEFINITION INTERACTIVE SHOWCASE (HERO DASHBOARD SCALE) ---------- */}
       <section id="showcase" className="py-16 bg-surface border-y border-border px-6">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
@@ -330,7 +367,7 @@ export default function LandingPage() {
               Zal Egasi, Murabbiy va A'zolar Uchun Maxsus Interfeyslar
             </h2>
             <p className="text-text-dim text-xs">
-              Har bir foydalanuvchi o'ziga kerakli ma'lumot va vositalarni 1 soniyada topadi.
+              Tugmalarni bosib, har bir rol uchun ishlab chiqilgan interfaol funksiyalarni chuqurroq sinab ko'ring:
             </p>
 
             {/* Role Tabs */}
@@ -355,235 +392,374 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Role Screen Demo Container */}
-          <div className="p-4 md:p-6 rounded-2xl bg-bg border border-border min-h-[380px] flex flex-col justify-center shadow-2xl">
-            
-            {/* 1. GYM OWNER FULL DESKTOP DASHBOARD MOCKUP */}
-            {activeTab === "owner" && (
-              <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-border">
-                  <div>
-                    <h3 className="text-lg font-display font-bold text-text-hi flex items-center gap-2">
-                      <Building2 className="w-4 h-4 text-accent" /> Gym Owner Full SaaS Dashboard
-                    </h3>
-                    <p className="text-xs text-text-dim">Moliya, a'zolar statistikasi, churn risk balansi va real-vaqt auditi</p>
-                  </div>
-                  <Link href="/owner/dashboard" className="px-3.5 py-1.5 bg-accent text-bg text-xs font-semibold rounded-xl flex items-center gap-1 shrink-0 self-start sm:self-auto">
-                    Owner Paneliga Kirish <ArrowRight className="w-3.5 h-3.5" />
+          {/* HERO-SCALE DASHBOARD BROWSER MOCKUP WRAPPER */}
+          <div className="max-w-5xl mx-auto rounded-2xl border border-accent/20 bg-surface/90 p-2 backdrop-blur-2xl shadow-[0_0_60px_rgba(0,0,0,0.9)] relative">
+            <div className="rounded-xl border border-border bg-[#0a0a14] overflow-hidden text-left shadow-2xl">
+              
+              {/* Browser Window Header */}
+              <div className="bg-surface border-b border-border px-4 py-2.5 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-bad/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-warn/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-good/80" />
+                  <span className="text-[10px] font-mono text-text-dim ml-2 hidden sm:inline">
+                    {activeTab === 'owner' ? 'https://retenix-ai.vercel.app/owner/dashboard' : activeTab === 'trainer' ? 'https://retenix-ai.vercel.app/trainer/dashboard' : 'https://retenix-ai.vercel.app/member'}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="text-[10px] font-mono text-accent bg-accent/10 px-2 py-0.5 rounded-full border border-accent/20">
+                    INTERFAOL DEMO REJIMI
+                  </span>
+                  <Link 
+                    href={activeTab === 'owner' ? '/owner/dashboard' : activeTab === 'trainer' ? '/trainer/dashboard' : '/member'} 
+                    className="text-[10px] font-mono text-text-hi hover:text-accent flex items-center gap-1 underline"
+                  >
+                    Tizimga Kirish <ArrowUpRight className="w-3 h-3" />
                   </Link>
-                </div>
-
-                {/* Owner KPI Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  <div className="p-3 rounded-xl bg-surface border border-border">
-                    <div className="text-[9px] font-mono text-text-dim uppercase">JAMI A'ZOLAR</div>
-                    <div className="text-lg font-display font-bold text-accent mt-0.5">2,350 ta</div>
-                    <div className="text-[9px] font-mono text-good mt-0.5">+12% bu oy</div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-surface border border-border">
-                    <div className="text-[9px] font-mono text-text-dim uppercase">RETENTION RATE</div>
-                    <div className="text-lg font-display font-bold text-good mt-0.5">92.4%</div>
-                    <div className="text-[9px] font-mono text-good mt-0.5">+2.1% o'sish</div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-surface border border-border">
-                    <div className="text-[9px] font-mono text-text-dim uppercase">CHURN RISK</div>
-                    <div className="text-lg font-display font-bold text-bad mt-0.5">143 ta</div>
-                    <div className="text-[9px] font-mono text-good mt-0.5">-12 mijoz xavfi kamaydi</div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-surface border border-border">
-                    <div className="text-[9px] font-mono text-text-dim uppercase">BUGUN FAOL</div>
-                    <div className="text-lg font-display font-bold text-text-hi mt-0.5">573 ta</div>
-                    <div className="text-[9px] font-mono text-text-dim mt-0.5">Turniket pass</div>
-                  </div>
-                </div>
-
-                {/* Owner Chart & Activity Split */}
-                <div className="grid md:grid-cols-7 gap-3 pt-2">
-                  <div className="md:col-span-4 p-3.5 rounded-xl bg-surface border border-border space-y-3">
-                    <div className="flex items-center justify-between text-xs font-display font-bold text-text-hi border-b border-border pb-2">
-                      <span>Retention Oylik O'sish Dinamikasi</span>
-                      <span className="text-[10px] font-mono text-accent">2026 Yil</span>
-                    </div>
-                    <div className="h-28 flex items-end justify-between gap-2 pt-2 pb-1 border-b border-border">
-                      {[45, 60, 52, 70, 82, 88, 92, 95].map((h, i) => (
-                        <div key={i} className="flex-1 bg-surface-3 hover:bg-accent rounded-t transition-all" style={{ height: `${h}%` }} />
-                      ))}
-                    </div>
-                    <div className="flex justify-between text-[9px] font-mono text-text-dim">
-                      <span>Yan</span><span>Fev</span><span>Mar</span><span>Apr</span><span>May</span><span>Iyun</span><span>Iyul</span><span>Avg</span>
-                    </div>
-                  </div>
-
-                  <div className="md:col-span-3 p-3.5 rounded-xl bg-surface border border-border space-y-2.5">
-                    <div className="text-xs font-display font-bold text-text-hi border-b border-border pb-2">
-                      Zal Harakatlari Audit Logi
-                    </div>
-                    <div className="space-y-2">
-                      <div className="p-2 rounded-lg bg-surface-2 text-[10px] font-mono space-y-0.5">
-                        <div className="text-accent font-semibold">Jasur Toshmatov • QR Pass</div>
-                        <div className="text-text-dim">FitZone Yunusobod turniketi orqali kirdi</div>
-                      </div>
-                      <div className="p-2 rounded-lg bg-surface-2 text-[10px] font-mono space-y-0.5">
-                        <div className="text-good font-semibold">Coach Aziz • Trener seansi</div>
-                        <div className="text-text-dim">Personal Training bajarildi</div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
-            )}
 
-            {/* 2. TRAINER FULL DESKTOP SCHEDULE & CLIENTS DASHBOARD MOCKUP */}
-            {activeTab === "trainer" && (
-              <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-border">
-                  <div>
-                    <h3 className="text-lg font-display font-bold text-text-hi flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-accent" /> Trainer Schedule & Clients Dashboard
-                    </h3>
-                    <p className="text-xs text-text-dim">Kunlik mashg'ulotlar grafigi, mijozlar adherence % va xavf bildirishnomalari</p>
-                  </div>
-                  <Link href="/trainer/dashboard" className="px-3.5 py-1.5 bg-accent text-bg text-xs font-semibold rounded-xl flex items-center gap-1 shrink-0 self-start sm:self-auto">
-                    Trainer Paneliga Kirish <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-
-                {/* Trainer Schedule Timeline Mockup */}
-                <div className="grid md:grid-cols-7 gap-3">
-                  <div className="md:col-span-4 p-3.5 rounded-xl bg-surface border border-border space-y-3">
-                    <div className="flex items-center justify-between border-b border-border pb-2">
-                      <div className="text-xs font-display font-bold text-text-hi flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 text-accent" /> Bugungi Mashg'ulotlar Jadvali
+              {/* DASHBOARD CONTENT BODY */}
+              <div className="p-4 md:p-6 space-y-4 min-h-[420px]">
+                
+                {/* 1. INTERACTIVE GYM OWNER DASHBOARD */}
+                {activeTab === "owner" && (
+                  <div className="space-y-4">
+                    {/* Owner Sub-Tab Selector */}
+                    <div className="flex items-center justify-between border-b border-border pb-3">
+                      <div className="flex items-center gap-2">
+                        {[
+                          { id: "overview", label: "📌 Umumiy Ko'rsatkichlar" },
+                          { id: "churn", label: "⚠️ Churn Risk Ro'yxati" },
+                          { id: "trainers", label: "🏋️ Murabbiylar Audit" },
+                        ].map((st) => (
+                          <button
+                            key={st.id}
+                            onClick={() => setOwnerSubTab(st.id as any)}
+                            className={`px-3 py-1 rounded-lg text-xs font-mono transition-all cursor-pointer ${
+                              ownerSubTab === st.id
+                                ? "bg-accent/20 text-accent border border-accent/40 font-semibold"
+                                : "bg-surface text-text-dim border border-border hover:text-text-hi"
+                            }`}
+                          >
+                            {st.label}
+                          </button>
+                        ))}
                       </div>
-                      <span className="text-[10px] font-mono text-accent">Dushanba seanslari</span>
+
+                      <span className="text-[10px] font-mono text-good hidden md:inline">
+                        ● Live Database Stream
+                      </span>
                     </div>
 
-                    <div className="space-y-2">
-                      {[
-                        { time: "09:00 - 10:00", client: "Jasur Toshmatov", type: "Personal Training", zone: "Zona A", status: "Completed", variant: "success" },
-                        { time: "11:00 - 12:00", client: "Nilufar Mirzaeva", type: "Fitness Assessment", zone: "Zona B", status: "Upcoming", variant: "default" },
-                        { time: "15:00 - 16:00", client: "Doniyor Raxmonov", type: "Rehab & Recovery", zone: "Zona A", status: "Risk Alert", variant: "danger" },
-                      ].map((s, idx) => (
-                        <div key={idx} className="p-2.5 rounded-lg bg-surface-2 border border-border-2 flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-3">
-                            <span className="px-2 py-1 rounded bg-surface-3 font-mono text-[9px] text-accent font-bold">
-                              {s.time}
-                            </span>
-                            <div>
-                              <div className="text-xs font-semibold text-text-hi">{s.client}</div>
-                              <div className="text-[9px] text-text-dim font-mono">{s.type} • {s.zone}</div>
+                    {ownerSubTab === "overview" && (
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                          <div className="p-3.5 rounded-xl bg-surface border border-border">
+                            <div className="text-[9px] font-mono text-text-dim uppercase">JAMI A'ZOLAR</div>
+                            <div className="text-xl font-display font-bold text-accent mt-0.5">2,350 ta</div>
+                            <div className="text-[9px] font-mono text-good mt-0.5">+12% bu oy</div>
+                          </div>
+                          <div className="p-3.5 rounded-xl bg-surface border border-border">
+                            <div className="text-[9px] font-mono text-text-dim uppercase">RETENTION RATE</div>
+                            <div className="text-xl font-display font-bold text-good mt-0.5">92.4%</div>
+                            <div className="text-[9px] font-mono text-good mt-0.5">+2.1% o'sish</div>
+                          </div>
+                          <div className="p-3.5 rounded-xl bg-surface border border-border">
+                            <div className="text-[9px] font-mono text-text-dim uppercase">CHURN RISK</div>
+                            <div className="text-xl font-display font-bold text-bad mt-0.5">143 ta</div>
+                            <div className="text-[9px] font-mono text-good mt-0.5">-12 mijoz kamaydi</div>
+                          </div>
+                          <div className="p-3.5 rounded-xl bg-surface border border-border">
+                            <div className="text-[9px] font-mono text-text-dim uppercase">BUGUN FAOL</div>
+                            <div className="text-xl font-display font-bold text-text-hi mt-0.5">573 ta</div>
+                            <div className="text-[9px] font-mono text-text-dim mt-0.5">Turniket pass</div>
+                          </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-7 gap-3">
+                          <div className="md:col-span-4 p-4 rounded-xl bg-surface border border-border space-y-3">
+                            <div className="flex items-center justify-between text-xs font-display font-bold text-text-hi border-b border-border pb-2">
+                              <span>Retention Oylik O'sish Dinamikasi</span>
+                              <span className="text-[10px] font-mono text-accent">2026 Yil</span>
+                            </div>
+                            <div className="h-32 flex items-end justify-between gap-2 pt-2 pb-1 border-b border-border">
+                              {[45, 60, 52, 70, 82, 88, 92, 95].map((h, i) => (
+                                <div key={i} className="flex-1 bg-surface-3 hover:bg-accent rounded-t transition-all group relative cursor-pointer" style={{ height: `${h}%` }}>
+                                  <div className="opacity-0 group-hover:opacity-100 absolute -top-6 left-1/2 -translate-x-1/2 bg-surface-2 border border-accent/40 text-[9px] font-mono px-1.5 py-0.5 rounded text-accent whitespace-nowrap z-10 transition-opacity">
+                                    {h}%
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                            <div className="flex justify-between text-[9px] font-mono text-text-dim">
+                              <span>Yan</span><span>Fev</span><span>Mar</span><span>Apr</span><span>May</span><span>Iyun</span><span>Iyul</span><span>Avg</span>
                             </div>
                           </div>
-                          <span className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold ${
-                            s.variant === 'success' ? 'bg-good/10 text-good' : s.variant === 'danger' ? 'bg-bad/10 text-bad' : 'bg-surface-3 text-text-mid'
-                          }`}>
-                            {s.status}
+
+                          <div className="md:col-span-3 p-4 rounded-xl bg-surface border border-border space-y-2.5">
+                            <div className="text-xs font-display font-bold text-text-hi border-b border-border pb-2">
+                              Zal Harakatlari Real-Vaqt Audit Logi
+                            </div>
+                            <div className="space-y-2">
+                              <div className="p-2.5 rounded-lg bg-surface-2 text-[10px] font-mono space-y-0.5">
+                                <div className="text-accent font-semibold">Jasur Toshmatov • QR Pass</div>
+                                <div className="text-text-dim">FitZone Yunusobod turniketi orqali kirdi</div>
+                              </div>
+                              <div className="p-2.5 rounded-lg bg-surface-2 text-[10px] font-mono space-y-0.5">
+                                <div className="text-good font-semibold">Coach Aziz • Trener seansi</div>
+                                <div className="text-text-dim">Personal Training bajarildi</div>
+                              </div>
+                              <div className="p-2.5 rounded-lg bg-surface-2 text-[10px] font-mono space-y-0.5">
+                                <div className="text-warn font-semibold">Sevara Qodirova • Risk Alert</div>
+                                <div className="text-text-dim">AI Copilot 20% promo xabari yuborildi</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {ownerSubTab === "churn" && (
+                      <div className="space-y-3">
+                        <div className="text-xs font-display font-bold text-text-hi">Ketish Xavfi Yuqori A'zolar Ro'yxati</div>
+                        <div className="space-y-2">
+                          {[
+                            { name: "Doniyor Raxmonov", risk: "85%", trainer: "Coach Aziz", reason: "14 kundan beri kelmadi • Streak uzildi", action: "Proaktiv Xabar Yuborish" },
+                            { name: "Sevara Qodirova", risk: "78%", trainer: "Coach Dilshod", reason: "Ovqat kiritish to'xtadi • To'lov kechikmoqda", action: "Chegirma Taklif Qilish" },
+                            { name: "Mohira Aliyeva", risk: "64%", trainer: "Coach Aziz", reason: "Haftalik kelish 3x -> 1x ga tushdi", action: "Qo'ng'iroq Bajarish" },
+                          ].map((item, idx) => (
+                            <div key={idx} className="p-3 rounded-xl bg-surface border border-border flex items-center justify-between gap-3">
+                              <div>
+                                <div className="text-xs font-bold text-text-hi">{item.name} <span className="text-[10px] font-mono text-text-dim">({item.trainer})</span></div>
+                                <div className="text-[10px] text-text-dim font-mono mt-0.5">{item.reason}</div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="px-2 py-1 rounded bg-bad/10 border border-bad/30 text-bad font-mono text-[10px] font-bold">
+                                  {item.risk} Risk
+                                </span>
+                                <button className="px-3 py-1 bg-accent text-bg text-[10px] font-bold rounded-lg hover:opacity-90 transition-opacity cursor-pointer">
+                                  {item.action}
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {ownerSubTab === "trainers" && (
+                      <div className="space-y-3">
+                        <div className="text-xs font-display font-bold text-text-hi">Murabbiylar Samaradorligi Audit Panel</div>
+                        <div className="grid md:grid-cols-2 gap-3">
+                          <div className="p-3.5 rounded-xl bg-surface border border-border space-y-2">
+                            <div className="flex justify-between items-center text-xs font-semibold text-text-hi">
+                              <span>Coach Aziz Raximov</span>
+                              <span className="text-good font-mono font-bold">96% Retention</span>
+                            </div>
+                            <div className="text-[10px] text-text-dim font-mono">18 ta personal mijoz • 4.9 ★ Reyting</div>
+                          </div>
+                          <div className="p-3.5 rounded-xl bg-surface border border-border space-y-2">
+                            <div className="flex justify-between items-center text-xs font-semibold text-text-hi">
+                              <span>Coach Dilshod Sobirov</span>
+                              <span className="text-good font-mono font-bold">91% Retention</span>
+                            </div>
+                            <div className="text-[10px] text-text-dim font-mono">14 ta personal mijoz • 4.8 ★ Reyting</div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 2. INTERACTIVE TRAINER SCHEDULE & CLIENTS DASHBOARD */}
+                {activeTab === "trainer" && (
+                  <div className="space-y-4">
+                    <div className="text-xs font-display font-bold text-text-hi border-b border-border pb-2 flex items-center justify-between">
+                      <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-accent" /> Trainer Interactive Timeline & Client Prescriptions</span>
+                      <span className="text-[10px] font-mono text-accent">Vaqt slotiga bosing:</span>
+                    </div>
+
+                    <div className="grid md:grid-cols-7 gap-4">
+                      {/* Left: Schedule Slots List */}
+                      <div className="md:col-span-3 space-y-2">
+                        {trainerSessions.map((s, idx) => (
+                          <div 
+                            key={idx}
+                            onClick={() => setTrainerScheduleIdx(idx)}
+                            className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                              trainerScheduleIdx === idx
+                                ? "bg-accent/15 border-accent text-text-hi shadow-[0_0_15px_rgba(232,255,71,0.15)]"
+                                : "bg-surface border-border text-text-mid hover:border-accent/40"
+                            }`}
+                          >
+                            <div>
+                              <div className="text-xs font-bold text-text-hi">{s.client}</div>
+                              <div className="text-[10px] font-mono text-text-dim">{s.time} • {s.type}</div>
+                            </div>
+                            <span className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold ${
+                              s.variant === 'success' ? 'bg-good/10 text-good' : s.variant === 'danger' ? 'bg-bad/10 text-bad' : 'bg-surface-3 text-text-mid'
+                            }`}>
+                              {s.status}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Right: Selected Session Detail & AI Action */}
+                      <div className="md:col-span-4 p-4 rounded-xl bg-surface border border-accent/30 space-y-3 relative">
+                        <div className="flex items-center justify-between border-b border-border pb-2">
+                          <div>
+                            <div className="text-sm font-display font-bold text-text-hi">{trainerSessions[trainerScheduleIdx].client}</div>
+                            <div className="text-[10px] font-mono text-accent">{trainerSessions[trainerScheduleIdx].time} ({trainerSessions[trainerScheduleIdx].zone})</div>
+                          </div>
+                          <span className="px-2 py-1 bg-surface-2 text-good font-mono text-[10px] font-bold rounded">
+                            Adherence: {trainerSessions[trainerScheduleIdx].adherence}
                           </span>
                         </div>
-                      ))}
-                    </div>
-                  </div>
 
-                  {/* Trainer Client Performance & Risk */}
-                  <div className="md:col-span-3 p-3.5 rounded-xl bg-surface border border-border space-y-3">
-                    <div className="text-xs font-display font-bold text-text-hi border-b border-border pb-2 flex items-center gap-1.5">
-                      <Users className="w-3.5 h-3.5 text-accent" /> Mijozlar Adherence Ko'rsatkichi
-                    </div>
+                        <div className="space-y-2 text-xs">
+                          <div className="p-2.5 rounded-lg bg-surface-2 font-mono text-[11px] text-text-dim leading-relaxed">
+                            <span className="text-text-hi font-bold">Trenirovka Eslatmasi:</span><br />
+                            "{trainerSessions[trainerScheduleIdx].notes}"
+                          </div>
 
-                    <div className="space-y-2 font-mono text-[10px]">
-                      <div className="p-2 rounded-lg bg-surface-2 flex items-center justify-between">
-                        <span className="text-text-hi">Jasur Toshmatov (Hypertrophy)</span>
-                        <span className="text-good font-bold">94% Adherence</span>
-                      </div>
-                      <div className="p-2 rounded-lg bg-surface-2 flex items-center justify-between">
-                        <span className="text-text-hi">Nilufar Mirzaeva (Fat Loss)</span>
-                        <span className="text-good font-bold">85% Adherence</span>
-                      </div>
-                      <div className="p-2 rounded-lg bg-surface-2 flex items-center justify-between border border-bad/30">
-                        <span className="text-bad">Doniyor Raxmonov (Rehab)</span>
-                        <span className="text-bad font-bold">42% Adherence</span>
+                          <div className="flex items-center justify-between text-[11px] font-mono pt-1">
+                            <span className="text-text-dim">Kelish Streaki: <strong className="text-accent">{trainerSessions[trainerScheduleIdx].streak}</strong></span>
+                            <button className="px-3 py-1 bg-accent text-bg font-semibold rounded-lg text-xs hover:opacity-90 transition-opacity flex items-center gap-1">
+                              <MessageSquare className="w-3 h-3" /> Telegram-ga Xabar Yuborish
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
+
+                {/* 3. INTERACTIVE MEMBER MOBILE SMARTPHONE FRAME */}
+                {activeTab === "member" && (
+                  <div className="flex flex-col md:flex-row items-center justify-center gap-8 py-2">
+                    {/* Smartphone Mockup */}
+                    <div className="w-[280px] h-[470px] rounded-[36px] bg-[#050508] border-4 border-border shadow-[0_0_40px_rgba(232,255,71,0.15)] p-3 relative flex flex-col justify-between shrink-0">
+                      {/* Phone Notch */}
+                      <div className="w-24 h-3.5 rounded-full bg-border mx-auto mb-2" />
+
+                      {/* App Screen Inside Phone */}
+                      <div className="flex-1 bg-surface rounded-[24px] border border-border p-3.5 space-y-3 text-left overflow-y-auto">
+                        
+                        {/* Member App Internal Tabs */}
+                        <div className="grid grid-cols-3 gap-1 bg-surface-2 p-1 rounded-xl text-center text-[9px] font-mono">
+                          <button 
+                            onClick={() => setMemberAppTab("profile")}
+                            className={`py-1 rounded-lg transition-colors cursor-pointer ${memberAppTab === 'profile' ? 'bg-accent text-bg font-bold' : 'text-text-dim'}`}
+                          >
+                            Profil
+                          </button>
+                          <button 
+                            onClick={() => setMemberAppTab("qr")}
+                            className={`py-1 rounded-lg transition-colors cursor-pointer ${memberAppTab === 'qr' ? 'bg-accent text-bg font-bold' : 'text-text-dim'}`}
+                          >
+                            QR Pass
+                          </button>
+                          <button 
+                            onClick={() => setMemberAppTab("plan")}
+                            className={`py-1 rounded-lg transition-colors cursor-pointer ${memberAppTab === 'plan' ? 'bg-accent text-bg font-bold' : 'text-text-dim'}`}
+                          >
+                            Reja
+                          </button>
+                        </div>
+
+                        {/* TAB 1: PROFILE & RESULTS */}
+                        {memberAppTab === "profile" && (
+                          <div className="space-y-3">
+                            <div className="flex items-center gap-2.5 pb-2 border-b border-border">
+                              <div className="w-9 h-9 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center font-display font-bold text-accent text-xs">
+                                JT
+                              </div>
+                              <div>
+                                <div className="text-xs font-bold text-text-hi">Jasur Toshmatov</div>
+                                <div className="text-[8px] font-mono text-accent">👑 Daraja 5 · Usta</div>
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-1.5 text-center">
+                              <div className="p-2 rounded-lg bg-surface-2 border border-border">
+                                <div className="text-xs font-bold text-text-hi">🔥 14 kun</div>
+                                <div className="text-[8px] font-mono text-text-dim uppercase">Streak</div>
+                              </div>
+                              <div className="p-2 rounded-lg bg-surface-2 border border-border">
+                                <div className="text-xs font-bold text-accent">2,340 XP</div>
+                                <div className="text-[8px] font-mono text-text-dim uppercase">Reyting #2</div>
+                              </div>
+                            </div>
+
+                            <div className="space-y-1">
+                              <div className="text-[9px] font-mono text-text-dim">OCHILGAN YUTUQLAR (BADGES)</div>
+                              <div className="flex justify-between text-[10px]">
+                                <span className="p-1 rounded bg-surface-2 border border-border">✅ Birinchi qadam</span>
+                                <span className="p-1 rounded bg-surface-2 border border-border">🔥 7 kunlik olov</span>
+                                <span className="p-1 rounded bg-surface-2 border border-border">🤖 AI do'sti</span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* TAB 2: QR TURNSTILE PASS */}
+                        {memberAppTab === "qr" && (
+                          <div className="p-3 rounded-xl bg-surface-2 border border-accent/30 text-center space-y-2">
+                            <div className="w-24 h-24 bg-white rounded-lg p-1 mx-auto flex items-center justify-center">
+                              <QrCode className="w-full h-full text-black" />
+                            </div>
+                            <div className="text-[9px] font-mono text-accent">● Turniket Check-in QR Pass</div>
+                            <div className="text-[8px] font-mono text-text-dim">Kodni turniketga skaner qiling</div>
+                          </div>
+                        )}
+
+                        {/* TAB 3: WORKOUT PLAN */}
+                        {memberAppTab === "plan" && (
+                          <div className="space-y-2">
+                            <div className="text-[9px] font-mono text-text-dim uppercase">BUGUNGI MASHQ REJASI</div>
+                            <div className="space-y-1.5 text-[10px]">
+                              <div className="p-2 rounded bg-surface-2 flex items-center justify-between border border-border">
+                                <span>Shtanga siqish (Bench Press)</span>
+                                <span className="text-accent font-bold">4 x 10</span>
+                              </div>
+                              <div className="p-2 rounded bg-surface-2 flex items-center justify-between border border-border">
+                                <span>Gantel bilan qo'llarni ko'tarish</span>
+                                <span className="text-accent font-bold">3 x 12</span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                      </div>
+
+                      {/* Phone Home Indicator */}
+                      <div className="w-20 h-1 rounded-full bg-border mx-auto mt-2" />
+                    </div>
+
+                    {/* Description Text */}
+                    <div className="space-y-3 max-w-sm text-center md:text-left">
+                      <span className="px-3 py-1 rounded-full bg-accent/10 text-accent font-mono text-[10px]">
+                        TELEGRAM MINI APP DEMO
+                      </span>
+                      <h4 className="text-lg font-display font-bold text-text-hi">Member App: Profil va Natijalar Ko'rinishi</h4>
+                      <p className="text-xs text-text-dim leading-relaxed">
+                        Smartfon ichidagi tablarni bosib sinab ko'ring — a'zolar Telegram orqali turniket QR kodi, shaxsiy XP darajasi va trenirovka rejalarini 1 ta joyda boshqarishadi.
+                      </p>
+                      <Link 
+                        href="/member" 
+                        className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-accent text-bg text-xs font-bold rounded-xl shadow-[0_0_20px_rgba(232,255,71,0.2)]"
+                      >
+                        Member App Demoni Ochish <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
               </div>
-            )}
-
-            {/* 3. MEMBER MOBILE SMARTPHONE FRAME - PROFILE & RESULTS */}
-            {activeTab === "member" && (
-              <div className="flex flex-col md:flex-row items-center justify-center gap-8 py-2">
-                {/* Mobile Smartphone Mockup Frame */}
-                <div className="w-[270px] h-[460px] rounded-[36px] bg-[#050508] border-4 border-border shadow-[0_0_40px_rgba(232,255,71,0.15)] p-3 relative flex flex-col justify-between shrink-0">
-                  {/* Phone Notch */}
-                  <div className="w-24 h-3.5 rounded-full bg-border mx-auto mb-2" />
-
-                  {/* App Screen Inside Phone */}
-                  <div className="flex-1 bg-surface rounded-[24px] border border-border p-3.5 space-y-3 text-left overflow-y-auto">
-                    {/* User Profile Header */}
-                    <div className="flex items-center gap-2.5 pb-2 border-b border-border">
-                      <div className="w-9 h-9 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center font-display font-bold text-accent text-xs">
-                        JT
-                      </div>
-                      <div>
-                        <div className="text-xs font-bold text-text-hi">Jasur Toshmatov</div>
-                        <div className="text-[8px] font-mono text-accent">👑 Daraja 5 · Usta</div>
-                      </div>
-                    </div>
-
-                    {/* Results & Streak Grid */}
-                    <div className="grid grid-cols-2 gap-1.5 text-center">
-                      <div className="p-2 rounded-lg bg-surface-2 border border-border">
-                        <div className="text-xs font-bold text-text-hi">🔥 14 kun</div>
-                        <div className="text-[8px] font-mono text-text-dim uppercase">Streak</div>
-                      </div>
-                      <div className="p-2 rounded-lg bg-surface-2 border border-border">
-                        <div className="text-xs font-bold text-accent">2,340 XP</div>
-                        <div className="text-[8px] font-mono text-text-dim uppercase">Reyting #2</div>
-                      </div>
-                    </div>
-
-                    {/* Digital QR Turnstile Pass */}
-                    <div className="p-2.5 rounded-xl bg-surface-2 border border-accent/30 text-center space-y-1.5">
-                      <div className="w-20 h-20 bg-white rounded-lg p-1 mx-auto flex items-center justify-center">
-                        <QrCode className="w-full h-full text-black" />
-                      </div>
-                      <div className="text-[8px] font-mono text-accent">● Turniket Check-in QR Pass</div>
-                    </div>
-
-                    {/* Achievements Badges */}
-                    <div className="space-y-1">
-                      <div className="text-[9px] font-mono text-text-dim">OCHILGAN YUTUQLAR (BADGES)</div>
-                      <div className="flex justify-between text-[10px]">
-                        <span className="p-1 rounded bg-surface-2 border border-border">✅ Birinchi qadam</span>
-                        <span className="p-1 rounded bg-surface-2 border border-border">🔥 7 kunlik olov</span>
-                        <span className="p-1 rounded bg-surface-2 border border-border">🤖 AI do'sti</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Phone Home Indicator */}
-                  <div className="w-20 h-1 rounded-full bg-border mx-auto mt-2" />
-                </div>
-
-                {/* Info Text */}
-                <div className="space-y-3 max-w-sm text-center md:text-left">
-                  <span className="px-3 py-1 rounded-full bg-accent/10 text-accent font-mono text-[10px]">
-                    TELEGRAM MINI APP DEMO
-                  </span>
-                  <h4 className="text-lg font-display font-bold text-text-hi">Member App: Profil va Natijalar Ko'rinishi</h4>
-                  <p className="text-xs text-text-dim leading-relaxed">
-                    A'zolar Telegram orqali turniket pass kodi, shaxsiy XP darajasi, trenirovka natijalari, olov stikerlari va haftalik reyting barchasini 1 ta joyda kuzatib borishadi.
-                  </p>
-                  <Link 
-                    href="/member" 
-                    className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-accent text-bg text-xs font-bold rounded-xl shadow-[0_0_20px_rgba(232,255,71,0.2)]"
-                  >
-                    Member App Demoni Ochish <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </div>
-            )}
-
+            </div>
           </div>
         </div>
       </section>
