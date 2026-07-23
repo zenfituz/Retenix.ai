@@ -10,6 +10,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pill } from "@/components/ui/pill";
 import { useLanguage } from "@/context/language-context";
+import Link from "next/link";
 
 interface ChatMessage {
   sender: string;
@@ -31,14 +32,6 @@ export default function MemberApp() {
   const [selectedTrainer, setSelectedTrainer] = useState<string>("aziz");
   const [gymCodeValid, setGymCodeValid] = useState<boolean>(true);
 
-  // AI Chat Messages State
-  const [chatInput, setChatInput] = useState("");
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    { sender: "ai", text: "Salom! Men sizning 24/7 AI Treneringizman. Bugun nima haqida yordam bera olaman?" },
-    { sender: "user", text: "Osh necha kaloriya?" },
-    { sender: "ai", text: "O'rtacha porsiya osh (300g) — taxminan 540 kcal. Sizning kunlik normangizning 30% ini tashkil qiladi." },
-  ]);
-
   useEffect(() => {
     const onboarded = localStorage.getItem("member_onboarded_v2");
     if (onboarded) {
@@ -50,23 +43,6 @@ export default function MemberApp() {
   const completeOnboarding = () => {
     localStorage.setItem("member_onboarded_v2", "true");
     setIsOnboarding(false);
-  };
-
-  const handleSendMessage = () => {
-    if (!chatInput.trim()) return;
-    const userMsg = chatInput;
-    setChatMessages(prev => [...prev, { sender: "user", text: userMsg }]);
-    setChatInput("");
-
-    setTimeout(() => {
-      let reply = "Juda yaxshi savol! Mashg'ulotlardan so'ng ko'proq oqsilli (protein) taomlar iste'mol qilish tavsiya etiladi.";
-      if (userMsg.toLowerCase().includes("tuxum")) {
-        reply = "1 ta qaynatilgan tuxum taxminan 70 kcal va 6g sifatli protein beradi.";
-      } else if (userMsg.toLowerCase().includes("suv")) {
-        reply = "Kunlik suv normangiz kamida 2.5 litr bo'lishi tavsiya etiladi.";
-      }
-      setChatMessages(prev => [...prev, { sender: "ai", text: reply }]);
-    }, 600);
   };
 
   if (!isReady) return null;
@@ -96,15 +72,7 @@ export default function MemberApp() {
             onComplete={completeOnboarding}
           />
         ) : (
-          <ActionFirstDashboard 
-            key="dashboard"
-            selectedTrainer={selectedTrainer}
-            chatInput={chatInput}
-            setChatInput={setChatInput}
-            chatMessages={chatMessages}
-            handleSendMessage={handleSendMessage}
-            onResetOnboarding={() => setIsOnboarding(true)}
-          />
+          <ActionFirstDashboard key="dashboard" />
         )}
       </AnimatePresence>
     </div>
@@ -338,54 +306,58 @@ function OnboardingWizard({
   );
 }
 
-interface ActionFirstDashboardProps {
-  selectedTrainer: string;
-  chatInput: string;
-  setChatInput: (val: string) => void;
-  chatMessages: ChatMessage[];
-  handleSendMessage: () => void;
-  onResetOnboarding: () => void;
-}
-
 {/* Action-First Dashboard Screen */}
-function ActionFirstDashboard({
-  selectedTrainer, chatInput, setChatInput, chatMessages, handleSendMessage, onResetOnboarding
-}: ActionFirstDashboardProps) {
+function ActionFirstDashboard() {
   const [checkedIn, setCheckedIn] = useState(false);
 
   return (
-    <div className="p-4 sm:p-6 space-y-6 max-w-4xl mx-auto pb-24">
+    <div className="p-4 sm:p-6 space-y-6 max-w-4xl mx-auto pb-24 text-text-hi">
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <div>
           <div className="text-[10px] font-mono text-text-dim uppercase tracking-widest">XUSH KELIBSIZ</div>
           <h2 className="text-xl sm:text-2xl font-display font-bold text-text-hi">Salom, Jasur 👋</h2>
         </div>
-        <button 
-          onClick={onResetOnboarding}
-          className="text-[10px] font-mono text-accent bg-accent/10 border border-accent/20 px-2.5 py-1 rounded-lg hover:underline"
-        >
-          Onboarding-ni Qayta O'tish
-        </button>
+        <div className="flex items-center gap-2">
+          <span className="px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent font-mono text-xs font-bold">
+            🔥 14 Kun Streak
+          </span>
+        </div>
       </div>
 
-      {/* Primary Action Card: Turnstile Check-in CTA */}
-      <Card className="bg-surface border-accent/40 shadow-[0_0_30px_rgba(232,255,71,0.1)] p-5 text-center space-y-3">
+      {/* Primary Action Card: Interactive Turnstile Check-in QR Code */}
+      <Card className="bg-surface border-accent/40 shadow-[0_0_30px_rgba(232,255,71,0.12)] p-5 text-center space-y-4 relative overflow-hidden">
         <div className="text-[10px] font-mono text-accent uppercase tracking-widest">
-          {checkedIn ? "✓ TURNIKET KIK-IN BAJARILDI" : "BUGUN HALI CHECK-IN QILMADINGIZ"}
+          {checkedIn ? "✓ TURNIKET CHECK-IN BAJARILDI" : "TURNIKET CHECK-IN QR KODA PASS"}
         </div>
         
         {checkedIn ? (
-          <div className="p-3 rounded-xl bg-good/10 border border-good/30 text-good font-mono text-xs flex items-center justify-center gap-2">
-            <CheckCircle2 className="w-4 h-4" /> FitZone Yunusobod Turniketidan Kirdingiz! (+10 XP)
+          <div className="p-4 rounded-xl bg-good/10 border border-good/30 text-good font-mono text-xs space-y-1">
+            <div className="flex items-center justify-center gap-2 font-bold text-sm">
+              <CheckCircle2 className="w-5 h-5" /> Turniketdan Muvaffaqiyatli O'tdingiz!
+            </div>
+            <div className="text-[10px] text-text-dim">+10 XP va kunlik streak saqlandi</div>
           </div>
         ) : (
-          <button
+          <div 
             onClick={() => setCheckedIn(true)}
-            className="w-full py-4 rounded-xl bg-accent text-bg font-display font-bold text-sm hover:opacity-90 transition-opacity shadow-[0_0_25px_rgba(232,255,71,0.3)] flex items-center justify-center gap-2 cursor-pointer"
+            className="bg-surface-2 border border-border hover:border-accent/40 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-center gap-5 cursor-pointer transition-all max-w-md mx-auto group"
           >
-            📍 Gym ga keldim (QR Turniket Pass)
-          </button>
+            <div className="w-32 h-32 bg-white rounded-xl p-2 shrink-0 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+              <QrCode className="w-full h-full text-black" strokeWidth={1.5} />
+            </div>
+            <div className="text-left space-y-1.5">
+              <div className="text-xs font-bold text-text-hi flex items-center gap-1.5">
+                <span>📍 Turniket Skaneriga Ko'rsating</span>
+              </div>
+              <p className="text-[11px] text-text-dim leading-relaxed">
+                Zalga kirish uchun turniket skaneriga ushbu QR kodni yaqinlashtiring. Har 30s da yangilanadi.
+              </p>
+              <div className="text-[10px] font-mono text-accent font-bold">
+                ● Turniket Pass Avtomatik Faol
+              </div>
+            </div>
+          </div>
         )}
       </Card>
 
@@ -402,61 +374,32 @@ function ActionFirstDashboard({
 
       {/* Quick Action Buttons */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="p-4 rounded-2xl bg-surface border border-border hover:border-accent/30 transition-all text-center space-y-1.5 cursor-pointer">
+        <Link href="/member/food" className="p-4 rounded-2xl bg-surface border border-border hover:border-accent/30 transition-all text-center space-y-1.5 cursor-pointer">
           <div className="text-2xl">🥗</div>
           <div className="text-xs font-bold text-text-hi">Ovqat Qo'shish</div>
           <div className="text-[10px] text-text-dim font-mono">AI bilan yozish</div>
-        </div>
-        <div className="p-4 rounded-2xl bg-surface border border-border hover:border-accent/30 transition-all text-center space-y-1.5 cursor-pointer">
-          <div className="text-2xl">📸</div>
-          <div className="text-xs font-bold text-text-hi">Progress Foto</div>
-          <div className="text-[10px] text-text-dim font-mono">AI tahlil</div>
-        </div>
+        </Link>
+        <Link href="/member/plan" className="p-4 rounded-2xl bg-surface border border-border hover:border-accent/30 transition-all text-center space-y-1.5 cursor-pointer">
+          <div className="text-2xl">💪</div>
+          <div className="text-xs font-bold text-text-hi">Mashq Rejasi</div>
+          <div className="text-[10px] text-text-dim font-mono">Bugungi mashq</div>
+        </Link>
       </div>
 
-      {/* 24/7 AI Coach Interface */}
-      <Card className="bg-surface border-border">
-        <CardHeader className="pb-2 border-b border-border flex flex-row items-center justify-between">
-          <CardTitle className="text-xs font-display font-bold flex items-center gap-2 text-text-hi">
-            <Bot className="w-4 h-4 text-accent" /> 24/7 AI Trener Bilan Muloqot
-          </CardTitle>
-          <span className="text-[10px] font-mono text-good flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-good animate-pulse" /> Online
-          </span>
-        </CardHeader>
-        <CardContent className="p-4 space-y-3">
-          <div className="space-y-2.5 max-h-48 overflow-y-auto pr-1">
-            {chatMessages.map((msg: ChatMessage, idx: number) => (
-              <div 
-                key={idx}
-                className={`max-w-[85%] p-3 rounded-xl text-xs font-body leading-relaxed ${
-                  msg.sender === 'ai'
-                    ? "bg-surface-2 border border-border text-text-hi self-start rounded-tl-none"
-                    : "bg-accent text-bg font-semibold ml-auto rounded-tr-none"
-                }`}
-              >
-                {msg.text}
-              </div>
-            ))}
+      {/* Sleek AI Coach Banner (Directing to floating button or /member/ai) */}
+      <Card className="bg-surface-2 border border-accent/30 p-4 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-accent/15 border border-accent/30 flex items-center justify-center text-accent shrink-0">
+            <Bot className="w-5 h-5" />
           </div>
-
-          <div className="flex gap-2 pt-2 border-t border-border">
-            <input
-              type="text"
-              value={chatInput}
-              onChange={(e) => setChatInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-              placeholder="Savolingizni yozing..."
-              className="flex-1 bg-surface-2 border border-border rounded-xl px-3 py-2 text-xs text-text-hi focus:border-accent outline-none"
-            />
-            <button
-              onClick={handleSendMessage}
-              className="p-2 bg-accent text-bg rounded-xl hover:opacity-90 cursor-pointer"
-            >
-              <Send className="w-4 h-4" />
-            </button>
+          <div>
+            <div className="text-xs font-bold text-text-hi">Retenix AI Trener Bilan Muloqot</div>
+            <p className="text-[11px] text-text-dim">24/7 Shaxsiy virtual murabbiyingizdan savollaringizga javob oling</p>
           </div>
-        </CardContent>
+        </div>
+        <Link href="/member/ai" className="px-3.5 py-2 bg-accent text-bg text-xs font-bold rounded-xl whitespace-nowrap hover:opacity-90 shrink-0">
+          Chatni Ochish →
+        </Link>
       </Card>
     </div>
   );

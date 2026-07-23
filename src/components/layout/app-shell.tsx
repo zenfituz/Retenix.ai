@@ -192,6 +192,17 @@ export function AppShell({
         </main>
       </div>
 
+      {/* ---------- Mobile Floating AI Coach Button (< 1024px) ---------- */}
+      {role === 'member' && (
+        <Link
+          href="/member/ai"
+          className="lg:hidden fixed bottom-18 right-4 z-50 w-12 h-12 rounded-full bg-accent text-bg border-2 border-bg shadow-[0_0_30px_rgba(232,255,71,0.5)] flex items-center justify-center font-bold hover:scale-105 active:scale-95 transition-transform cursor-pointer"
+          title="Retenix AI Trener"
+        >
+          <Bot className="w-6 h-6 text-bg" />
+        </Link>
+      )}
+
       {/* ---------- Mobile Bottom Navigation (< 1024px) ---------- */}
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-md border-t border-border z-40 flex items-center justify-around py-2 px-1">
         {bottomItems.map((item) => {

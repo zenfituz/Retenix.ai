@@ -168,8 +168,19 @@ export default function MemberProfilePage() {
         </CardContent>
       </Card>
 
-      {/* DEDICATED MEMBER SIGN OUT BUTTON (ONLY IN PROFILE) */}
-      <div className="pt-4 border-t border-border">
+      {/* EDIT PROFILE & RE-RUN ONBOARDING BUTTON */}
+      <div className="pt-4 border-t border-border space-y-3">
+        <button
+          onClick={() => {
+            localStorage.removeItem("member_onboarded_v2");
+            window.location.href = "/member";
+          }}
+          className="w-full py-3.5 rounded-xl bg-surface-2 border border-accent/40 text-accent font-semibold text-xs hover:bg-accent/10 transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md"
+        >
+          <Sparkles className="w-4 h-4" />
+          <span>Profilni Tahrirlash & Onboarding-ni Qayta O'tish</span>
+        </button>
+
         <form action={signOut}>
           <button
             type="submit"
