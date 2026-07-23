@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Users, Calendar, Flame, Activity, MessageSquare, CheckCircle2, Clock, AlertTriangle, ArrowRight } from "lucide-react";
+import { Users, Calendar, Flame, Activity, MessageSquare, CheckCircle2, Clock, AlertTriangle, ArrowRight, Sparkles, Check, Edit3 } from "lucide-react";
 import { KpiCard } from "@/components/ui/kpi-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
@@ -28,6 +28,21 @@ export default function TrainerDashboard() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [schedule, setSchedule] = useState(DEMO_SCHEDULE);
+
+  // Synchronized AI Plan Approval State
+  const [pendingPlan, setPendingPlan] = useState<{
+    id: string;
+    memberName: string;
+    goal: string;
+    calories: string;
+    status: "pending" | "approved";
+  }>({
+    id: "p1",
+    memberName: "Nodirbek Aliyev",
+    goal: "Vazn yo'qotish (Fat Loss)",
+    calories: "1,840 kcal • 3-Kunlik Reja",
+    status: "pending"
+  });
 
   useEffect(() => {
     async function checkUser() {
@@ -73,6 +88,41 @@ export default function TrainerDashboard() {
           {isDemo ? "4 ta mashg'ulot belgilangan" : `${schedule.length} ta mashg'ulot`}
         </div>
       </div>
+
+      {/* SYNCHRONIZED AI PLAN APPROVAL NOTIFICATION BANNER */}
+      {pendingPlan.status === "pending" && (
+        <Card className="bg-surface-2 border-accent/40 shadow-[0_0_25px_rgba(232,255,71,0.12)]">
+          <CardContent className="p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 font-display font-bold text-accent text-sm">
+                <Sparkles className="w-4 h-4 text-accent" /> Yangi A'zodan AI Plan Tasdiqlash So'rovi
+              </div>
+              <p className="text-xs text-text-hi font-semibold">
+                {pendingPlan.memberName} — <span className="text-text-dim font-normal">{pendingPlan.goal} ({pendingPlan.calories})</span>
+              </p>
+              <p className="text-[11px] text-text-dim leading-relaxed">
+                A'zo onboarding payti sizni shaxsiy murabbiy sifatida tanladi. Unga tuzilgan AI planini ko'rib chiqing va tasdiqlang.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => setPendingPlan(prev => ({ ...prev, status: "approved" }))}
+                className="px-4 py-2 bg-accent text-bg font-bold text-xs rounded-xl hover:opacity-90 transition-opacity flex items-center gap-1.5 shadow-[0_0_15px_rgba(232,255,71,0.2)] cursor-pointer"
+              >
+                <Check className="w-4 h-4" /> Planni Tasdiqlash
+              </button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {pendingPlan.status === "approved" && (
+        <div className="p-3.5 rounded-xl bg-good/10 border border-good/30 text-good text-xs font-mono flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4" /> {pendingPlan.memberName} mashqlar rejasi tasdiqlandi va uning ilovasiga yuborildi!
+          </div>
+        </div>
+      )}
 
       {/* KPI Section */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
