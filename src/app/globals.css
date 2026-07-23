@@ -34,10 +34,15 @@
     background-color: var(--color-bg);
     color: var(--color-text-hi);
     font-family: var(--font-body);
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(232, 255, 71, 0.03) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(93, 202, 165, 0.02) 0px, transparent 50%);
+    background-attachment: fixed;
   }
 
   ::selection {
     background: rgba(232, 255, 71, 0.25);
+    color: #080810;
   }
 
   ::-webkit-scrollbar {
@@ -48,4 +53,48 @@
     background: var(--color-border-2);
     border-radius: 4px;
   }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+  }
+}
+
+/* ---------- Custom UI/UX Keyframes & Animations ---------- */
+@keyframes scannerLine {
+  0% { top: 0%; opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { top: 100%; opacity: 0.8; }
+}
+
+@keyframes auraGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(232, 255, 71, 0.3); }
+  50% { box-shadow: 0 0 35px rgba(232, 255, 71, 0.6); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-scanner {
+  animation: scannerLine 2.5s ease-in-out infinite alternate;
+}
+
+.animate-aura {
+  animation: auraGlow 3s ease-in-out infinite;
+}
+
+.glass-panel {
+  background: rgba(13, 13, 22, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-card-hover:hover {
+  border-color: rgba(232, 255, 71, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -10px rgba(232, 255, 71, 0.15);
 }

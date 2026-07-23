@@ -196,7 +196,7 @@ export function AppShell({
       {role === 'member' && (
         <Link
           href="/member/ai"
-          className="lg:hidden fixed bottom-18 right-4 z-50 w-12 h-12 rounded-full bg-accent text-bg border-2 border-bg shadow-[0_0_30px_rgba(232,255,71,0.5)] flex items-center justify-center font-bold hover:scale-105 active:scale-95 transition-transform cursor-pointer"
+          className="lg:hidden fixed bottom-20 right-4 z-50 w-13 h-13 rounded-full bg-accent text-bg border-2 border-bg shadow-[0_0_35px_rgba(232,255,71,0.55)] flex items-center justify-center font-bold hover:scale-110 active:scale-95 transition-all cursor-pointer animate-aura"
           title="Retenix AI Trener"
         >
           <Bot className="w-6 h-6 text-bg" />
@@ -204,7 +204,7 @@ export function AppShell({
       )}
 
       {/* ---------- Mobile Bottom Navigation (< 1024px) ---------- */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-md border-t border-border z-40 flex items-center justify-around py-2 px-1">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-surface/95 backdrop-blur-xl border-t border-border z-40 flex items-center justify-around py-2 px-2">
         {bottomItems.map((item) => {
           const active = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href + "/"));
           const Icon = item.icon;
@@ -212,8 +212,10 @@ export function AppShell({
             <Link
               key={item.id}
               href={item.href}
-              className={`flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium transition-colors ${
-                active ? "text-accent" : "text-text-dim hover:text-text-mid"
+              className={`flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-[10px] font-medium transition-all ${
+                active 
+                  ? "bg-accent/10 text-accent font-bold border border-accent/20 shadow-[0_0_15px_rgba(232,255,71,0.1)]" 
+                  : "text-text-dim hover:text-text-mid"
               }`}
             >
               <Icon className="w-5 h-5" />

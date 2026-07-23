@@ -57,18 +57,18 @@ export default function MemberProfilePage() {
       </Card>
 
       {/* XP Gamification & Progress */}
-      <Card className="bg-surface border-accent/30 p-5 space-y-3">
+      <Card className="bg-surface border-accent/40 p-5 space-y-3 shadow-[0_0_25px_rgba(232,255,71,0.1)] glass-card-hover">
         <div className="flex items-center justify-between text-xs font-mono">
-          <span className="text-text-dim uppercase tracking-wider flex items-center gap-1.5">
-            <Zap className="w-4 h-4 text-accent" /> XP Gamifikatsiya va Level Progress
+          <span className="text-text-dim uppercase tracking-wider flex items-center gap-1.5 font-bold">
+            <Zap className="w-4 h-4 text-accent fill-accent/20" /> XP GAMIFIKATSIYA VA LEVEL PROGRESS
           </span>
           <span className="text-accent font-bold">2,340 / 3,000 XP</span>
         </div>
         <div className="w-full h-3 bg-surface-2 rounded-full overflow-hidden border border-border p-0.5">
-          <div className="h-full bg-accent rounded-full shadow-[0_0_12px_rgba(232,255,71,0.4)]" style={{ width: "78%" }} />
+          <div className="h-full bg-accent rounded-full shadow-[0_0_15px_rgba(232,255,71,0.5)] transition-all duration-700" style={{ width: "78%" }} />
         </div>
         <div className="flex justify-between text-[10px] font-mono text-text-dim">
-          <span>Daraja 5 (Usta)</span>
+          <span className="text-text-hi font-semibold">Daraja 5 (Usta)</span>
           <span>Daraja 6 (Afsona) uchun 660 XP qoldi</span>
         </div>
       </Card>
