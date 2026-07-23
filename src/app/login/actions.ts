@@ -28,7 +28,10 @@ export async function signup(formData: FormData) {
 
   const email = formData.get('email') as string
   const password = formData.get('password') as string
-  const role = (formData.get('role') as string) || 'owner'
+  const name = (formData.get('name') as string) || ''
+
+  // Only members can self-register. Owners/Trainers are created by admins.
+  const role = 'member'
 
   const { error } = await supabase.auth.signUp({
     email,
@@ -36,6 +39,7 @@ export async function signup(formData: FormData) {
     options: {
       data: {
         role: role,
+        full_name: name,
       },
     },
   })
