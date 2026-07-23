@@ -85,6 +85,7 @@ export default function LandingPage() {
             <a href="#engine" className="hover:text-accent transition-colors">5-Factor Engine</a>
             <a href="#showcase" className="hover:text-accent transition-colors">Panellar</a>
             <a href="#roi-calculator" className="hover:text-accent transition-colors">Kalkulyator</a>
+            <Link href="/telegram" className="hover:text-accent transition-colors flex items-center gap-1 text-accent font-bold">🤖 Telegram Bot</Link>
             <Link href="/features" className="hover:text-accent transition-colors">Imkoniyatlar</Link>
             <Link href="/pricing" className="hover:text-accent transition-colors">Narxlar</Link>
           </div>
