@@ -26,9 +26,14 @@ export default function MemberApp() {
   const [selectedTrainer, setSelectedTrainer] = useState<string>("aziz");
   const [gymCodeValid, setGymCodeValid] = useState<boolean>(true);
 
+interface ChatMessage {
+  sender: string;
+  text: string;
+}
+
   // AI Chat Messages State
   const [chatInput, setChatInput] = useState("");
-  const [chatMessages, setChatMessages] = useState([
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
     { sender: "ai", text: "Salom! Men sizning 24/7 AI Treneringizman. Bugun nima haqida yordam bera olaman?" },
     { sender: "user", text: "Osh necha kaloriya?" },
     { sender: "ai", text: "O'rtacha porsiya osh (300g) — taxminan 540 kcal. Sizning kunlik normangizning 30% ini tashkil qiladi." },
@@ -333,10 +338,19 @@ function OnboardingWizard({
   );
 }
 
+interface ActionFirstDashboardProps {
+  selectedTrainer: string;
+  chatInput: string;
+  setChatInput: (val: string) => void;
+  chatMessages: ChatMessage[];
+  handleSendMessage: () => void;
+  onResetOnboarding: () => void;
+}
+
 {/* Action-First Dashboard Screen */}
 function ActionFirstDashboard({
   selectedTrainer, chatInput, setChatInput, chatMessages, handleSendMessage, onResetOnboarding
-}: any) {
+}: ActionFirstDashboardProps) {
   const [checkedIn, setCheckedIn] = useState(false);
 
   return (
