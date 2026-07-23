@@ -129,7 +129,7 @@ export default function LandingPage() {
                     <div className="w-2.5 h-2.5 rounded-full bg-warn/80" />
                     <div className="w-2.5 h-2.5 rounded-full bg-good/80" />
                     <span className="text-[10px] font-mono text-text-dim ml-2 hidden sm:inline">
-                      https://app.retenix.ai/owner/dashboard
+                      https://retenix-ai.vercel.app/owner/dashboard
                     </span>
                   </div>
 

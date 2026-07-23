@@ -23,8 +23,17 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Retenix | Gym Churn Prediction Engine",
-  description: "Predict gym member churn before it happens with our 5-factor AI engine. Built for gym owners and trainers.",
+  metadataBase: new URL("https://retenix-ai.vercel.app"),
+  title: "Retenix AI | Gym Churn Prediction & Retention Engine",
+  description: "Predict gym member churn 14 days in advance with 5-factor AI analysis. Increase gym retention and MRR.",
+  openGraph: {
+    title: "Retenix AI | Gym Churn Prediction Engine",
+    description: "AI-powered member retention platform for gym owners and personal trainers.",
+    url: "https://retenix-ai.vercel.app",
+    siteName: "Retenix AI",
+    locale: "uz_UZ",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -33,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`scroll-smooth ${unbounded.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
+    <html lang="uz" className={`scroll-smooth ${unbounded.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
       <body className="antialiased font-body bg-bg text-text-hi min-h-screen selection:bg-accent/25 selection:text-bg">
         <LanguageProvider>
           <ActivityLogProvider>
