@@ -30,6 +30,15 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Offset sticky nav when scrolling to anchored sections */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
   body {
     background-color: var(--color-bg);
     color: var(--color-text-hi);

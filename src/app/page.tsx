@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import InteractiveDotGrid from "@/components/ui/interactive-dot-grid";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -107,16 +108,24 @@ export default function LandingPage() {
       </nav>
 
       {/* ---------- Hero Section ---------- */}
-      <section className="pt-28 pb-16 px-6 relative overflow-hidden">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[650px] h-[400px] bg-accent/8 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute top-16 right-10 w-[280px] h-[280px] bg-info/10 rounded-full blur-[120px] pointer-events-none" />
+      <section className="pt-32 pb-20 md:pb-24 px-6 relative overflow-hidden">
+        {/* Interactive Dot Grid Background */}
+        <InteractiveDotGrid
+          gap={28}
+          dotRadius={1}
+          glowRadius={200}
+          baseColor="rgba(82, 82, 106, 0.18)"
+          activeColor="rgba(232, 255, 71, 0.7)"
+        />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-accent/6 rounded-full blur-[160px] pointer-events-none" />
+        <div className="absolute top-16 right-10 w-[300px] h-[300px] bg-info/8 rounded-full blur-[130px] pointer-events-none" />
 
-        <div className="max-w-5xl mx-auto text-center relative z-10 space-y-5">
+        <div className="max-w-5xl mx-auto text-center relative z-10 space-y-6">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45 }}
-            className="space-y-4"
+            className="space-y-5"
           >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-2 border border-accent/30 shadow-[0_0_20px_rgba(232,255,71,0.1)]">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
@@ -125,16 +134,16 @@ export default function LandingPage() {
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold leading-[1.18] tracking-tight max-w-3xl mx-auto">
+            <h1 className="text-3xl sm:text-4xl lg:text-[3.25rem] font-display font-bold leading-[1.15] tracking-tight max-w-3xl mx-auto">
               Mijozlar ketib qolishini <span className="text-bad underline decoration-bad/30">kutmang</span>.<br />
               Ularni <span className="text-accent">Retenix.ai</span> bilan ushlab qoling.
             </h1>
 
-            <p className="text-xs sm:text-sm text-text-dim max-w-xl mx-auto leading-relaxed font-body">
+            <p className="text-sm sm:text-base text-text-dim max-w-xl mx-auto leading-relaxed font-body">
               Retenix.ai — fitness zal a'zolari davomati, trenirovka uzilishi va to'lovlar tarixini 5 faktorli AI bilan tahlil qilib, mijoz ketib qolishini (churn) 14 kun oldindan aniqlaydi hamda zudlik bilan saqlab qoladi.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-3">
               <Link 
                 href="/login" 
                 className="w-full sm:w-auto bg-accent text-bg px-6 py-3 rounded-xl text-xs font-semibold hover:opacity-90 transition-opacity shadow-[0_0_30px_rgba(232,255,71,0.25)] flex items-center justify-center gap-2 cursor-pointer"
@@ -156,7 +165,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="pt-6 relative mx-auto max-w-5xl"
+            className="pt-10 relative mx-auto max-w-5xl"
           >
             <div className="rounded-2xl border border-accent/20 bg-surface/90 p-2 backdrop-blur-2xl shadow-[0_0_60px_rgba(0,0,0,0.9)] relative">
               <div className="rounded-xl border border-border bg-[#0a0a14] overflow-hidden text-left shadow-2xl">
@@ -258,8 +267,8 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- Metric Banner ---------- */}
-      <section className="py-8 bg-surface border-y border-border">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+      <section className="py-10 md:py-12 bg-surface border-y border-border">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
           <div>
             <div className="text-2xl md:text-3xl font-display font-bold text-accent">412+</div>
             <div className="text-[10px] font-mono text-text-dim mt-0.5">Boshqarilayotgan Zallar</div>
@@ -280,21 +289,21 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- 5-Factor Churn Signal Engine Section ---------- */}
-      <section id="engine" className="py-16 px-6 relative">
-        <div className="max-w-7xl mx-auto space-y-10">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent font-mono text-[10px]">
+      <section id="engine" className="py-20 md:py-24 px-6 relative">
+        <div className="max-w-7xl mx-auto space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="px-3.5 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent font-mono text-[10px] tracking-widest uppercase font-bold">
               🎯 RETENIX.AI ALGORITMI QANDAY ISHLAYDI?
             </span>
-            <h2 className="text-2xl md:text-3xl font-display font-bold">
+            <h2 className="text-2xl md:text-4xl font-display font-bold">
               Mijoz Ketishining Oldini Oluvchi 5 Tahlil Faktori
             </h2>
-            <p className="text-text-dim text-xs leading-relaxed max-w-lg mx-auto">
+            <p className="text-text-dim text-xs sm:text-sm leading-relaxed max-w-lg mx-auto">
               Har bir a'zoning xulq-atvori real-vaqtda tahlil qilinadi va murabbiylarga avtomatik choralar beriladi.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-5">
+          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
             {[
               {
                 step: "01",
@@ -341,7 +350,7 @@ export default function LandingPage() {
             ].map((f, i) => (
               <div 
                 key={i}
-                className="p-5 rounded-2xl bg-surface border border-border hover:border-accent/40 transition-all space-y-2.5 relative group"
+                className="p-5 md:p-6 rounded-2xl bg-surface border border-border hover:border-accent/40 transition-all duration-300 space-y-3 relative group glass-card-hover"
               >
                 <div className="flex items-center justify-between">
                   <div className={`w-9 h-9 rounded-xl bg-surface-2 border border-border flex items-center justify-center ${f.color}`}>
@@ -360,10 +369,10 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- HIGH-DEFINITION SHOWCASE SECTION (DESKTOP ROLE DASHBOARDS + MOBILE DEDICATED APP) ---------- */}
-      <section id="showcase" className="py-16 bg-surface border-y border-border px-6">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <h2 className="text-2xl md:text-3xl font-display font-bold">
+      <section id="showcase" className="py-20 md:py-24 bg-surface border-y border-border px-6">
+        <div className="max-w-7xl mx-auto space-y-10">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <h2 className="text-2xl md:text-4xl font-display font-bold">
               Zal Egasi, Murabbiy va A'zolar Uchun Maxsus Interfeyslar
             </h2>
             <p className="text-text-dim text-xs">
@@ -797,21 +806,21 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- FEATURES SHOWCASE SECTION (#features) ---------- */}
-      <section id="features" className="py-20 px-6 bg-surface/50 border-t border-border relative">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="px-3.5 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent font-mono text-[10px] uppercase font-bold tracking-widest">
-              PLATFORMA IMMONIYATLARI
+      <section id="features" className="py-20 md:py-24 px-6 bg-surface/50 border-t border-border relative">
+        <div className="max-w-7xl mx-auto space-y-14">
+          <div className="text-center max-w-2xl mx-auto space-y-4">
+            <span className="px-3.5 py-1.5 rounded-full bg-accent/10 border border-accent/30 text-accent font-mono text-[10px] uppercase font-bold tracking-widest">
+              PLATFORMA IMKONIYATLARI
             </span>
             <h2 className="text-3xl md:text-5xl font-display font-bold text-text-hi">
               Zamonaviy Fitness Zal Uchun Barcha Imkoniyatlar
             </h2>
-            <p className="text-text-dim text-xs sm:text-sm leading-relaxed">
+            <p className="text-text-dim text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
               Sizga mijozlarni saqlab qolish, turniketlarni raqamlashtirish va AI yordamida zal daromadini 30% ga oshirish uchun zarur bo'lgan barcha vositalar.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 md:gap-7">
             {[
               {
                 icon: Activity,
@@ -852,7 +861,7 @@ export default function LandingPage() {
             ].map((f, i) => {
               const Icon = f.icon;
               return (
-                <div key={i} className="p-6 rounded-2xl bg-surface border border-border hover:border-accent/40 transition-all duration-300 space-y-3 glass-card-hover group relative overflow-hidden">
+                <div key={i} className="p-6 md:p-7 rounded-2xl bg-surface border border-border hover:border-accent/40 transition-all duration-300 space-y-4 glass-card-hover group relative overflow-hidden">
                   <div className="flex items-center justify-between">
                     <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
                       <Icon className="w-6 h-6" />
@@ -871,16 +880,16 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- PRICING PLANS SECTION (#pricing) ---------- */}
-      <section id="pricing" className="py-20 px-6 relative">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="px-3.5 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent font-mono text-[10px] uppercase font-bold tracking-widest">
+      <section id="pricing" className="py-20 md:py-28 px-6 relative">
+        <div className="max-w-7xl mx-auto space-y-14">
+          <div className="text-center max-w-2xl mx-auto space-y-4">
+            <span className="px-3.5 py-1.5 rounded-full bg-accent/10 border border-accent/30 text-accent font-mono text-[10px] uppercase font-bold tracking-widest">
               SHAFFOF TARIFLAR
             </span>
             <h2 className="text-3xl md:text-5xl font-display font-bold text-text-hi">
               Zalingiz Hajmiga Mos Oylik Tariflar
             </h2>
-            <p className="text-text-dim text-xs sm:text-sm leading-relaxed">
+            <p className="text-text-dim text-sm sm:text-base leading-relaxed max-w-lg mx-auto">
               14 kunlik bepul sinov davri. Hech qanday yashirin to'lovlar va to'lov kartasisiz boshlang.
             </p>
           </div>
@@ -966,23 +975,23 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- Interactive ROI & Revenue Savings Calculator ---------- */}
-      <section id="roi-calculator" className="py-16 px-6 relative">
-        <div className="max-w-4xl mx-auto bg-surface border border-border rounded-2xl p-6 md:p-8 space-y-5 shadow-2xl">
-          <div className="text-center max-w-xl mx-auto space-y-2">
-            <span className="px-3 py-1 rounded-full bg-accent/10 text-accent font-mono text-[10px]">
+      <section id="roi-calculator" className="py-20 md:py-24 px-6 relative">
+        <div className="max-w-4xl mx-auto bg-surface border border-border rounded-2xl p-6 md:p-10 space-y-6 shadow-2xl">
+          <div className="text-center max-w-xl mx-auto space-y-3">
+            <span className="px-3.5 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent font-mono text-[10px] uppercase tracking-widest font-bold">
               INTERAKTIV DAROMAD KALKULYATORI
             </span>
-            <h2 className="text-2xl md:text-3xl font-display font-bold">
+            <h2 className="text-2xl md:text-4xl font-display font-bold">
               Retenix.ai Zalingizga Qancha Qo'shimcha Daromad Olib Keladi?
             </h2>
-            <p className="text-text-dim text-xs">
+            <p className="text-text-dim text-xs sm:text-sm leading-relaxed">
               Zaldagi a'zolar soni va oylik a'zolik narxini suring — Retenix.ai tejaydigan oylik sof daromadingizni hisoblang:
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-5 items-center">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
             {/* Sliders */}
-            <div className="space-y-4 bg-surface-2 p-4 rounded-xl border border-border">
+            <div className="space-y-5 bg-surface-2 p-5 md:p-6 rounded-xl border border-border">
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs font-mono">
                   <span className="text-text-dim">Zaldagi A'zolar Soni:</span>
@@ -1017,7 +1026,7 @@ export default function LandingPage() {
             </div>
 
             {/* Results */}
-            <div className="p-4 rounded-xl bg-accent/10 border border-accent/30 space-y-2 text-center">
+            <div className="p-5 md:p-6 rounded-xl bg-accent/10 border border-accent/30 space-y-3 text-center">
               <div className="text-[9px] font-mono text-text-dim uppercase tracking-wider">
                 OYLIK SAQLAB QOLINADIGAN QO'SHIMCHA DAROMAD:
               </div>
@@ -1033,14 +1042,14 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- FAQ Accordion ---------- */}
-      <section className="py-16 bg-surface border-t border-border px-6">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <div className="text-center space-y-2">
-            <h2 className="text-2xl md:text-3xl font-display font-bold">Retenix.ai Haqida Keng Tarqalgan Savollar</h2>
-            <p className="text-text-dim text-xs">Platforma integratsiyasi, xavfsizligi hamda narxlar bo'yicha ko'p beriladigan savollar</p>
+      <section className="py-20 md:py-24 bg-surface border-t border-border px-6">
+        <div className="max-w-3xl mx-auto space-y-10">
+          <div className="text-center space-y-3">
+            <h2 className="text-2xl md:text-4xl font-display font-bold">Retenix.ai Haqida Keng Tarqalgan Savollar</h2>
+            <p className="text-text-dim text-xs sm:text-sm">Platforma integratsiyasi, xavfsizligi hamda narxlar bo'yicha ko'p beriladigan savollar</p>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3.5">
             {[
               {
                 q: "Retenix.ai mavjud zallarga qanday integratsiya qilinadi?",
@@ -1079,39 +1088,47 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- Final CTA ---------- */}
-      <section className="py-16 relative overflow-hidden text-center px-6">
-        <div className="absolute inset-0 bg-accent/5 pointer-events-none" />
-        <div className="max-w-3xl mx-auto space-y-4 relative z-10">
-          <h2 className="text-2xl md:text-4xl font-display font-bold">
+      <section className="py-20 md:py-28 relative overflow-hidden text-center px-6">
+        <InteractiveDotGrid
+          gap={36}
+          dotRadius={0.8}
+          glowRadius={160}
+          baseColor="rgba(82, 82, 106, 0.12)"
+          activeColor="rgba(232, 255, 71, 0.55)"
+        />
+        <div className="absolute inset-0 bg-accent/4 pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-accent/8 rounded-full blur-[150px] pointer-events-none" />
+        <div className="max-w-3xl mx-auto space-y-6 relative z-10">
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold leading-tight">
             Mijozlar Ketib Qolishini Bugunoq To'xtating
           </h2>
-          <p className="text-text-dim text-xs max-w-md mx-auto">
+          <p className="text-text-dim text-sm sm:text-base max-w-md mx-auto leading-relaxed">
             14 kunlik bepul sinov davrini boshlang va zalingiz daromadini barqaror oshiring.
           </p>
           <Link 
             href="/login" 
-            className="inline-flex items-center gap-2 bg-accent text-bg px-8 py-3 rounded-xl text-xs font-semibold hover:opacity-90 transition-opacity shadow-[0_0_35px_rgba(232,255,71,0.3)] cursor-pointer"
+            className="inline-flex items-center gap-2.5 bg-accent text-bg px-8 py-3.5 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity shadow-[0_0_40px_rgba(232,255,71,0.35)] cursor-pointer"
           >
-            14-Kunlik Bepul Sinovni Boshlash <ArrowRight className="w-3.5 h-3.5" />
+            14-Kunlik Bepul Sinovni Boshlash <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
 
       {/* ---------- Glass Footer ---------- */}
-      <footer className="border-t border-border bg-surface py-8 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded border border-accent/50 flex items-center justify-center font-display font-bold text-accent text-[10px]">
+      <footer className="border-t border-border bg-surface py-10 md:py-12 px-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-2.5">
+            <div className="w-6 h-6 rounded-lg border border-accent/50 flex items-center justify-center font-display font-bold text-accent text-[11px]">
               R
             </div>
-            <span className="font-display font-bold text-xs text-text-hi">Retenix.ai Platform</span>
+            <span className="font-display font-bold text-sm text-text-hi">Retenix.ai Platform</span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-5 text-xs text-text-dim font-mono">
-            <a href="#features" className="hover:text-accent">Imkoniyatlar</a>
-            <a href="#pricing" className="hover:text-accent">Narxlar</a>
-            <Link href="/about" className="hover:text-accent">Biz Haqimizda</Link>
-            <Link href="/contact" className="hover:text-accent">Bog'lanish</Link>
+          <div className="flex flex-wrap items-center gap-6 text-xs text-text-dim font-mono">
+            <a href="#features" className="hover:text-accent transition-colors">Imkoniyatlar</a>
+            <a href="#pricing" className="hover:text-accent transition-colors">Narxlar</a>
+            <Link href="/about" className="hover:text-accent transition-colors">Biz Haqimizda</Link>
+            <Link href="/contact" className="hover:text-accent transition-colors">Bog'lanish</Link>
           </div>
 
           <div className="text-[11px] text-text-dim font-mono">
