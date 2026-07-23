@@ -11,6 +11,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pill } from "@/components/ui/pill";
 import { useLanguage } from "@/context/language-context";
 
+interface ChatMessage {
+  sender: string;
+  text: string;
+}
+
 export default function MemberApp() {
   const { lang, t } = useLanguage();
   const [step, setStep] = useState<number>(1);
@@ -25,11 +30,6 @@ export default function MemberApp() {
   const [gymCode, setGymCode] = useState<string>("FITZONE-77");
   const [selectedTrainer, setSelectedTrainer] = useState<string>("aziz");
   const [gymCodeValid, setGymCodeValid] = useState<boolean>(true);
-
-interface ChatMessage {
-  sender: string;
-  text: string;
-}
 
   // AI Chat Messages State
   const [chatInput, setChatInput] = useState("");
