@@ -47,14 +47,14 @@ export function LoginForm({ message }: { message?: string }) {
   const [telegramUser, setTelegramUser] = useState<any>(null)
 
   useEffect(() => {
-    // Auto-detect Telegram WebApp User Data
+    // Auto-detect Telegram WebApp User Data (with or without username)
     if (typeof window !== 'undefined') {
       const tg = (window as any).Telegram?.WebApp
       if (tg && tg.initDataUnsafe?.user) {
         const u = tg.initDataUnsafe.user
         setTelegramUser(u)
-        // Pre-fill email and default role for Telegram member
-        const tgEmail = u.username ? `${u.username}@telegram.me` : `tg_${u.id}@fitzone.uz`
+        // Clean email handle for users without username using ID
+        const tgEmail = u.username ? `${u.username}@telegram.me` : `tg_${u.id}@retenix.ai`
         setEmail(tgEmail)
         setPassword('123456')
         setSelectedRole('member')
@@ -112,7 +112,7 @@ export function LoginForm({ message }: { message?: string }) {
         <div className="mb-5 p-3 rounded-xl bg-accent/10 border border-accent/30 text-accent text-xs font-mono flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Bot className="w-4 h-4 text-accent" />
-            <span>✈️ {telegramUser.first_name} {telegramUser.last_name || ''} (@{telegramUser.username || 'tg'})</span>
+            <span>✈️ {telegramUser.first_name} {telegramUser.last_name || ''} ({telegramUser.username ? '@' + telegramUser.username : 'ID: #' + telegramUser.id})</span>
           </div>
           <span className="text-[10px] bg-accent text-bg px-2 py-0.5 rounded font-bold">Avto-profil</span>
         </div>
