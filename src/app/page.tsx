@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowRight, Activity, Zap, TrendingUp, ShieldCheck, CheckCircle2, 
   Bot, QrCode, Building2, Users, ChevronDown, Sparkles, Star, Award, 
-  BarChart3, Dumbbell, Shield, HelpCircle, Layers, Cpu, Play
+  BarChart3, Dumbbell, Shield, HelpCircle, Layers, Cpu, Play, Bell, AlertTriangle, ArrowUpRight
 } from "lucide-react";
 
 export default function LandingPage() {
@@ -21,178 +21,250 @@ export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   // ROI Math
-  const estimatedChurnedMembers = Math.round(membersCount * 0.18); // 18% avg churn
-  const savedMembers = Math.round(estimatedChurnedMembers * 0.65); // 65% saved via Retenix
+  const estimatedChurnedMembers = Math.round(membersCount * 0.18);
+  const savedMembers = Math.round(estimatedChurnedMembers * 0.65);
   const monthlySavedRevenue = savedMembers * avgFee;
 
   return (
     <div className="min-h-screen bg-bg text-text-hi font-body selection:bg-accent/25 selection:text-bg overflow-x-hidden">
       {/* ---------- Sticky Glass Navigation ---------- */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-accent flex items-center justify-center font-display font-black text-bg text-lg shadow-[0_0_20px_rgba(232,255,71,0.3)]">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-accent flex items-center justify-center font-display font-black text-bg text-base shadow-[0_0_16px_rgba(232,255,71,0.3)]">
               R
             </div>
-            <span className="font-display font-bold text-xl tracking-tight text-text-hi">Retenix AI</span>
+            <span className="font-display font-bold text-lg tracking-tight text-text-hi">Retenix AI</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 text-xs font-mono text-text-mid">
+          <div className="hidden md:flex items-center gap-7 text-xs font-mono text-text-mid">
+            <a href="#hero-dashboard" className="hover:text-accent transition-colors">Dashboard</a>
             <a href="#engine" className="hover:text-accent transition-colors">5-Factor Engine</a>
             <a href="#showcase" className="hover:text-accent transition-colors">Platforma</a>
             <a href="#roi-calculator" className="hover:text-accent transition-colors">Kalkulyator</a>
             <Link href="/features" className="hover:text-accent transition-colors">Imkoniyatlar</Link>
             <Link href="/pricing" className="hover:text-accent transition-colors">Narxlar</Link>
-            <Link href="/about" className="hover:text-accent transition-colors">Biz Haqimizda</Link>
           </div>
 
           <div className="flex items-center gap-3">
             <Link 
               href="/login" 
-              className="hidden sm:block text-xs font-mono text-text-hi hover:text-accent px-3 py-2 transition-colors"
+              className="hidden sm:block text-xs font-mono text-text-hi hover:text-accent px-3 py-1.5 transition-colors"
             >
               Kirish
             </Link>
             <Link 
               href="/login" 
-              className="bg-accent text-bg px-5 py-2.5 rounded-xl text-xs font-semibold hover:opacity-90 transition-opacity shadow-[0_0_25px_rgba(232,255,71,0.25)] flex items-center gap-2"
+              className="bg-accent text-bg px-4 py-2 rounded-xl text-xs font-semibold hover:opacity-90 transition-opacity shadow-[0_0_20px_rgba(232,255,71,0.25)] flex items-center gap-1.5"
             >
-              Demo Sinash <ArrowRight className="w-4 h-4" />
+              Demo Sinash <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
       </nav>
 
-      {/* ---------- Hero Section (Modern Parallax & Animations) ---------- */}
-      <section className="pt-40 pb-24 px-6 relative overflow-hidden">
-        {/* Background Glow Orbs */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-accent/10 rounded-full blur-[160px] pointer-events-none" />
-        <div className="absolute top-10 right-10 w-[350px] h-[350px] bg-info/10 rounded-full blur-[140px] pointer-events-none" />
+      {/* ---------- Halsa-Inspired Hero Section ---------- */}
+      <section className="pt-28 pb-20 px-6 relative overflow-hidden">
+        {/* Subtle Ambient Background Gradients */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-accent/8 rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute top-20 right-10 w-[300px] h-[300px] bg-info/10 rounded-full blur-[130px] pointer-events-none" />
 
-        <div className="max-w-5xl mx-auto text-center relative z-10 space-y-8">
+        <div className="max-w-6xl mx-auto text-center relative z-10 space-y-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
+            transition={{ duration: 0.5 }}
+            className="space-y-4"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-2 border border-accent/30 shadow-[0_0_20px_rgba(232,255,71,0.1)]">
+            {/* Pill Badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-2 border border-accent/30 shadow-[0_0_20px_rgba(232,255,71,0.1)]">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              <span className="text-xs font-mono text-accent uppercase tracking-widest">
-                5-Factor Churn Prediction Engine 2.0
+              <span className="text-[11px] font-mono text-accent uppercase tracking-widest">
+                5-FACTOR CHURN PREDICTION ENGINE 2.0
               </span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-display font-bold leading-[1.1] tracking-tight">
-              Mijozlar qachon ketishini <span className="text-bad underline decoration-bad/40">kutmang</span>.<br />
+            {/* Slightly Smaller Sleek Typography */}
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold leading-[1.15] tracking-tight max-w-4xl mx-auto">
+              Mijozlar ketib qolishini <span className="text-bad underline decoration-bad/30">kutmang</span>.<br />
               Ularni <span className="text-accent">sun'iy intellekt</span> bilan ushlab qoling.
             </h1>
 
-            <p className="text-base md:text-xl text-text-dim max-w-3xl mx-auto leading-relaxed font-body">
-              Retenix platformasi fitness zal a'zolarining kelish grafigi, streak uzilishi, ovqatlanish jurnali va to'lovlar tarixini 5 faktor bo'yicha tahlil qilib, mijoz ketib qolishini (churn) 14 kun oldindan bashorat qiladi.
+            <p className="text-xs sm:text-sm text-text-dim max-w-2xl mx-auto leading-relaxed font-body">
+              Retenix platformasi fitness zal a'zolarining kelish grafigi, streak uzilishi, ovqatlanish jurnali va to'lovlar tarixini tahlil qilib, mijoz ketib qolishini (churn) 14 kun oldindan aniq prognoz qiladi.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <Link 
                 href="/login" 
-                className="w-full sm:w-auto bg-accent text-bg px-8 py-4 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity shadow-[0_0_35px_rgba(232,255,71,0.3)] flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto bg-accent text-bg px-6 py-3 rounded-xl text-xs font-semibold hover:opacity-90 transition-opacity shadow-[0_0_30px_rgba(232,255,71,0.25)] flex items-center justify-center gap-2 cursor-pointer"
               >
                 14-Kunlik Sinovni Boshlash <ArrowRight className="w-4 h-4" />
               </Link>
               <a 
-                href="#showcase"
-                className="w-full sm:w-auto bg-surface border border-border text-text-hi px-8 py-4 rounded-xl text-sm font-semibold hover:bg-surface-2 transition-colors flex items-center justify-center gap-2"
+                href="#hero-dashboard"
+                className="w-full sm:w-auto bg-surface border border-border text-text-hi px-6 py-3 rounded-xl text-xs font-semibold hover:bg-surface-2 transition-colors flex items-center justify-center gap-2"
               >
-                <Play className="w-4 h-4 text-accent fill-accent" /> Platforma Demoni Ko'rish
+                <Play className="w-3.5 h-3.5 text-accent fill-accent" /> Platforma Demoni Ko'rish
               </a>
             </div>
           </motion.div>
 
-          {/* Hero Live Mockup Showcase */}
+          {/* ---------- Halsa-Style Realistic Interactive Dashboard Showcase ---------- */}
           <motion.div 
-            initial={{ opacity: 0, y: 60 }}
+            id="hero-dashboard"
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="pt-12 relative mx-auto max-w-5xl"
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="pt-8 relative mx-auto max-w-5xl"
           >
-            <div className="rounded-3xl border border-accent/30 bg-surface/90 p-3 backdrop-blur-2xl shadow-[0_0_50px_rgba(0,0,0,0.8)] relative">
-              <div className="rounded-2xl border border-border bg-surface-2 overflow-hidden space-y-4 p-6">
-                {/* Header bar of mockup */}
-                <div className="flex items-center justify-between pb-4 border-b border-border text-xs font-mono">
-                  <div className="flex items-center gap-2 text-accent font-bold">
-                    <span className="w-2.5 h-2.5 rounded-full bg-accent animate-ping" />
-                    LIVE REAL-TIME CHURN MONITORING
+            {/* Outer Glow Wrapper */}
+            <div className="rounded-3xl border border-accent/20 bg-surface/90 p-2.5 backdrop-blur-2xl shadow-[0_0_60px_rgba(0,0,0,0.9)] relative">
+              {/* Inner Dashboard UI Container */}
+              <div className="rounded-2xl border border-border bg-[#0a0a14] overflow-hidden text-left shadow-2xl">
+                
+                {/* Top Window Navigation Bar */}
+                <div className="bg-surface border-b border-border px-4 py-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-bad/80" />
+                    <div className="w-3 h-3 rounded-full bg-warn/80" />
+                    <div className="w-3 h-3 rounded-full bg-good/80" />
+                    <span className="text-[11px] font-mono text-text-dim ml-3 hidden sm:inline">
+                      https://app.retenix.ai/owner/dashboard
+                    </span>
                   </div>
-                  <div className="text-text-dim">FitZone Gym Yunusobod • 450 ta a'zo</div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent font-mono text-[10px]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                      450 Ta A'zo Kuzatuvda
+                    </div>
+                    <div className="w-7 h-7 rounded-lg bg-surface-2 border border-border flex items-center justify-center text-text-mid">
+                      <Bell className="w-3.5 h-3.5 text-accent" />
+                    </div>
+                  </div>
                 </div>
 
-                {/* Key stats inside mockup */}
-                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                  <div className="p-4 rounded-xl bg-surface border border-border">
-                    <div className="text-[10px] font-mono text-text-dim">O'RTACHA RETENTION</div>
-                    <div className="text-2xl font-display font-bold text-good mt-1">92.4%</div>
-                    <div className="text-[10px] font-mono text-good mt-0.5">+2.1% bu oy</div>
+                {/* Dashboard Main Grid Area */}
+                <div className="p-5 space-y-5">
+                  {/* Top Stats Banner */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div className="p-3.5 rounded-xl bg-surface border border-border">
+                      <div className="text-[10px] font-mono text-text-dim uppercase">RETENTION DARAJASI</div>
+                      <div className="text-xl font-display font-bold text-good mt-1">92.4%</div>
+                      <div className="text-[9px] font-mono text-good mt-0.5">+2.1% bu oy</div>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-surface border border-border">
+                      <div className="text-[10px] font-mono text-text-dim uppercase">CHURN RISK XAVFI</div>
+                      <div className="text-xl font-display font-bold text-bad mt-1">14 ta mijoz</div>
+                      <div className="text-[9px] font-mono text-bad mt-0.5">Xavf bali {'>'} 75%</div>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-surface border border-border">
+                      <div className="text-[10px] font-mono text-text-dim uppercase">SAQLANGAN MRR</div>
+                      <div className="text-xl font-display font-bold text-accent mt-1">$2,450</div>
+                      <div className="text-[9px] font-mono text-accent mt-0.5">Retenix AI sharofati bilan</div>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-surface border border-border">
+                      <div className="text-[10px] font-mono text-text-dim uppercase">BUGUN FAOL A'ZOLAR</div>
+                      <div className="text-xl font-display font-bold text-text-hi mt-1">187 ta</div>
+                      <div className="text-[9px] font-mono text-text-dim mt-0.5">Turniket pass</div>
+                    </div>
                   </div>
-                  <div className="p-4 rounded-xl bg-surface border border-border">
-                    <div className="text-[10px] font-mono text-text-dim">CHURN RISK XAVFI</div>
-                    <div className="text-2xl font-display font-bold text-bad mt-1">14 ta mijoz</div>
-                    <div className="text-[10px] font-mono text-bad mt-0.5">Xavf darajasi {'>'} 75%</div>
-                  </div>
-                  <div className="p-4 rounded-xl bg-surface border border-border">
-                    <div className="text-[10px] font-mono text-text-dim">SAQLAB QOLINGAN MRR</div>
-                    <div className="text-2xl font-display font-bold text-accent mt-1">$2,450</div>
-                    <div className="text-[10px] font-mono text-accent mt-0.5">Retenix AI sharofati bilan</div>
-                  </div>
-                  <div className="p-4 rounded-xl bg-surface border border-border">
-                    <div className="text-[10px] font-mono text-text-dim">BUGUN FAOL A'ZOLAR</div>
-                    <div className="text-2xl font-display font-bold text-text-hi mt-1">187 ta</div>
-                    <div className="text-[10px] font-mono text-text-dim mt-0.5">Turniket check-in</div>
+
+                  {/* Mid Split: Real-time Member Feed & AI Copilot Insights */}
+                  <div className="grid md:grid-cols-7 gap-4">
+                    {/* Churn Risk Feed */}
+                    <div className="md:col-span-4 p-4 rounded-xl bg-surface border border-border space-y-3">
+                      <div className="flex items-center justify-between pb-2 border-b border-border">
+                        <div className="text-xs font-display font-bold text-text-hi flex items-center gap-2">
+                          <AlertTriangle className="w-3.5 h-3.5 text-bad" /> Yuqori Churn Xavfidagi Mijozlar
+                        </div>
+                        <span className="text-[10px] font-mono text-accent">AI Auto-Detect</span>
+                      </div>
+
+                      <div className="space-y-2">
+                        {[
+                          { name: "Doniyor Raxmonov", risk: "85%", reason: "14 kundan beri kelmadi • Streak uzildi", trainer: "Coach Aziz" },
+                          { name: "Sevara Qodirova", risk: "78%", reason: "Ovqat kiritish to'xtadi • To'lov kechikmoqda", trainer: "Coach Dilshod" },
+                          { name: "Mohira Aliyeva", risk: "64%", reason: "Haftalik kelish 3x -> 1x ga tushdi", trainer: "Coach Aziz" },
+                        ].map((m, idx) => (
+                          <div key={idx} className="p-2.5 rounded-lg bg-surface-2 border border-border-2 flex items-center justify-between gap-2">
+                            <div>
+                              <div className="text-xs font-semibold text-text-hi">{m.name}</div>
+                              <div className="text-[10px] text-text-dim font-mono mt-0.5">{m.reason}</div>
+                            </div>
+                            <div className="text-right shrink-0">
+                              <span className="px-2 py-0.5 rounded bg-bad/10 border border-bad/30 text-bad font-mono text-[10px] font-bold">
+                                {m.risk} Risk
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* AI Copilot Action Box */}
+                    <div className="md:col-span-3 p-4 rounded-xl bg-surface-2 border border-accent/30 space-y-3 relative overflow-hidden">
+                      <div className="flex items-center gap-2 text-xs font-display font-bold text-accent">
+                        <Bot className="w-4 h-4 text-accent" /> Retenix AI Copilot
+                      </div>
+                      <p className="text-[11px] text-text-dim leading-relaxed">
+                        "Doniyor Raxmonov ketish xavfi 85%. Unga 20% chegirmali murabbiy seansi taklif qilish tavsiya etiladi."
+                      </p>
+                      <button className="w-full py-2 bg-accent text-bg font-semibold rounded-lg text-xs hover:opacity-90 transition-opacity cursor-pointer shadow-[0_0_15px_rgba(232,255,71,0.2)]">
+                        Proaktiv Xabar Yuborish
+                      </button>
+                    </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ---------- Stats Banner ---------- */}
-      <section className="py-12 bg-surface border-y border-border">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      {/* ---------- Evotrack-Style Metric Banner ---------- */}
+      <section className="py-10 bg-surface border-y border-border">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
-            <div className="text-3xl md:text-4xl font-display font-bold text-accent">412+</div>
-            <div className="text-xs font-mono text-text-dim mt-1">Faol Hamkor Zallar</div>
+            <div className="text-2xl md:text-3xl font-display font-bold text-accent">412+</div>
+            <div className="text-[11px] font-mono text-text-dim mt-0.5">Faol Hamkor Zallar</div>
           </div>
           <div>
-            <div className="text-3xl md:text-4xl font-display font-bold text-good">34,000+</div>
-            <div className="text-xs font-mono text-text-dim mt-1">Kuzatuvdagi A'zolar</div>
+            <div className="text-2xl md:text-3xl font-display font-bold text-good">34,000+</div>
+            <div className="text-[11px] font-mono text-text-dim mt-0.5">Kuzatuvdagi A'zolar</div>
           </div>
           <div>
-            <div className="text-3xl md:text-4xl font-display font-bold text-info">94.8%</div>
-            <div className="text-xs font-mono text-text-dim mt-1">AI Churn Aniqligi</div>
+            <div className="text-2xl md:text-3xl font-display font-bold text-info">94.8%</div>
+            <div className="text-[11px] font-mono text-text-dim mt-0.5">AI Churn Aniqligi</div>
           </div>
           <div>
-            <div className="text-3xl md:text-4xl font-display font-bold text-warn">$18.4K</div>
-            <div className="text-xs font-mono text-text-dim mt-1">Oylik Saqlangan MRR</div>
+            <div className="text-2xl md:text-3xl font-display font-bold text-warn">$18.4K</div>
+            <div className="text-[11px] font-mono text-text-dim mt-0.5">Oylik Saqlangan MRR</div>
           </div>
         </div>
       </section>
 
       {/* ---------- 5-Factor Churn Signal Engine Section ---------- */}
-      <section id="engine" className="py-24 px-6 relative">
-        <div className="max-w-7xl mx-auto space-y-16">
-          <div className="text-center max-w-3xl mx-auto space-y-4">
-            <span className="px-3.5 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent font-mono text-xs">
+      <section id="engine" className="py-20 px-6 relative">
+        <div className="max-w-7xl mx-auto space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent font-mono text-[11px]">
               AI CHURN SIGNAL ALGORITHM
             </span>
-            <h2 className="text-3xl md:text-5xl font-display font-bold">
+            <h2 className="text-2xl md:text-4xl font-display font-bold">
               Retenix 5-Faktorli Tahlil Dvigateli
             </h2>
-            <p className="text-text-dim text-base">
+            <p className="text-text-dim text-xs leading-relaxed">
               Har bir a'zoning xulq-atvori 5 ta alohida faktor bo'yicha doimiy skanerlanadi va zudlik bilan murabbiylarga xabar beriladi.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {[
               {
                 step: "01",
@@ -239,18 +311,18 @@ export default function LandingPage() {
             ].map((f, i) => (
               <div 
                 key={i}
-                className="p-8 rounded-2xl bg-surface border border-border hover:border-accent/40 transition-all space-y-4 relative group"
+                className="p-6 rounded-2xl bg-surface border border-border hover:border-accent/40 transition-all space-y-3 relative group"
               >
                 <div className="flex items-center justify-between">
-                  <div className={`w-12 h-12 rounded-xl bg-surface-2 border border-border flex items-center justify-center ${f.color}`}>
-                    <f.icon className="w-6 h-6" />
+                  <div className={`w-10 h-10 rounded-xl bg-surface-2 border border-border flex items-center justify-center ${f.color}`}>
+                    <f.icon className="w-5 h-5" />
                   </div>
                   <span className="font-mono text-xs font-bold text-text-dim group-hover:text-accent transition-colors">
                     {f.step}
                   </span>
                 </div>
-                <h3 className="text-xl font-display font-bold text-text-hi">{f.title}</h3>
-                <p className="text-text-dim text-sm leading-relaxed">{f.desc}</p>
+                <h3 className="text-base font-display font-bold text-text-hi">{f.title}</h3>
+                <p className="text-text-dim text-xs leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -258,18 +330,18 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- Interactive Role Showcase (Dual Render Tabs) ---------- */}
-      <section id="showcase" className="py-24 bg-surface border-y border-border px-6">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="text-center max-w-3xl mx-auto space-y-4">
-            <h2 className="text-3xl md:text-5xl font-display font-bold">
+      <section id="showcase" className="py-20 bg-surface border-y border-border px-6">
+        <div className="max-w-7xl mx-auto space-y-10">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <h2 className="text-2xl md:text-4xl font-display font-bold">
               Har Bir Rol Uchun Shaxsiy Panellar
             </h2>
-            <p className="text-text-dim text-sm">
-              Platforma Gym Owner, Murabbiy, A'zolar va SuperAdmin uchun alohida optimal interfeyslarni taqdim etadi.
+            <p className="text-text-dim text-xs">
+              Platforma Gym Owner, Murabbiy, A'zolar va SuperAdmin uchun alohida interfeyslarni taqdim etadi.
             </p>
 
             {/* Role Tabs */}
-            <div className="flex flex-wrap justify-center gap-2 pt-4">
+            <div className="flex flex-wrap justify-center gap-2 pt-2">
               {[
                 { id: "owner", label: "🏢 Gym Owner View" },
                 { id: "trainer", label: "🏋️ Trainer View" },
@@ -279,7 +351,7 @@ export default function LandingPage() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`px-5 py-2.5 rounded-xl text-xs font-mono transition-all cursor-pointer ${
+                  className={`px-4 py-2 rounded-xl text-xs font-mono transition-all cursor-pointer ${
                     activeTab === tab.id
                       ? "bg-accent text-bg font-bold shadow-[0_0_20px_rgba(232,255,71,0.25)]"
                       : "bg-surface-2 text-text-mid border border-border hover:text-text-hi"
@@ -292,103 +364,103 @@ export default function LandingPage() {
           </div>
 
           {/* Role Screen Demo Preview */}
-          <div className="p-6 md:p-10 rounded-3xl bg-bg border border-border space-y-6 min-h-[360px] flex flex-col justify-center">
+          <div className="p-6 md:p-8 rounded-2xl bg-bg border border-border space-y-6 min-h-[320px] flex flex-col justify-center">
             {activeTab === "owner" && (
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <div>
-                    <h3 className="text-2xl font-display font-bold text-text-hi">Gym Owner Dashboard</h3>
+                    <h3 className="text-xl font-display font-bold text-text-hi">Gym Owner Dashboard</h3>
                     <p className="text-xs text-text-dim">Real-vaqt retention darajasi, billing va murabbiylar samaradorligi</p>
                   </div>
-                  <Link href="/owner/dashboard" className="px-4 py-2 bg-accent text-bg text-xs font-semibold rounded-xl">
+                  <Link href="/owner/dashboard" className="px-3.5 py-1.5 bg-accent text-bg text-xs font-semibold rounded-xl">
                     Owner Paneliga Kirish
                   </Link>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 rounded-xl bg-surface border border-border">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="p-3.5 rounded-xl bg-surface border border-border">
                     <div className="text-[10px] font-mono text-text-dim">JAMI A'ZOLAR</div>
-                    <div className="text-2xl font-display font-bold text-accent">2,350 ta</div>
+                    <div className="text-xl font-display font-bold text-accent">2,350 ta</div>
                   </div>
-                  <div className="p-4 rounded-xl bg-surface border border-border">
+                  <div className="p-3.5 rounded-xl bg-surface border border-border">
                     <div className="text-[10px] font-mono text-text-dim">RETENTION RATE</div>
-                    <div className="text-2xl font-display font-bold text-good">92.4%</div>
+                    <div className="text-xl font-display font-bold text-good">92.4%</div>
                   </div>
-                  <div className="p-4 rounded-xl bg-surface border border-border">
+                  <div className="p-3.5 rounded-xl bg-surface border border-border">
                     <div className="text-[10px] font-mono text-text-dim">CHURN RISK</div>
-                    <div className="text-2xl font-display font-bold text-bad">143 ta</div>
+                    <div className="text-xl font-display font-bold text-bad">143 ta</div>
                   </div>
                 </div>
               </div>
             )}
 
             {activeTab === "trainer" && (
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <div>
-                    <h3 className="text-2xl font-display font-bold text-text-hi">Trainer Dashboard</h3>
-                    <p className="text-xs text-text-dim">Bugungi mijozlar seansi, jadval va xavf ostidagi a'zolar bilikmasi</p>
+                    <h3 className="text-xl font-display font-bold text-text-hi">Trainer Dashboard</h3>
+                    <p className="text-xs text-text-dim">Bugungi mijozlar seansi, jadval va xavf ostidagi a'zolar</p>
                   </div>
-                  <Link href="/trainer/dashboard" className="px-4 py-2 bg-accent text-bg text-xs font-semibold rounded-xl">
+                  <Link href="/trainer/dashboard" className="px-3.5 py-1.5 bg-accent text-bg text-xs font-semibold rounded-xl">
                     Trainer Paneliga Kirish
                   </Link>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 rounded-xl bg-surface border border-border flex items-center justify-between">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="p-3.5 rounded-xl bg-surface border border-border flex items-center justify-between">
                     <div>
                       <div className="text-xs font-semibold text-text-hi">Jasur Toshmatov</div>
                       <div className="text-[10px] text-text-dim font-mono">Personal Training • 15:00</div>
                     </div>
-                    <span className="px-2 py-1 rounded bg-good/10 text-good text-[10px] font-mono font-bold">Faol</span>
+                    <span className="px-2 py-0.5 rounded bg-good/10 text-good text-[10px] font-mono font-bold">Faol</span>
                   </div>
-                  <div className="p-4 rounded-xl bg-surface border border-border flex items-center justify-between">
+                  <div className="p-3.5 rounded-xl bg-surface border border-border flex items-center justify-between">
                     <div>
                       <div className="text-xs font-semibold text-text-hi">Doniyor Raxmonov</div>
                       <div className="text-[10px] text-text-dim font-mono">14 kundan beri kelmadi</div>
                     </div>
-                    <span className="px-2 py-1 rounded bg-bad/10 text-bad text-[10px] font-mono font-bold">Risk Alert</span>
+                    <span className="px-2 py-0.5 rounded bg-bad/10 text-bad text-[10px] font-mono font-bold">Risk Alert</span>
                   </div>
                 </div>
               </div>
             )}
 
             {activeTab === "member" && (
-              <div className="space-y-6 max-w-md mx-auto text-center">
-                <div className="w-16 h-16 rounded-2xl bg-accent/10 border border-accent/30 flex items-center justify-center text-accent mx-auto">
-                  <QrCode className="w-8 h-8" />
+              <div className="space-y-4 max-w-md mx-auto text-center">
+                <div className="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/30 flex items-center justify-center text-accent mx-auto">
+                  <QrCode className="w-7 h-7" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-display font-bold text-text-hi">Telegram Mini App</h3>
+                  <h3 className="text-xl font-display font-bold text-text-hi">Telegram Mini App</h3>
                   <p className="text-xs text-text-dim mt-1">A'zolar uchun ilovasiz, to'g'ridan-to'g'ri Telegram ichida ishlovchi raqamli turniket pass va olov stikerlari.</p>
                 </div>
-                <Link href="/member" className="inline-block px-6 py-3 bg-accent text-bg text-xs font-bold rounded-xl shadow-[0_0_20px_rgba(232,255,71,0.2)]">
+                <Link href="/member" className="inline-block px-5 py-2.5 bg-accent text-bg text-xs font-bold rounded-xl shadow-[0_0_20px_rgba(232,255,71,0.2)]">
                   Member App Demoni Ko'rish
                 </Link>
               </div>
             )}
 
             {activeTab === "superadmin" && (
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <div>
-                    <h3 className="text-2xl font-display font-bold text-text-hi">SuperAdmin Global Platform</h3>
+                    <h3 className="text-xl font-display font-bold text-text-hi">SuperAdmin Global Platform</h3>
                     <p className="text-xs text-text-dim">412 ta zal boshqaruvi, platforma MRR va AI tokenlar sarfi</p>
                   </div>
-                  <Link href="/superadmin/dashboard" className="px-4 py-2 bg-accent text-bg text-xs font-semibold rounded-xl">
+                  <Link href="/superadmin/dashboard" className="px-3.5 py-1.5 bg-accent text-bg text-xs font-semibold rounded-xl">
                     SuperAdmin Paneliga Kirish
                   </Link>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 rounded-xl bg-surface border border-border">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="p-3.5 rounded-xl bg-surface border border-border">
                     <div className="text-[10px] font-mono text-text-dim">JAMI ZALLAR</div>
-                    <div className="text-2xl font-display font-bold text-accent">412 ta</div>
+                    <div className="text-xl font-display font-bold text-accent">412 ta</div>
                   </div>
-                  <div className="p-4 rounded-xl bg-surface border border-border">
+                  <div className="p-3.5 rounded-xl bg-surface border border-border">
                     <div className="text-[10px] font-mono text-text-dim">PLATFORMA MRR</div>
-                    <div className="text-2xl font-display font-bold text-good">$18,450</div>
+                    <div className="text-xl font-display font-bold text-good">$18,450</div>
                   </div>
-                  <div className="p-4 rounded-xl bg-surface border border-border">
+                  <div className="p-3.5 rounded-xl bg-surface border border-border">
                     <div className="text-[10px] font-mono text-text-dim">AI TOKEN CONSUMPTION</div>
-                    <div className="text-2xl font-display font-bold text-info">1.4M / oy</div>
+                    <div className="text-xl font-display font-bold text-info">1.4M / oy</div>
                   </div>
                 </div>
               </div>
@@ -398,13 +470,13 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- Interactive ROI & Revenue Savings Calculator ---------- */}
-      <section id="roi-calculator" className="py-24 px-6 relative">
-        <div className="max-w-5xl mx-auto bg-surface border border-border rounded-3xl p-8 md:p-12 space-y-8 shadow-2xl">
-          <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="px-3.5 py-1 rounded-full bg-accent/10 text-accent font-mono text-xs">
+      <section id="roi-calculator" className="py-20 px-6 relative">
+        <div className="max-w-4xl mx-auto bg-surface border border-border rounded-2xl p-6 md:p-10 space-y-6 shadow-2xl">
+          <div className="text-center max-w-xl mx-auto space-y-2">
+            <span className="px-3 py-1 rounded-full bg-accent/10 text-accent font-mono text-[11px]">
               INTERAKTIV DAROMAD KALKULYATORI
             </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold">
+            <h2 className="text-2xl md:text-3xl font-display font-bold">
               Retenix Zalingizga Qancha Daromad Olib Keladi?
             </h2>
             <p className="text-text-dim text-xs">
@@ -412,9 +484,9 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="grid md:grid-cols-2 gap-6 items-center">
             {/* Sliders */}
-            <div className="space-y-6 bg-surface-2 p-6 rounded-2xl border border-border">
+            <div className="space-y-5 bg-surface-2 p-5 rounded-xl border border-border">
               <div className="space-y-2">
                 <div className="flex justify-between text-xs font-mono">
                   <span className="text-text-dim">Zaldagi A'zolar Soni:</span>
@@ -449,14 +521,14 @@ export default function LandingPage() {
             </div>
 
             {/* Results */}
-            <div className="p-6 rounded-2xl bg-accent/10 border border-accent/30 space-y-4 text-center">
-              <div className="text-xs font-mono text-text-dim uppercase tracking-wider">
+            <div className="p-5 rounded-xl bg-accent/10 border border-accent/30 space-y-3 text-center">
+              <div className="text-[10px] font-mono text-text-dim uppercase tracking-wider">
                 OYLIK SAQLAB QOLINADIGAN QO'SHIMCHA DAROMAD:
               </div>
-              <div className="text-4xl md:text-5xl font-display font-bold text-accent">
-                +${monthlySavedRevenue.toLocaleString()} <span className="text-sm font-normal text-text-dim">/oy</span>
+              <div className="text-3xl md:text-4xl font-display font-bold text-accent">
+                +${monthlySavedRevenue.toLocaleString()} <span className="text-xs font-normal text-text-dim">/oy</span>
               </div>
-              <div className="text-xs text-text-mid font-mono border-t border-accent/20 pt-3">
+              <div className="text-xs text-text-mid font-mono border-t border-accent/20 pt-2.5">
                 Retenix har oy o'rtacha <span className="text-good font-bold">{savedMembers} ta a'zongizni</span> zalni tark etishidan saqlab qoladi.
               </div>
             </div>
@@ -465,14 +537,14 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- FAQ Accordion ---------- */}
-      <section className="py-24 bg-surface border-t border-border px-6">
-        <div className="max-w-4xl mx-auto space-y-12">
-          <div className="text-center space-y-3">
-            <h2 className="text-3xl md:text-4xl font-display font-bold">Keng Tarqalgan Savollar (FAQ)</h2>
-            <p className="text-text-dim text-sm">Retenix AI platformasi bo'yicha ko'p beriladigan savollar</p>
+      <section className="py-20 bg-surface border-t border-border px-6">
+        <div className="max-w-3xl mx-auto space-y-8">
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl md:text-3xl font-display font-bold">Keng Tarqalgan Savollar (FAQ)</h2>
+            <p className="text-text-dim text-xs">Retenix AI platformasi bo'yicha ko'p beriladigan savollar</p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {[
               {
                 q: "Retenix mavjud zallarga qanday integratsiya qilinadi?",
@@ -484,23 +556,23 @@ export default function LandingPage() {
               },
               {
                 q: "A'zolar telefoniga yangi ilova yuklab olishi shartmi?",
-                a: "Yo'q! A me'zolar to'g'ridan-to'g'ri Telegram Mini App orqali ilovasiz foydalanishadi."
+                a: "Yo'q! A'zolar to'g'ridan-to'g'ri Telegram Mini App orqali ilovasiz foydalanishadi."
               },
               {
                 q: "14 kunlik bepul sinov davrida to'lov kartasi so'raladimi?",
                 a: "Yo'q, 14 kunlik sinov davrida hech qanday to'lov kartasi so'ralmaydi."
               }
             ].map((item, idx) => (
-              <div key={idx} className="rounded-2xl bg-surface-2 border border-border overflow-hidden">
+              <div key={idx} className="rounded-xl bg-surface-2 border border-border overflow-hidden">
                 <button
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full p-5 text-left font-display font-bold text-sm text-text-hi flex items-center justify-between cursor-pointer"
+                  className="w-full p-4 text-left font-display font-bold text-xs text-text-hi flex items-center justify-between cursor-pointer"
                 >
                   <span>{item.q}</span>
                   <ChevronDown className={`w-4 h-4 text-accent transition-transform ${openFaq === idx ? 'rotate-180' : ''}`} />
                 </button>
                 {openFaq === idx && (
-                  <div className="p-5 pt-0 text-xs text-text-dim leading-relaxed border-t border-border-2">
+                  <div className="p-4 pt-0 text-[11px] text-text-dim leading-relaxed border-t border-border-2">
                     {item.a}
                   </div>
                 )}
@@ -511,18 +583,18 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- Final CTA ---------- */}
-      <section className="py-24 relative overflow-hidden text-center px-6">
+      <section className="py-20 relative overflow-hidden text-center px-6">
         <div className="absolute inset-0 bg-accent/5 pointer-events-none" />
-        <div className="max-w-4xl mx-auto space-y-6 relative z-10">
-          <h2 className="text-4xl md:text-5xl font-display font-bold">
+        <div className="max-w-3xl mx-auto space-y-4 relative z-10">
+          <h2 className="text-3xl md:text-4xl font-display font-bold">
             Bugunoq Zalingiz Retention Darajasini Oshiring
           </h2>
-          <p className="text-text-dim text-base max-w-xl mx-auto">
+          <p className="text-text-dim text-xs max-w-md mx-auto">
             Retenix AI platformasi bilan zalingiz daromadini oshiring va mijozlar ketib qolishining oldini oling.
           </p>
           <Link 
             href="/login" 
-            className="inline-flex items-center gap-2 bg-accent text-bg px-10 py-4 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity shadow-[0_0_35px_rgba(232,255,71,0.3)] cursor-pointer"
+            className="inline-flex items-center gap-2 bg-accent text-bg px-8 py-3.5 rounded-xl text-xs font-semibold hover:opacity-90 transition-opacity shadow-[0_0_35px_rgba(232,255,71,0.3)] cursor-pointer"
           >
             14-Kunlik Bepul Sinovni Boshlash <ArrowRight className="w-4 h-4" />
           </Link>
@@ -530,23 +602,23 @@ export default function LandingPage() {
       </section>
 
       {/* ---------- Glass Footer ---------- */}
-      <footer className="border-t border-border bg-surface py-12 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <footer className="border-t border-border bg-surface py-10 px-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded border border-accent/50 flex items-center justify-center font-display font-bold text-accent text-xs">
+            <div className="w-5 h-5 rounded border border-accent/50 flex items-center justify-center font-display font-bold text-accent text-[10px]">
               R
             </div>
-            <span className="font-display font-bold text-text-hi">Retenix AI Platform</span>
+            <span className="font-display font-bold text-xs text-text-hi">Retenix AI Platform</span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6 text-xs text-text-dim font-mono">
+          <div className="flex flex-wrap items-center gap-5 text-xs text-text-dim font-mono">
             <Link href="/features" className="hover:text-accent">Imkoniyatlar</Link>
             <Link href="/pricing" className="hover:text-accent">Narxlar</Link>
             <Link href="/about" className="hover:text-accent">Biz Haqimizda</Link>
             <Link href="/contact" className="hover:text-accent">Bog'lanish</Link>
           </div>
 
-          <div className="text-xs text-text-dim font-mono">
+          <div className="text-[11px] text-text-dim font-mono">
             © {new Date().getFullYear()} Retenix. All rights reserved.
           </div>
         </div>
