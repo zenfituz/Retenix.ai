@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowRight, Activity, Zap, TrendingUp, ShieldCheck, CheckCircle2, 
   Bot, QrCode, Building2, Users, ChevronDown, Sparkles, Star, Award, 
-  BarChart3, Dumbbell, Shield, HelpCircle, Layers, Cpu, Play, Bell, AlertTriangle, ArrowUpRight
+  BarChart3, Dumbbell, Shield, HelpCircle, Layers, Cpu, Play, Bell, AlertTriangle, ArrowUpRight, Flame, Smartphone
 } from "lucide-react";
 
 export default function LandingPage() {
@@ -14,8 +14,8 @@ export default function LandingPage() {
   const [membersCount, setMembersCount] = useState(450);
   const [avgFee, setAvgFee] = useState(55);
 
-  // Role Preview State
-  const [activeTab, setActiveTab] = useState<"owner" | "trainer" | "member" | "superadmin">("owner");
+  // Role Preview State (Owner, Trainer, Member - SuperAdmin removed per request)
+  const [activeTab, setActiveTab] = useState<"owner" | "trainer" | "member">("owner");
 
   // FAQ State
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -40,7 +40,7 @@ export default function LandingPage() {
           <div className="hidden md:flex items-center gap-7 text-xs font-mono text-text-mid">
             <a href="#hero-dashboard" className="hover:text-accent transition-colors">Dashboard</a>
             <a href="#engine" className="hover:text-accent transition-colors">5-Factor Engine</a>
-            <a href="#showcase" className="hover:text-accent transition-colors">Platforma</a>
+            <a href="#showcase" className="hover:text-accent transition-colors">Panellar</a>
             <a href="#roi-calculator" className="hover:text-accent transition-colors">Kalkulyator</a>
             <Link href="/features" className="hover:text-accent transition-colors">Imkoniyatlar</Link>
             <Link href="/pricing" className="hover:text-accent transition-colors">Narxlar</Link>
@@ -65,7 +65,7 @@ export default function LandingPage() {
 
       {/* ---------- Halsa-Inspired Hero Section ---------- */}
       <section className="pt-28 pb-20 px-6 relative overflow-hidden">
-        {/* Subtle Ambient Background Gradients */}
+        {/* Ambient Glows */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-accent/8 rounded-full blur-[150px] pointer-events-none" />
         <div className="absolute top-20 right-10 w-[300px] h-[300px] bg-info/10 rounded-full blur-[130px] pointer-events-none" />
 
@@ -84,7 +84,7 @@ export default function LandingPage() {
               </span>
             </div>
 
-            {/* Slightly Smaller Sleek Typography */}
+            {/* Headline */}
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold leading-[1.15] tracking-tight max-w-4xl mx-auto">
               Mijozlar ketib qolishini <span className="text-bad underline decoration-bad/30">kutmang</span>.<br />
               Ularni <span className="text-accent">sun'iy intellekt</span> bilan ushlab qoling.
@@ -118,9 +118,7 @@ export default function LandingPage() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="pt-8 relative mx-auto max-w-5xl"
           >
-            {/* Outer Glow Wrapper */}
             <div className="rounded-3xl border border-accent/20 bg-surface/90 p-2.5 backdrop-blur-2xl shadow-[0_0_60px_rgba(0,0,0,0.9)] relative">
-              {/* Inner Dashboard UI Container */}
               <div className="rounded-2xl border border-border bg-[#0a0a14] overflow-hidden text-left shadow-2xl">
                 
                 {/* Top Window Navigation Bar */}
@@ -147,7 +145,6 @@ export default function LandingPage() {
 
                 {/* Dashboard Main Grid Area */}
                 <div className="p-5 space-y-5">
-                  {/* Top Stats Banner */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div className="p-3.5 rounded-xl bg-surface border border-border">
                       <div className="text-[10px] font-mono text-text-dim uppercase">RETENTION DARAJASI</div>
@@ -174,9 +171,7 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  {/* Mid Split: Real-time Member Feed & AI Copilot Insights */}
                   <div className="grid md:grid-cols-7 gap-4">
-                    {/* Churn Risk Feed */}
                     <div className="md:col-span-4 p-4 rounded-xl bg-surface border border-border space-y-3">
                       <div className="flex items-center justify-between pb-2 border-b border-border">
                         <div className="text-xs font-display font-bold text-text-hi flex items-center gap-2">
@@ -206,7 +201,6 @@ export default function LandingPage() {
                       </div>
                     </div>
 
-                    {/* AI Copilot Action Box */}
                     <div className="md:col-span-3 p-4 rounded-xl bg-surface-2 border border-accent/30 space-y-3 relative overflow-hidden">
                       <div className="flex items-center gap-2 text-xs font-display font-bold text-accent">
                         <Bot className="w-4 h-4 text-accent" /> Retenix AI Copilot
@@ -337,16 +331,15 @@ export default function LandingPage() {
               Har Bir Rol Uchun Shaxsiy Panellar
             </h2>
             <p className="text-text-dim text-xs">
-              Platforma Gym Owner, Murabbiy, A'zolar va SuperAdmin uchun alohida interfeyslarni taqdim etadi.
+              Platforma Gym Owner, Murabbiy va A'zolar uchun alohida interfeyslarni taqdim etadi.
             </p>
 
-            {/* Role Tabs */}
+            {/* Role Tabs (Owner, Trainer, Member - SuperAdmin removed) */}
             <div className="flex flex-wrap justify-center gap-2 pt-2">
               {[
-                { id: "owner", label: "🏢 Gym Owner View" },
-                { id: "trainer", label: "🏋️ Trainer View" },
-                { id: "member", label: "🧑 Member Telegram Mini App" },
-                { id: "superadmin", label: "🛡️ SuperAdmin Global View" },
+                { id: "owner", label: "🏢 Gym Owner Dashboard" },
+                { id: "trainer", label: "🏋️ Trainer Dashboard" },
+                { id: "member", label: "📱 Member Telegram App (Mobile)" },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -364,7 +357,7 @@ export default function LandingPage() {
           </div>
 
           {/* Role Screen Demo Preview */}
-          <div className="p-6 md:p-8 rounded-2xl bg-bg border border-border space-y-6 min-h-[320px] flex flex-col justify-center">
+          <div className="p-6 md:p-8 rounded-2xl bg-bg border border-border space-y-6 min-h-[360px] flex flex-col justify-center">
             {activeTab === "owner" && (
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -423,45 +416,66 @@ export default function LandingPage() {
               </div>
             )}
 
+            {/* MEMBER MOBILE SMARTPHONE FRAME DEMO */}
             {activeTab === "member" && (
-              <div className="space-y-4 max-w-md mx-auto text-center">
-                <div className="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/30 flex items-center justify-center text-accent mx-auto">
-                  <QrCode className="w-7 h-7" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-display font-bold text-text-hi">Telegram Mini App</h3>
-                  <p className="text-xs text-text-dim mt-1">A'zolar uchun ilovasiz, to'g'ridan-to'g'ri Telegram ichida ishlovchi raqamli turniket pass va olov stikerlari.</p>
-                </div>
-                <Link href="/member" className="inline-block px-5 py-2.5 bg-accent text-bg text-xs font-bold rounded-xl shadow-[0_0_20px_rgba(232,255,71,0.2)]">
-                  Member App Demoni Ko'rish
-                </Link>
-              </div>
-            )}
+              <div className="flex flex-col md:flex-row items-center justify-center gap-8 py-2">
+                {/* Mobile Phone Mockup */}
+                <div className="w-[280px] h-[480px] rounded-[36px] bg-[#050508] border-4 border-border shadow-[0_0_40px_rgba(232,255,71,0.15)] p-3 relative flex flex-col justify-between shrink-0">
+                  {/* Phone Notch */}
+                  <div className="w-24 h-4 rounded-full bg-border mx-auto mb-3" />
 
-            {activeTab === "superadmin" && (
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="text-xl font-display font-bold text-text-hi">SuperAdmin Global Platform</h3>
-                    <p className="text-xs text-text-dim">412 ta zal boshqaruvi, platforma MRR va AI tokenlar sarfi</p>
+                  {/* App Screen Inside Phone */}
+                  <div className="flex-1 bg-surface rounded-[24px] border border-border p-4 space-y-4 text-left overflow-y-auto">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-[9px] font-mono text-text-dim">MEMBER PASS</span>
+                        <div className="text-xs font-bold text-text-hi">Jasur Toshmatov</div>
+                      </div>
+                      <span className="text-[9px] font-mono text-accent bg-accent/10 px-2 py-0.5 rounded-full border border-accent/20">
+                        Pro A'zo
+                      </span>
+                    </div>
+
+                    {/* QR Code Pass Box */}
+                    <div className="p-3 rounded-xl bg-surface-2 border border-accent/30 text-center space-y-2">
+                      <div className="w-24 h-24 bg-white rounded-lg p-1.5 mx-auto flex items-center justify-center">
+                        <QrCode className="w-full h-full text-black" />
+                      </div>
+                      <div className="text-[9px] font-mono text-accent">● Turniket Check-in Pass</div>
+                    </div>
+
+                    {/* Streaks & XP */}
+                    <div className="grid grid-cols-2 gap-2 text-center">
+                      <div className="p-2 rounded-lg bg-surface-2 border border-border">
+                        <div className="text-xs font-bold text-text-hi">🔥 14 kun</div>
+                        <div className="text-[8px] font-mono text-text-dim">Streak</div>
+                      </div>
+                      <div className="p-2 rounded-lg bg-surface-2 border border-border">
+                        <div className="text-xs font-bold text-accent">2,340 XP</div>
+                        <div className="text-[8px] font-mono text-text-dim">Reyting #2</div>
+                      </div>
+                    </div>
                   </div>
-                  <Link href="/superadmin/dashboard" className="px-3.5 py-1.5 bg-accent text-bg text-xs font-semibold rounded-xl">
-                    SuperAdmin Paneliga Kirish
-                  </Link>
+
+                  {/* Phone Home Indicator */}
+                  <div className="w-20 h-1 rounded-full bg-border mx-auto mt-2" />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div className="p-3.5 rounded-xl bg-surface border border-border">
-                    <div className="text-[10px] font-mono text-text-dim">JAMI ZALLAR</div>
-                    <div className="text-xl font-display font-bold text-accent">412 ta</div>
-                  </div>
-                  <div className="p-3.5 rounded-xl bg-surface border border-border">
-                    <div className="text-[10px] font-mono text-text-dim">PLATFORMA MRR</div>
-                    <div className="text-xl font-display font-bold text-good">$18,450</div>
-                  </div>
-                  <div className="p-3.5 rounded-xl bg-surface border border-border">
-                    <div className="text-[10px] font-mono text-text-dim">AI TOKEN CONSUMPTION</div>
-                    <div className="text-xl font-display font-bold text-info">1.4M / oy</div>
-                  </div>
+
+                {/* Info Text */}
+                <div className="space-y-4 max-w-sm text-center md:text-left">
+                  <span className="px-3 py-1 rounded-full bg-accent/10 text-accent font-mono text-[10px]">
+                    TELEGRAM MINI APP DEMO
+                  </span>
+                  <h4 className="text-xl font-display font-bold text-text-hi">A'zolar Uchun Mobil Ilovasiz Turniket Pass</h4>
+                  <p className="text-xs text-text-dim leading-relaxed">
+                    A me'zolar hech qanday alohida ilova o'rnatishi shart emas. Telegram Mini App orqali turniket pass kodi, mashqlar jadvali va ovqatlanish jurnali darhol ochiladi.
+                  </p>
+                  <Link 
+                    href="/member" 
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-bg text-xs font-bold rounded-xl shadow-[0_0_20px_rgba(232,255,71,0.2)]"
+                  >
+                    Member App Demoni Ochish <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
               </div>
             )}
