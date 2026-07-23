@@ -426,7 +426,7 @@ function ActionFirstDashboard({
         </CardHeader>
         <CardContent className="p-4 space-y-3">
           <div className="space-y-2.5 max-h-48 overflow-y-auto pr-1">
-            {chatMessages.map((msg, idx) => (
+            {chatMessages.map((msg: ChatMessage, idx: number) => (
               <div 
                 key={idx}
                 className={`max-w-[85%] p-3 rounded-xl text-xs font-body leading-relaxed ${
