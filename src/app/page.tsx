@@ -359,7 +359,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ---------- HIGH-DEFINITION INTERACTIVE SHOWCASE (HERO DASHBOARD SCALE) ---------- */}
+      {/* ---------- HIGH-DEFINITION SHOWCASE SECTION (DESKTOP ROLE DASHBOARDS + MOBILE DEDICATED APP) ---------- */}
       <section id="showcase" className="py-16 bg-surface border-y border-border px-6">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
@@ -367,11 +367,12 @@ export default function LandingPage() {
               Zal Egasi, Murabbiy va A'zolar Uchun Maxsus Interfeyslar
             </h2>
             <p className="text-text-dim text-xs">
-              Tugmalarni bosib, har bir rol uchun ishlab chiqilgan interfaol funksiyalarni chuqurroq sinab ko'ring:
+              <span className="hidden md:inline">Tugmalarni bosib, har bir rol uchun ishlab chiqilgan interfaol funksiyalarni sinab ko'ring:</span>
+              <span className="inline md:hidden">Mobile qurilmada A'zoning shaxsiy Telegram Mini App interfeysi:</span>
             </p>
 
-            {/* Role Tabs */}
-            <div className="flex flex-wrap justify-center gap-2 pt-2">
+            {/* Desktop / Tablet Role Tabs (Hidden on mobile) */}
+            <div className="hidden md:flex flex-wrap justify-center gap-2 pt-2">
               {[
                 { id: "owner", label: "🏢 Gym Owner Full Dashboard" },
                 { id: "trainer", label: "🏋️ Trainer Schedule & Clients Dashboard" },
@@ -392,8 +393,8 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* HERO-SCALE DASHBOARD BROWSER MOCKUP WRAPPER */}
-          <div className="max-w-5xl mx-auto rounded-2xl border border-accent/20 bg-surface/90 p-2 backdrop-blur-2xl shadow-[0_0_60px_rgba(0,0,0,0.9)] relative">
+          {/* DESKTOP / TABLET DASHBOARD BROWSER MOCKUP WRAPPER (hidden on mobile) */}
+          <div className="hidden md:block max-w-5xl mx-auto rounded-2xl border border-accent/20 bg-surface/90 p-2 backdrop-blur-2xl shadow-[0_0_60px_rgba(0,0,0,0.9)] relative">
             <div className="rounded-xl border border-border bg-[#0a0a14] overflow-hidden text-left shadow-2xl">
               
               {/* Browser Window Header */}
@@ -402,7 +403,7 @@ export default function LandingPage() {
                   <div className="w-2.5 h-2.5 rounded-full bg-bad/80" />
                   <div className="w-2.5 h-2.5 rounded-full bg-warn/80" />
                   <div className="w-2.5 h-2.5 rounded-full bg-good/80" />
-                  <span className="text-[10px] font-mono text-text-dim ml-2 hidden sm:inline">
+                  <span className="text-[10px] font-mono text-text-dim ml-2">
                     {activeTab === 'owner' ? 'https://retenix-ai.vercel.app/owner/dashboard' : activeTab === 'trainer' ? 'https://retenix-ai.vercel.app/trainer/dashboard' : 'https://retenix-ai.vercel.app/member'}
                   </span>
                 </div>
@@ -421,12 +422,11 @@ export default function LandingPage() {
               </div>
 
               {/* DASHBOARD CONTENT BODY */}
-              <div className="p-4 md:p-6 space-y-4 min-h-[420px]">
+              <div className="p-6 space-y-4 min-h-[420px]">
                 
                 {/* 1. INTERACTIVE GYM OWNER DASHBOARD */}
                 {activeTab === "owner" && (
                   <div className="space-y-4">
-                    {/* Owner Sub-Tab Selector */}
                     <div className="flex items-center justify-between border-b border-border pb-3">
                       <div className="flex items-center gap-2">
                         {[
@@ -448,14 +448,14 @@ export default function LandingPage() {
                         ))}
                       </div>
 
-                      <span className="text-[10px] font-mono text-good hidden md:inline">
+                      <span className="text-[10px] font-mono text-good">
                         ● Live Database Stream
                       </span>
                     </div>
 
                     {ownerSubTab === "overview" && (
                       <div className="space-y-4">
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div className="grid grid-cols-4 gap-3">
                           <div className="p-3.5 rounded-xl bg-surface border border-border">
                             <div className="text-[9px] font-mono text-text-dim uppercase">JAMI A'ZOLAR</div>
                             <div className="text-xl font-display font-bold text-accent mt-0.5">2,350 ta</div>
@@ -478,8 +478,8 @@ export default function LandingPage() {
                           </div>
                         </div>
 
-                        <div className="grid md:grid-cols-7 gap-3">
-                          <div className="md:col-span-4 p-4 rounded-xl bg-surface border border-border space-y-3">
+                        <div className="grid grid-cols-7 gap-3">
+                          <div className="col-span-4 p-4 rounded-xl bg-surface border border-border space-y-3">
                             <div className="flex items-center justify-between text-xs font-display font-bold text-text-hi border-b border-border pb-2">
                               <span>Retention Oylik O'sish Dinamikasi</span>
                               <span className="text-[10px] font-mono text-accent">2026 Yil</span>
@@ -498,7 +498,7 @@ export default function LandingPage() {
                             </div>
                           </div>
 
-                          <div className="md:col-span-3 p-4 rounded-xl bg-surface border border-border space-y-2.5">
+                          <div className="col-span-3 p-4 rounded-xl bg-surface border border-border space-y-2.5">
                             <div className="text-xs font-display font-bold text-text-hi border-b border-border pb-2">
                               Zal Harakatlari Real-Vaqt Audit Logi
                             </div>
@@ -552,7 +552,7 @@ export default function LandingPage() {
                     {ownerSubTab === "trainers" && (
                       <div className="space-y-3">
                         <div className="text-xs font-display font-bold text-text-hi">Murabbiylar Samaradorligi Audit Panel</div>
-                        <div className="grid md:grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 gap-3">
                           <div className="p-3.5 rounded-xl bg-surface border border-border space-y-2">
                             <div className="flex justify-between items-center text-xs font-semibold text-text-hi">
                               <span>Coach Aziz Raximov</span>
@@ -581,9 +581,9 @@ export default function LandingPage() {
                       <span className="text-[10px] font-mono text-accent">Vaqt slotiga bosing:</span>
                     </div>
 
-                    <div className="grid md:grid-cols-7 gap-4">
+                    <div className="grid grid-cols-7 gap-4">
                       {/* Left: Schedule Slots List */}
-                      <div className="md:col-span-3 space-y-2">
+                      <div className="col-span-3 space-y-2">
                         {trainerSessions.map((s, idx) => (
                           <div 
                             key={idx}
@@ -608,7 +608,7 @@ export default function LandingPage() {
                       </div>
 
                       {/* Right: Selected Session Detail & AI Action */}
-                      <div className="md:col-span-4 p-4 rounded-xl bg-surface border border-accent/30 space-y-3 relative">
+                      <div className="col-span-4 p-4 rounded-xl bg-surface border border-accent/30 space-y-3 relative">
                         <div className="flex items-center justify-between border-b border-border pb-2">
                           <div>
                             <div className="text-sm font-display font-bold text-text-hi">{trainerSessions[trainerScheduleIdx].client}</div>
@@ -637,52 +637,26 @@ export default function LandingPage() {
                   </div>
                 )}
 
-                {/* 3. INTERACTIVE MEMBER MOBILE SMARTPHONE FRAME */}
+                {/* 3. MEMBER MOBILE VIEW ON DESKTOP */}
                 {activeTab === "member" && (
-                  <div className="flex flex-col md:flex-row items-center justify-center gap-8 py-2">
-                    {/* Smartphone Mockup */}
+                  <div className="flex items-center justify-center gap-8 py-2">
                     <div className="w-[280px] h-[470px] rounded-[36px] bg-[#050508] border-4 border-border shadow-[0_0_40px_rgba(232,255,71,0.15)] p-3 relative flex flex-col justify-between shrink-0">
-                      {/* Phone Notch */}
                       <div className="w-24 h-3.5 rounded-full bg-border mx-auto mb-2" />
-
-                      {/* App Screen Inside Phone */}
                       <div className="flex-1 bg-surface rounded-[24px] border border-border p-3.5 space-y-3 text-left overflow-y-auto">
-                        
-                        {/* Member App Internal Tabs */}
                         <div className="grid grid-cols-3 gap-1 bg-surface-2 p-1 rounded-xl text-center text-[9px] font-mono">
-                          <button 
-                            onClick={() => setMemberAppTab("profile")}
-                            className={`py-1 rounded-lg transition-colors cursor-pointer ${memberAppTab === 'profile' ? 'bg-accent text-bg font-bold' : 'text-text-dim'}`}
-                          >
-                            Profil
-                          </button>
-                          <button 
-                            onClick={() => setMemberAppTab("qr")}
-                            className={`py-1 rounded-lg transition-colors cursor-pointer ${memberAppTab === 'qr' ? 'bg-accent text-bg font-bold' : 'text-text-dim'}`}
-                          >
-                            QR Pass
-                          </button>
-                          <button 
-                            onClick={() => setMemberAppTab("plan")}
-                            className={`py-1 rounded-lg transition-colors cursor-pointer ${memberAppTab === 'plan' ? 'bg-accent text-bg font-bold' : 'text-text-dim'}`}
-                          >
-                            Reja
-                          </button>
+                          <button onClick={() => setMemberAppTab("profile")} className={`py-1 rounded-lg cursor-pointer ${memberAppTab === 'profile' ? 'bg-accent text-bg font-bold' : 'text-text-dim'}`}>Profil</button>
+                          <button onClick={() => setMemberAppTab("qr")} className={`py-1 rounded-lg cursor-pointer ${memberAppTab === 'qr' ? 'bg-accent text-bg font-bold' : 'text-text-dim'}`}>QR Pass</button>
+                          <button onClick={() => setMemberAppTab("plan")} className={`py-1 rounded-lg cursor-pointer ${memberAppTab === 'plan' ? 'bg-accent text-bg font-bold' : 'text-text-dim'}`}>Reja</button>
                         </div>
-
-                        {/* TAB 1: PROFILE & RESULTS */}
                         {memberAppTab === "profile" && (
                           <div className="space-y-3">
                             <div className="flex items-center gap-2.5 pb-2 border-b border-border">
-                              <div className="w-9 h-9 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center font-display font-bold text-accent text-xs">
-                                JT
-                              </div>
+                              <div className="w-9 h-9 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center font-display font-bold text-accent text-xs">JT</div>
                               <div>
                                 <div className="text-xs font-bold text-text-hi">Jasur Toshmatov</div>
                                 <div className="text-[8px] font-mono text-accent">👑 Daraja 5 · Usta</div>
                               </div>
                             </div>
-
                             <div className="grid grid-cols-2 gap-1.5 text-center">
                               <div className="p-2 rounded-lg bg-surface-2 border border-border">
                                 <div className="text-xs font-bold text-text-hi">🔥 14 kun</div>
@@ -693,30 +667,23 @@ export default function LandingPage() {
                                 <div className="text-[8px] font-mono text-text-dim uppercase">Reyting #2</div>
                               </div>
                             </div>
-
                             <div className="space-y-1">
-                              <div className="text-[9px] font-mono text-text-dim">OCHILGAN YUTUQLAR (BADGES)</div>
+                              <div className="text-[9px] font-mono text-text-dim">OCHILGAN YUTUQLAR</div>
                               <div className="flex justify-between text-[10px]">
                                 <span className="p-1 rounded bg-surface-2 border border-border">✅ Birinchi qadam</span>
                                 <span className="p-1 rounded bg-surface-2 border border-border">🔥 7 kunlik olov</span>
-                                <span className="p-1 rounded bg-surface-2 border border-border">🤖 AI do'sti</span>
                               </div>
                             </div>
                           </div>
                         )}
-
-                        {/* TAB 2: QR TURNSTILE PASS */}
                         {memberAppTab === "qr" && (
                           <div className="p-3 rounded-xl bg-surface-2 border border-accent/30 text-center space-y-2">
                             <div className="w-24 h-24 bg-white rounded-lg p-1 mx-auto flex items-center justify-center">
                               <QrCode className="w-full h-full text-black" />
                             </div>
                             <div className="text-[9px] font-mono text-accent">● Turniket Check-in QR Pass</div>
-                            <div className="text-[8px] font-mono text-text-dim">Kodni turniketga skaner qiling</div>
                           </div>
                         )}
-
-                        {/* TAB 3: WORKOUT PLAN */}
                         {memberAppTab === "plan" && (
                           <div className="space-y-2">
                             <div className="text-[9px] font-mono text-text-dim uppercase">BUGUNGI MASHQ REJASI</div>
@@ -725,33 +692,20 @@ export default function LandingPage() {
                                 <span>Shtanga siqish (Bench Press)</span>
                                 <span className="text-accent font-bold">4 x 10</span>
                               </div>
-                              <div className="p-2 rounded bg-surface-2 flex items-center justify-between border border-border">
-                                <span>Gantel bilan qo'llarni ko'tarish</span>
-                                <span className="text-accent font-bold">3 x 12</span>
-                              </div>
                             </div>
                           </div>
                         )}
-
                       </div>
-
-                      {/* Phone Home Indicator */}
                       <div className="w-20 h-1 rounded-full bg-border mx-auto mt-2" />
                     </div>
 
-                    {/* Description Text */}
-                    <div className="space-y-3 max-w-sm text-center md:text-left">
-                      <span className="px-3 py-1 rounded-full bg-accent/10 text-accent font-mono text-[10px]">
-                        TELEGRAM MINI APP DEMO
-                      </span>
+                    <div className="space-y-3 max-w-sm text-left">
+                      <span className="px-3 py-1 rounded-full bg-accent/10 text-accent font-mono text-[10px]">TELEGRAM MINI APP DEMO</span>
                       <h4 className="text-lg font-display font-bold text-text-hi">Member App: Profil va Natijalar Ko'rinishi</h4>
                       <p className="text-xs text-text-dim leading-relaxed">
-                        Smartfon ichidagi tablarni bosib sinab ko'ring — a'zolar Telegram orqali turniket QR kodi, shaxsiy XP darajasi va trenirovka rejalarini 1 ta joyda boshqarishadi.
+                        A'zolar Telegram orqali turniket QR kodi, shaxsiy XP darajasi va trenirovka rejalarini 1 ta joyda boshqarishadi.
                       </p>
-                      <Link 
-                        href="/member" 
-                        className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-accent text-bg text-xs font-bold rounded-xl shadow-[0_0_20px_rgba(232,255,71,0.2)]"
-                      >
+                      <Link href="/member" className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-accent text-bg text-xs font-bold rounded-xl shadow-[0_0_20px_rgba(232,255,71,0.2)]">
                         Member App Demoni Ochish <ArrowRight className="w-3.5 h-3.5" />
                       </Link>
                     </div>
@@ -761,6 +715,84 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
+
+          {/* DEDICATED MOBILE SCREEN SHOWCASE (ONLY SHOWN ON MOBILE DEVICES: block md:hidden) */}
+          <div className="block md:hidden py-4 text-center space-y-4">
+            <div className="w-[280px] h-[480px] rounded-[36px] bg-[#050508] border-4 border-border shadow-[0_0_40px_rgba(232,255,71,0.2)] p-3 relative flex flex-col justify-between shrink-0 mx-auto">
+              <div className="w-24 h-3.5 rounded-full bg-border mx-auto mb-2" />
+              <div className="flex-1 bg-surface rounded-[24px] border border-border p-3.5 space-y-3 text-left overflow-y-auto">
+                <div className="grid grid-cols-3 gap-1 bg-surface-2 p-1 rounded-xl text-center text-[9px] font-mono">
+                  <button onClick={() => setMemberAppTab("profile")} className={`py-1 rounded-lg cursor-pointer ${memberAppTab === 'profile' ? 'bg-accent text-bg font-bold' : 'text-text-dim'}`}>Profil</button>
+                  <button onClick={() => setMemberAppTab("qr")} className={`py-1 rounded-lg cursor-pointer ${memberAppTab === 'qr' ? 'bg-accent text-bg font-bold' : 'text-text-dim'}`}>QR Pass</button>
+                  <button onClick={() => setMemberAppTab("plan")} className={`py-1 rounded-lg cursor-pointer ${memberAppTab === 'plan' ? 'bg-accent text-bg font-bold' : 'text-text-dim'}`}>Reja</button>
+                </div>
+
+                {memberAppTab === "profile" && (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2.5 pb-2 border-b border-border">
+                      <div className="w-9 h-9 rounded-full bg-accent/20 border border-accent/40 flex items-center justify-center font-display font-bold text-accent text-xs">JT</div>
+                      <div>
+                        <div className="text-xs font-bold text-text-hi">Jasur Toshmatov</div>
+                        <div className="text-[8px] font-mono text-accent">👑 Daraja 5 · Usta</div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-1.5 text-center">
+                      <div className="p-2 rounded-lg bg-surface-2 border border-border">
+                        <div className="text-xs font-bold text-text-hi">🔥 14 kun</div>
+                        <div className="text-[8px] font-mono text-text-dim uppercase">Streak</div>
+                      </div>
+                      <div className="p-2 rounded-lg bg-surface-2 border border-border">
+                        <div className="text-xs font-bold text-accent">2,340 XP</div>
+                        <div className="text-[8px] font-mono text-text-dim uppercase">Reyting #2</div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="text-[9px] font-mono text-text-dim">OCHILGAN YUTUQLAR</div>
+                      <div className="flex justify-between text-[10px]">
+                        <span className="p-1 rounded bg-surface-2 border border-border">✅ Birinchi qadam</span>
+                        <span className="p-1 rounded bg-surface-2 border border-border">🔥 7 kunlik olov</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {memberAppTab === "qr" && (
+                  <div className="p-3 rounded-xl bg-surface-2 border border-accent/30 text-center space-y-2">
+                    <div className="w-24 h-24 bg-white rounded-lg p-1 mx-auto flex items-center justify-center">
+                      <QrCode className="w-full h-full text-black" />
+                    </div>
+                    <div className="text-[9px] font-mono text-accent">● Turniket Check-in QR Pass</div>
+                  </div>
+                )}
+
+                {memberAppTab === "plan" && (
+                  <div className="space-y-2">
+                    <div className="text-[9px] font-mono text-text-dim uppercase">BUGUNGI MASHQ REJASI</div>
+                    <div className="space-y-1.5 text-[10px]">
+                      <div className="p-2 rounded bg-surface-2 flex items-center justify-between border border-border">
+                        <span>Shtanga siqish (Bench Press)</span>
+                        <span className="text-accent font-bold">4 x 10</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="w-20 h-1 rounded-full bg-border mx-auto mt-2" />
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="text-base font-display font-bold text-text-hi">Telegram Mini App Mobile Preview</h4>
+              <p className="text-xs text-text-dim px-4 leading-relaxed">
+                Mobile qurilmada A'zolar uchun mo'ljallangan ilovasiz turniket pass, streak olovlari va shaxsiy mashqlar jurnali.
+              </p>
+              <Link href="/member" className="inline-flex items-center gap-1.5 px-4 py-2 bg-accent text-bg text-xs font-bold rounded-xl">
+                Member App Demoni Ochish <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+
         </div>
       </section>
 
