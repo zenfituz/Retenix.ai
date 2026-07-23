@@ -15,6 +15,22 @@ function getRoleRedirectPath(role: string) {
   }
 }
 
+const PUBLIC_ROUTES = [
+  '/',
+  '/features',
+  '/pricing',
+  '/about',
+  '/contact',
+  '/login',
+]
+
+function isPublicRoute(pathname: string) {
+  if (PUBLIC_ROUTES.includes(pathname)) return true;
+  if (pathname.startsWith('/api/')) return true;
+  if (pathname.startsWith('/_next') || pathname.includes('.')) return true;
+  return false;
+}
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -51,13 +67,13 @@ export async function updateSession(request: NextRequest) {
   const role = user?.app_metadata?.role || user?.user_metadata?.role || 'owner'
   const targetPath = getRoleRedirectPath(role)
 
-  // Redirect logged-in users away from /login
+  // Redirect logged-in users away from /login to their role dashboard
   if (user && pathname.startsWith('/login')) {
     return NextResponse.redirect(new URL(targetPath, request.url))
   }
   
   // Protect private routes from unauthenticated users
-  if (!user && !pathname.startsWith('/login') && pathname !== '/') {
+  if (!user && !isPublicRoute(pathname)) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
