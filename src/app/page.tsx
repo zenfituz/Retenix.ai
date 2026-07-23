@@ -88,7 +88,7 @@ export default function LandingPage() {
             {/* Typography Scale: Refined & Compact */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold leading-[1.18] tracking-tight max-w-3xl mx-auto">
               Mijozlar ketib qolishini <span className="text-bad underline decoration-bad/30">kutmang</span>.<br />
-              Ularni <span className="text-accent">sun'iy intellekt</span> bilan ushlab qoling.
+              Ularni <span className="text-accent">Retenix.ai</span> bilan ushlab qoling.
             </h1>
 
             <p className="text-xs sm:text-sm text-text-dim max-w-xl mx-auto leading-relaxed font-body">
