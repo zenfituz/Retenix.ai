@@ -6,6 +6,7 @@ import { User, QrCode, Flame, ShieldCheck, ChevronRight, CheckCircle2, Trophy, U
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { KpiCard } from "@/components/ui/kpi-card";
 import { Pill } from "@/components/ui/pill";
+import { getCurrentUserSession } from "@/utils/demo-check";
 
 const BADGES = [
   { id: "1", icon: "✅", label: "Birinchi qadam", unlocked: true },
@@ -18,13 +19,22 @@ const BADGES = [
 export default function MemberApp() {
   const [isOnboarding, setIsOnboarding] = useState(true);
   const [isReady, setIsReady] = useState(false);
+  const [isDemo, setIsDemo] = useState(true);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    const onboarded = localStorage.getItem("tma_onboarded");
-    if (onboarded) {
-      setIsOnboarding(false);
+    async function init() {
+      const session = await getCurrentUserSession();
+      setUserEmail(session.email);
+      setIsDemo(session.isDemo);
+
+      const onboarded = localStorage.getItem("tma_onboarded");
+      if (onboarded) {
+        setIsOnboarding(false);
+      }
+      setIsReady(true);
     }
-    setIsReady(true);
+    init();
   }, []);
 
   const completeOnboarding = () => {
@@ -40,7 +50,7 @@ export default function MemberApp() {
         {isOnboarding ? (
           <OnboardingScreen key="onboarding" onComplete={completeOnboarding} />
         ) : (
-          <DashboardScreen key="dashboard" />
+          <DashboardScreen key="dashboard" isDemo={isDemo} userEmail={userEmail} />
         )}
       </AnimatePresence>
     </div>
@@ -94,7 +104,9 @@ function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
   );
 }
 
-function DashboardScreen() {
+function DashboardScreen({ isDemo, userEmail }: { isDemo: boolean; userEmail: string | null }) {
+  const name = isDemo ? "Jasur Toshmatov" : userEmail?.split("@")[0] || "A'zo";
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -105,14 +117,16 @@ function DashboardScreen() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl md:text-3xl font-display font-bold text-text-hi">
-            Xush kelibsiz, Jasur Toshmatov 👋
+            Xush kelibsiz, {name} 👋
           </h2>
-          <p className="text-text-dim text-sm mt-1">FitZone Gym Yunusobod • Pro A'zo</p>
+          <p className="text-text-dim text-sm mt-1">
+            {isDemo ? "FitZone Gym Yunusobod • Pro A'zo" : "FitZone Gym • Shaxsiy A'zolik"}
+          </p>
         </div>
         <div className="flex items-center gap-2 bg-surface-2 border border-border px-3.5 py-1.5 rounded-full font-mono text-xs text-accent">
-          <span>👑 Daraja 5 · Usta</span>
+          <span>👑 Daraja {isDemo ? "5 · Usta" : "1 · Boshlang'ich"}</span>
           <span>•</span>
-          <span>2,340 XP</span>
+          <span>{isDemo ? "2,340 XP" : "100 XP"}</span>
         </div>
       </div>
 
@@ -127,11 +141,15 @@ function DashboardScreen() {
                 <Pill variant="success" className="mb-2">
                   ✓ Faol Obuna
                 </Pill>
-                <h3 className="text-2xl font-display font-bold text-text-hi">Pro Annual Plan</h3>
-                <p className="text-text-dim text-xs mt-1 font-mono">Qolgan muddat: 18 kun • Yunusobod Filiali</p>
+                <h3 className="text-2xl font-display font-bold text-text-hi">
+                  {isDemo ? "Pro Annual Plan" : "Standard Membership"}
+                </h3>
+                <p className="text-text-dim text-xs mt-1 font-mono">
+                  {isDemo ? "Qolgan muddat: 18 kun • Yunusobod Filiali" : "Qolgan muddat: 30 kun • Asosiy Zonalarga Ruxsat"}
+                </p>
               </div>
               <div className="font-mono text-xs text-accent bg-accent/10 border border-accent/20 px-3 py-1 rounded-lg">
-                ID: #RET-8492
+                ID: {isDemo ? "#RET-8492" : "#RET-NEW"}
               </div>
             </div>
 
@@ -156,7 +174,7 @@ function DashboardScreen() {
               <div className="w-9 h-9 rounded-full bg-accent/10 flex items-center justify-center text-accent mb-2">
                 <Flame className="w-5 h-5" />
               </div>
-              <div className="text-xl font-display font-bold text-text-hi">🔥 14</div>
+              <div className="text-xl font-display font-bold text-text-hi">{isDemo ? "🔥 14" : "🔥 1"}</div>
               <div className="text-[10px] font-mono text-text-dim uppercase mt-0.5">Kunlik Streak</div>
             </div>
 
@@ -164,7 +182,7 @@ function DashboardScreen() {
               <div className="w-9 h-9 rounded-full bg-good/10 flex items-center justify-center text-good mb-2">
                 <CheckCircle2 className="w-5 h-5" />
               </div>
-              <div className="text-xl font-display font-bold text-text-hi">18</div>
+              <div className="text-xl font-display font-bold text-text-hi">{isDemo ? "18" : "1"}</div>
               <div className="text-[10px] font-mono text-text-dim uppercase mt-0.5">Bu Oydagi Tashrif</div>
             </div>
 
@@ -172,7 +190,7 @@ function DashboardScreen() {
               <div className="w-9 h-9 rounded-full bg-info/10 flex items-center justify-center text-info mb-2">
                 <Trophy className="w-5 h-5" />
               </div>
-              <div className="text-xl font-display font-bold text-accent">#3</div>
+              <div className="text-xl font-display font-bold text-accent">{isDemo ? "#3" : "#--"}</div>
               <div className="text-[10px] font-mono text-text-dim uppercase mt-0.5">Reyting O'rni</div>
             </div>
 
@@ -180,7 +198,7 @@ function DashboardScreen() {
               <div className="w-9 h-9 rounded-full bg-warn/10 flex items-center justify-center text-warn mb-2">
                 <Zap className="w-5 h-5" />
               </div>
-              <div className="text-xl font-display font-bold text-text-hi">2,340</div>
+              <div className="text-xl font-display font-bold text-text-hi">{isDemo ? "2,340" : "100"}</div>
               <div className="text-[10px] font-mono text-text-dim uppercase mt-0.5">Jami XP</div>
             </div>
           </div>
@@ -200,41 +218,16 @@ function DashboardScreen() {
                 {BADGES.map((b) => (
                   <div
                     key={b.id}
-                    title={b.unlocked ? "Ochilgan" : b.hint}
-                    className={`p-3 rounded-xl bg-surface-2 border border-border flex flex-col items-center text-center transition-all ${
-                      b.unlocked ? "opacity-100" : "opacity-40 grayscale"
+                    className={`p-2.5 rounded-xl border text-center transition-all ${
+                      b.unlocked
+                        ? "bg-surface-2 border-accent/40 text-text-hi"
+                        : "bg-surface-3 border-border opacity-50 text-text-dim"
                     }`}
                   >
-                    <span className="text-2xl mb-1">{b.unlocked ? b.icon : "🔒"}</span>
-                    <span className="text-[10px] font-medium text-text-mid leading-tight">{b.label}</span>
+                    <div className="text-xl mb-1">{b.icon}</div>
+                    <div className="text-[10px] font-semibold">{b.label}</div>
                   </div>
                 ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Today's Workout Plan */}
-          <Card className="bg-surface border-border">
-            <CardHeader className="pb-2 border-b border-border">
-              <CardTitle className="text-sm font-display font-bold flex items-center gap-2">
-                <Dumbbell className="w-4 h-4 text-accent" /> Bugungi Trenirovka Rejasi
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-4 space-y-3">
-              <div className="p-3 rounded-xl bg-surface-2 border border-border-2 flex items-center justify-between">
-                <div>
-                  <div className="text-xs font-semibold text-text-hi">Bench Press (Ko'krak)</div>
-                  <div className="text-[10px] text-text-dim font-mono mt-0.5">4 set × 10 takrorlash • 75 kg</div>
-                </div>
-                <Pill variant="success">Bajarildi</Pill>
-              </div>
-
-              <div className="p-3 rounded-xl bg-surface-2 border border-border-2 flex items-center justify-between">
-                <div>
-                  <div className="text-xs font-semibold text-text-hi">Incline Dumbbell Press</div>
-                  <div className="text-[10px] text-text-dim font-mono mt-0.5">3 set × 12 takrorlash • 26 kg</div>
-                </div>
-                <Pill variant="default">Kutilmoqda</Pill>
               </div>
             </CardContent>
           </Card>
