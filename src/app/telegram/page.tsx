@@ -90,7 +90,7 @@ export default function TelegramPage() {
 
         <div className="flex items-center gap-2">
           <a
-            href="https://t.me/RetenixAiBot"
+            href="https://t.me/retenixai_bot"
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-2.5 bg-accent text-bg font-bold text-xs rounded-xl hover:opacity-90 transition-opacity flex items-center gap-2 shadow-[0_0_20px_rgba(232,255,71,0.25)]"
@@ -159,7 +159,7 @@ export default function TelegramPage() {
                 🤖
               </div>
               <div>
-                <CardTitle className="text-sm font-display font-bold text-text-hi">@RetenixAiBot (Simulyator)</CardTitle>
+                <CardTitle className="text-sm font-display font-bold text-text-hi">@retenixai_bot (Simulyator)</CardTitle>
                 <p className="text-[10px] font-mono text-good flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-good animate-pulse" /> Bot Server Online
                 </p>

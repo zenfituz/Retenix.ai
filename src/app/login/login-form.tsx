@@ -90,7 +90,7 @@ export function LoginForm({ message }: { message?: string }) {
       form.submit()
     } else {
       // Redirect to Telegram Bot
-      window.open('https://t.me/RetenixAiBot', '_blank')
+      window.open('https://t.me/retenixai_bot', '_blank')
     }
   }
 

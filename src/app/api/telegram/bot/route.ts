@@ -117,11 +117,12 @@ export async function GET(req: Request) {
     const res = await fetch(`${TELEGRAM_API}/setWebhook?url=${webhookUrl}`);
     const data = await res.json();
     return NextResponse.json({
-      ok: true,
+      name: "Retenix Telegram Bot Webhook API",
+      status: "active",
       bot_token_configured: true,
-      webhook_url: webhookUrl,
-      telegram_response: data,
+      webhook_url: `${APP_URL}/api/telegram/bot`,
       mini_app_url: `${APP_URL}/member`,
+      bot_handle: "@retenixai_bot",
       commands: ["/start", "/checkin", "/plan", "/ai"]
     });
   } catch (err: any) {
