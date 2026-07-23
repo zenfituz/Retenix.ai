@@ -109,12 +109,32 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const setup = searchParams.get('setup');
+
+  if (setup === '1') {
+    try {
+      const webhookUrl = `${APP_URL}/api/telegram/bot`;
+      const res = await fetch(`${TELEGRAM_API}/setWebhook?url=${webhookUrl}`);
+      const data = await res.json();
+      return NextResponse.json({
+        ok: true,
+        message: "Webhook setup executed via Vercel Cloud Server",
+        webhook_url: webhookUrl,
+        telegram_response: data
+      });
+    } catch (err: any) {
+      return NextResponse.json({ ok: false, error: err.message });
+    }
+  }
+
   return NextResponse.json({
     name: "Retenix Telegram Bot Webhook API",
     status: "active",
     bot_token_configured: true,
     webhook_url: `${APP_URL}/api/telegram/bot`,
+    setup_instruction: "Visit /api/telegram/bot?setup=1 to trigger automatic live webhook registration on Telegram Cloud",
     mini_app_url: `${APP_URL}/member`,
     commands: ["/start", "/checkin", "/plan", "/ai"]
   });
