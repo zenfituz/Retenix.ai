@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTelegram } from '@/lib/telegram/provider';
 import { User, Bell, Shield, LogOut, CheckCircle2 } from 'lucide-react';
+import { signOut } from '@/app/login/actions';
 
 export default function ProfilePage() {
   const { user } = useTelegram();
@@ -103,10 +104,15 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <button className="w-full py-4 bg-[#1a1a26] text-[#E24B4A] font-bold rounded-2xl border border-[#2a2a3a] flex items-center justify-center gap-2 hover:bg-[#2a2a3a] transition-colors mt-8">
-        <LogOut className="w-5 h-5" />
-        Sign Out
-      </button>
+      <form action={signOut}>
+        <button 
+          type="submit"
+          className="w-full py-4 bg-[#1a1a26] text-[#E24B4A] font-bold rounded-2xl border border-[#2a2a3a] flex items-center justify-center gap-2 hover:bg-[#2a2a3a] transition-colors mt-8 cursor-pointer"
+        >
+          <LogOut className="w-5 h-5" />
+          Chiqish (Sign Out)
+        </button>
+      </form>
     </div>
   );
 }

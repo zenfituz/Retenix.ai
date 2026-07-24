@@ -131,17 +131,15 @@ export function AppShell({
 
           {/* User Section & Logout */}
           <div className="pt-4 border-t border-border mt-auto flex flex-col gap-3">
-            {role !== 'member' && (
-              <form action={signOut}>
-                <button
-                  type="submit"
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-bad hover:bg-bad-dim/20 transition-colors cursor-pointer"
-                >
-                  <LogOut className="w-4 h-4 shrink-0" />
-                  <span>{t("logout")}</span>
-                </button>
-              </form>
-            )}
+            <form action={signOut}>
+              <button
+                type="submit"
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-bad hover:bg-bad-dim/20 transition-colors cursor-pointer"
+              >
+                <LogOut className="w-4 h-4 shrink-0" />
+                <span>{t("logout")}</span>
+              </button>
+            </form>
 
             {/* Plan Card */}
             <div className="bg-surface-2 border border-border rounded-xl p-3">
@@ -170,19 +168,17 @@ export function AppShell({
           <div className="flex items-center gap-2">
             <LanguageSwitcher />
             
-            {/* MOBILE SIGN OUT BUTTON FOR NON-MEMBER ROLES ONLY */}
-            {role !== 'member' && (
-              <form action={signOut}>
-                <button
-                  type="submit"
-                  className="p-2 rounded-lg bg-bad/10 border border-bad/30 text-bad hover:bg-bad/20 transition-colors cursor-pointer flex items-center gap-1 text-xs font-semibold"
-                  title={t("logout")}
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span className="hidden sm:inline">{t("logout")}</span>
-                </button>
-              </form>
-            )}
+            {/* MOBILE SIGN OUT BUTTON FOR ALL ROLES */}
+            <form action={signOut}>
+              <button
+                type="submit"
+                className="p-2 rounded-lg bg-bad/10 border border-bad/30 text-bad hover:bg-bad/20 transition-colors cursor-pointer flex items-center gap-1 text-xs font-semibold"
+                title={t("logout")}
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="hidden sm:inline">{t("logout")}</span>
+              </button>
+            </form>
           </div>
         </header>
 
@@ -254,18 +250,16 @@ export function AppShell({
                 </Link>
               );
             })}
-            {role !== 'member' && (
-              <form action={signOut}>
-                <button
-                  type="submit"
-                  onClick={() => setMoreOpen(false)}
-                  className="w-full flex items-center gap-3 p-3 rounded-xl bg-bad-dim/20 text-sm text-bad border border-bad/30 cursor-pointer"
-                >
-                  <LogOut className="w-5 h-5" />
-                  <span>{t("logout")}</span>
-                </button>
-              </form>
-            )}
+            <form action={signOut}>
+              <button
+                type="submit"
+                onClick={() => setMoreOpen(false)}
+                className="w-full flex items-center gap-3 p-3 rounded-xl bg-bad-dim/20 text-sm text-bad border border-bad/30 cursor-pointer"
+              >
+                <LogOut className="w-5 h-5" />
+                <span>{t("logout")}</span>
+              </button>
+            </form>
           </div>
         </div>
       )}
