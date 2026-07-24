@@ -4,15 +4,21 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8614316875:AAELbAmeGQiAa8SfrhW5pc6O-5UQMRPU_vw';
-  const WEBHOOK_URL = 'https://retenix-ai.vercel.app/api/telegram/bot';
-  const MINI_APP_URL = 'https://retenix-ai.vercel.app/member';
+  const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://retenix-ai.vercel.app';
+  const WEBHOOK_URL = `${APP_URL}/api/telegram/bot`;
+  const MINI_APP_URL = `${APP_URL}/member`;
 
   try {
-    // 1. Set Webhook
-    const webhookRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/setWebhook?url=${WEBHOOK_URL}`);
+    const webhookRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/setWebhook`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        url: WEBHOOK_URL,
+        secret_token: process.env.TELEGRAM_WEBHOOK_SECRET || undefined,
+      })
+    });
     const webhookData = await webhookRes.json();
 
-    // 2. Set Bot Menu Button (Web App)
     const menuRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/setChatMenuButton`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -26,22 +32,23 @@ export async function GET() {
     });
     const menuData = await menuRes.json();
 
-    // 3. Set Bot Commands
     const commandsRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/setMyCommands`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         commands: [
-          { command: 'start', description: 'Start Bot & Open Retenix Mini App' },
+          { command: 'start', description: 'Start Bot & Link Account' },
+          { command: 'app', description: 'Open Mini App' },
+          { command: 'today', description: "Show today's workout" },
           { command: 'checkin', description: 'Turnstile QR Code Pass' },
-          { command: 'plan', description: 'Daily Workout Plan' },
-          { command: 'ai', description: '24/7 AI Coach Chat' }
+          { command: 'streak', description: 'Show current streak' },
+          { command: 'coach', description: 'Ask AI Coach' },
+          { command: 'help', description: 'Show available commands' }
         ]
       })
     });
     const commandsData = await commandsRes.json();
 
-    // 4. Get Webhook Info
     const infoRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getWebhookInfo`);
     const infoData = await infoRes.json();
 

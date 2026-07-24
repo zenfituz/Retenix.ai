@@ -1,46 +1,91 @@
 import { NextResponse } from 'next/server';
+import crypto from 'crypto';
+import { createClient } from '@supabase/supabase-js';
+
+const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8614316875:AAELbAmeGQiAa8SfrhW5pc6O-5UQMRPU_vw';
+
+const getSupabaseAdmin = () => createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.SUPABASE_SERVICE_ROLE_KEY || '',
+  { auth: { autoRefreshToken: false, persistSession: false } }
+);
+
+// Simple rate limit in-memory store
+const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { initData } = body;
+    const ip = req.headers.get('x-forwarded-for') || 'unknown';
+    const now = Date.now();
+    
+    // Clean up old entries
+    if (rateLimitMap.has(ip)) {
+      const entry = rateLimitMap.get(ip)!;
+      if (now - entry.timestamp > 60000) {
+        rateLimitMap.set(ip, { count: 1, timestamp: now });
+      } else {
+        if (entry.count >= 20) {
+          return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+        }
+        entry.count++;
+      }
+    } else {
+      rateLimitMap.set(ip, { count: 1, timestamp: now });
+    }
+
+    const body = await req.json().catch(() => ({}));
+    const initData = req.headers.get('x-telegram-init-data') || body.initData;
 
     if (!initData) {
       return NextResponse.json({ error: 'Missing initData' }, { status: 400 });
     }
 
-    // MOCK: Telegram Web App InitData HMAC validation
-    // The real implementation would be:
-    // 1. Parse initData into key-value pairs
-    // 2. Sort by keys alphabetically
-    // 3. Create a data check string (e.g., "auth_date=...&query_id=...&user=...")
-    // 4. Compute secret_key = HMAC_SHA256(bot_token, "WebAppData")
-    // 5. Compute hash = HMAC_SHA256(secret_key, data_check_string)
-    // 6. Compare computed hash with the hash provided in initData
-
     const urlParams = new URLSearchParams(initData);
     const hash = urlParams.get('hash');
-    const userStr = urlParams.get('user');
-
-    if (!hash || !userStr) {
+    
+    if (!hash) {
       return NextResponse.json({ error: 'Invalid initData format' }, { status: 400 });
     }
+    
+    urlParams.delete('hash');
+    const authDate = urlParams.get('auth_date');
+    if (!authDate || (now / 1000 - parseInt(authDate)) > 300) {
+      return NextResponse.json({ error: 'Data is outdated' }, { status: 401 });
+    }
 
-    const user = JSON.parse(decodeURIComponent(userStr));
+    const keys = Array.from(urlParams.keys()).sort();
+    const dataCheckString = keys.map(k => `${k}=${urlParams.get(k)}`).join('\n');
 
-    // MOCK Validation Check (Always passes for now)
-    const isValid = true; 
+    const secretKey = crypto.createHmac('sha256', 'WebAppData').update(BOT_TOKEN).digest();
+    const computedHash = crypto.createHmac('sha256', secretKey).update(dataCheckString).digest('hex');
 
-    if (!isValid) {
+    if (computedHash !== hash) {
       return NextResponse.json({ error: 'Invalid hash' }, { status: 401 });
     }
 
-    // Assuming user is authenticated, we might create a JWT or session here
-    
+    const userStr = urlParams.get('user');
+    let user = null;
+    if (userStr) {
+      user = JSON.parse(userStr);
+    }
+
+    if (!user) {
+      return NextResponse.json({ error: 'User data missing' }, { status: 400 });
+    }
+
+    // Check if user is linked
+    const supabaseAdmin = getSupabaseAdmin();
+    const { data: member } = await supabaseAdmin
+      .from('members')
+      .select('*')
+      .eq('telegram_user_id', user.id.toString())
+      .single();
+
     return NextResponse.json({ 
       success: true, 
       user: user,
-      message: 'Authentication successful' 
+      member: member || null,
+      is_linked: !!member
     });
   } catch (error) {
     console.error('Telegram Auth Error:', error);
