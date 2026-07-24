@@ -22,8 +22,8 @@ export default function ProfilePage() {
     <div className="p-4 space-y-6">
       <div className="text-center py-6">
         <div className="w-24 h-24 mx-auto bg-[#1a1a26] rounded-full border-2 border-[#E8FF47] flex items-center justify-center mb-4 overflow-hidden relative">
-          {user?.photoUrl ? (
-            <img src={user.photoUrl} alt="Avatar" className="w-full h-full object-cover" />
+          {user?.photo_url ? (
+            <img src={user.photo_url} alt="Avatar" className="w-full h-full object-cover" />
           ) : (
             <User className="w-10 h-10 text-gray-400" />
           )}
@@ -31,7 +31,7 @@ export default function ProfilePage() {
             <span className="text-[10px] font-bold text-white uppercase tracking-wider">PRO</span>
           </div>
         </div>
-        <h1 className="text-2xl font-bold font-unbounded text-white">{user?.firstName || 'O\'ktam'} {user?.lastName || ''}</h1>
+        <h1 className="text-2xl font-bold font-unbounded text-white">{user?.first_name || 'O\'ktam'} {user?.last_name || ''}</h1>
         <p className="text-[#5DCAA5] font-medium mt-1">Retenix Elite Gym</p>
       </div>
 
