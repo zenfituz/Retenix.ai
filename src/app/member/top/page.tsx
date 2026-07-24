@@ -77,14 +77,14 @@ export default function LeaderboardPage() {
           {leaders.map((member, index) => (
             <div 
               key={member.id} 
-              className={\`flex items-center p-4 \${index !== leaders.length - 1 ? 'border-b border-[#1e1e2c]' : ''} \${member.isCurrentUser ? 'bg-[#E8FF47]/5 border-l-4 border-l-[#E8FF47]' : 'hover:bg-[#1a1a26]'} transition-colors\`}
+              className={`flex items-center p-4 ${index !== leaders.length - 1 ? 'border-b border-[#1e1e2c]' : ''} ${member.isCurrentUser ? 'bg-[#E8FF47]/5 border-l-4 border-l-[#E8FF47]' : 'hover:bg-[#1a1a26]'} transition-colors`}
             >
               <div className="w-10 flex justify-center shrink-0 mr-3">
                 {getRankIcon(member.rank)}
               </div>
               
               <div className="flex-1 min-w-0">
-                <h3 className={\`font-bold truncate \${member.isCurrentUser ? 'text-[#E8FF47]' : 'text-white'}\`}>
+                <h3 className={`font-bold truncate ${member.isCurrentUser ? 'text-[#E8FF47]' : 'text-white'}`}>
                   {member.name} {member.isCurrentUser && '(You)'}
                 </h3>
                 <div className="flex items-center gap-1 mt-1">
@@ -95,8 +95,8 @@ export default function LeaderboardPage() {
               
               <div className="flex flex-col items-end shrink-0 ml-2">
                 <div className="flex items-center gap-1 bg-[#1a1a26] px-2 py-1 rounded-lg border border-[#2a2a3a]">
-                  <Flame className={\`w-3.5 h-3.5 \${member.streak >= 3 ? 'text-[#E8C547]' : 'text-gray-500'}\`} />
-                  <span className={\`text-xs font-bold \${member.streak >= 3 ? 'text-white' : 'text-gray-500'}\`}>
+                  <Flame className={`w-3.5 h-3.5 ${member.streak >= 3 ? 'text-[#E8C547]' : 'text-gray-500'}`} />
+                  <span className={`text-xs font-bold ${member.streak >= 3 ? 'text-white' : 'text-gray-500'}`}>
                     {member.streak}
                   </span>
                 </div>

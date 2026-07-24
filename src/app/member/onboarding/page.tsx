@@ -128,7 +128,7 @@ export default function OnboardingPage() {
     <div className="flex flex-col min-h-screen p-4 bg-[#080810] absolute inset-0 z-50 pt-12">
       {/* Progress Bar */}
       <div className="w-full h-1 bg-[#1a1a26] rounded-full overflow-hidden mb-10">
-        <div className="h-full bg-[#E8FF47] transition-all duration-300" style={{ width: \`\${(step / 2) * 100}%\` }}></div>
+        <div className="h-full bg-[#E8FF47] transition-all duration-300" style={{ width: `${(step / 2) * 100}%` }}></div>
       </div>
 
       <div className="flex-1">

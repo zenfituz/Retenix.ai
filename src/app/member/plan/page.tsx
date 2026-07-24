@@ -92,10 +92,10 @@ export default function WorkoutPlanPage() {
             <button
               key={day}
               onClick={() => setSelectedDay(idx)}
-              className={\`flex flex-col items-center gap-2 p-2 rounded-xl transition-colors \${selectedDay === idx ? 'bg-[#E8FF47] text-black' : 'text-gray-400 hover:bg-[#1a1a26]'}\`}
+              className={`flex flex-col items-center gap-2 p-2 rounded-xl transition-colors ${selectedDay === idx ? 'bg-[#E8FF47] text-black' : 'text-gray-400 hover:bg-[#1a1a26]'}`}
             >
               <span className="text-xs font-medium">{day}</span>
-              <span className={\`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold \${idx < 2 ? 'bg-[#5DCAA5] text-[#080810]' : selectedDay === idx ? 'bg-black text-[#E8FF47]' : 'bg-[#1a1a26] text-gray-300'}\`}>
+              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${idx < 2 ? 'bg-[#5DCAA5] text-[#080810]' : selectedDay === idx ? 'bg-black text-[#E8FF47]' : 'bg-[#1a1a26] text-gray-300'}`}>
                 {idx + 14}
               </span>
             </button>
@@ -118,7 +118,7 @@ export default function WorkoutPlanPage() {
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="font-bold text-white text-lg">{exercise.name}</h3>
-                  <p className="text-gray-400 text-sm">{exercise.sets} sets x {exercise.reps} {exercise.weight && \`• \${exercise.weight}\`}</p>
+                  <p className="text-gray-400 text-sm">{exercise.sets} sets x {exercise.reps} {exercise.weight && `• ${exercise.weight}`}</p>
                 </div>
               </div>
               
@@ -127,7 +127,7 @@ export default function WorkoutPlanPage() {
                   <button
                     key={idx}
                     onClick={() => toggleSet(exercise.id, idx)}
-                    className={\`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center border-2 transition-all \${idx < exercise.completedSets ? 'bg-[#5DCAA5]/20 border-[#5DCAA5] text-[#5DCAA5]' : 'bg-[#1a1a26] border-[#2a2a3a] text-gray-500 hover:border-gray-400'}\`}
+                    className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center border-2 transition-all ${idx < exercise.completedSets ? 'bg-[#5DCAA5]/20 border-[#5DCAA5] text-[#5DCAA5]' : 'bg-[#1a1a26] border-[#2a2a3a] text-gray-500 hover:border-gray-400'}`}
                   >
                     {idx < exercise.completedSets ? (
                       <CheckCircle2 className="w-6 h-6" />

@@ -129,7 +129,7 @@ export default function MemberDashboard() {
           <div className="flex flex-col gap-2">
             <span className="text-xl font-bold text-white">{data.member.xp} <span className="text-sm text-gray-500 font-normal">XP</span></span>
             <div className="h-1.5 w-full bg-[#1a1a26] rounded-full overflow-hidden">
-              <div className="h-full bg-[#5DCAA5]" style={{ width: \`\${xpProgress}%\` }}></div>
+              <div className="h-full bg-[#5DCAA5]" style={{ width: `${xpProgress}%` }}></div>
             </div>
           </div>
         </div>
