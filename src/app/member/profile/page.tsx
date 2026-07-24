@@ -115,9 +115,9 @@ function Toggle({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) {
   return (
     <button 
       onClick={onToggle}
-      className={\`w-12 h-6 rounded-full p-1 transition-colors duration-300 ease-in-out \${isOn ? 'bg-[#5DCAA5]' : 'bg-[#2a2a3a]'}\`}
+      className={`w-12 h-6 rounded-full p-1 transition-colors duration-300 ease-in-out ${isOn ? 'bg-[#5DCAA5]' : 'bg-[#2a2a3a]'}`}
     >
-      <div className={\`w-4 h-4 bg-white rounded-full shadow-md transform transition-transform duration-300 ease-in-out \${isOn ? 'translate-x-6' : 'translate-x-0'}\`} />
+      <div className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-transform duration-300 ease-in-out ${isOn ? 'translate-x-6' : 'translate-x-0'}`} />
     </button>
   );
 }

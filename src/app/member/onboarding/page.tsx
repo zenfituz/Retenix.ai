@@ -147,9 +147,9 @@ export default function OnboardingPage() {
                 <button
                   key={g.id}
                   onClick={() => setGoal(g.id)}
-                  className={\`w-full text-left p-4 rounded-2xl border-2 transition-all \${goal === g.id ? 'border-[#E8FF47] bg-[#E8FF47]/5' : 'border-[#1e1e2c] bg-[#13131c] hover:border-gray-600'}\`}
+                  className={`w-full text-left p-4 rounded-2xl border-2 transition-all ${goal === g.id ? 'border-[#E8FF47] bg-[#E8FF47]/5' : 'border-[#1e1e2c] bg-[#13131c] hover:border-gray-600'}`}
                 >
-                  <h3 className={\`font-bold \${goal === g.id ? 'text-[#E8FF47]' : 'text-white'}\`}>{g.label}</h3>
+                  <h3 className={`font-bold ${goal === g.id ? 'text-[#E8FF47]' : 'text-white'}`}>{g.label}</h3>
                   <p className="text-sm text-gray-500 mt-1">{g.desc}</p>
                 </button>
               ))}
@@ -172,9 +172,9 @@ export default function OnboardingPage() {
                 <button
                   key={d}
                   onClick={() => setDays(d)}
-                  className={\`aspect-square flex flex-col items-center justify-center rounded-2xl border-2 transition-all \${days === d ? 'border-[#5DCAA5] bg-[#5DCAA5]/5' : 'border-[#1e1e2c] bg-[#13131c] hover:border-gray-600'}\`}
+                  className={`aspect-square flex flex-col items-center justify-center rounded-2xl border-2 transition-all ${days === d ? 'border-[#5DCAA5] bg-[#5DCAA5]/5' : 'border-[#1e1e2c] bg-[#13131c] hover:border-gray-600'}`}
                 >
-                  <span className={\`text-3xl font-bold mb-2 \${days === d ? 'text-[#5DCAA5]' : 'text-white'}\`}>{d}</span>
+                  <span className={`text-3xl font-bold mb-2 ${days === d ? 'text-[#5DCAA5]' : 'text-white'}`}>{d}</span>
                   <span className="text-sm text-gray-500">Days/Week</span>
                 </button>
               ))}
