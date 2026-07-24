@@ -29,7 +29,7 @@ export default function LeaderboardPage() {
           { id: '1', name: 'Alisher R.', xp: 12500, streak: 45, rank: 1 },
           { id: '2', name: 'Bekzod M.', xp: 11200, streak: 32, rank: 2 },
           { id: '3', name: 'Sardor A.', xp: 10800, streak: 28, rank: 3 },
-          { id: '4', name: user?.firstName || 'O\'ktam', xp: 9500, streak: 12, rank: 4, isCurrentUser: true },
+          { id: '4', name: user?.first_name || 'O\'ktam', xp: 9500, streak: 12, rank: 4, isCurrentUser: true },
           { id: '5', name: 'Javohir T.', xp: 9200, streak: 15, rank: 5 },
           { id: '6', name: 'Aziz K.', xp: 8700, streak: 8, rank: 6 },
           { id: '7', name: 'Dilshod B.', xp: 8100, streak: 20, rank: 7 },
