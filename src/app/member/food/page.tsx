@@ -1,116 +1,167 @@
 "use client";
 
-import React, { useState } from "react";
-import { Utensils, Flame, Plus, CheckCircle2, Sparkles, PieChart } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Pill } from "@/components/ui/pill";
-import { useLanguage } from "@/context/language-context";
+import { useState } from 'react';
+import { Search, Loader2, Info, Utensils, CheckCircle2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-export default function MemberFoodPage() {
-  const { lang, t } = useLanguage();
+interface FoodEstimate {
+  name: string;
+  portion: string;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+}
 
-  const getLocalizedMeals = () => {
-    if (lang === "ru") {
-      return [
-        { name: "Завтрак", items: "3 вареных яйца, овсяная каша, зеленый чай", calories: 480, protein: "32г", time: "08:30" },
-        { name: "Обед", items: "Узбекский плов (300г), салат из огурцов", calories: 580, protein: "24г", time: "13:00" },
-        { name: "Перекус", items: "Протеиновый коктейль, 1 банан", calories: 250, protein: "28г", time: "16:30" },
-        { name: "Ужин", items: "Куриное филе (200г) и запеченные овощи", calories: 420, protein: "45г", time: "20:00" },
-      ];
+export default function FoodLoggerPage() {
+  const router = useRouter();
+  const [query, setQuery] = useState('');
+  const [isEstimating, setIsEstimating] = useState(false);
+  const [estimate, setEstimate] = useState<FoodEstimate | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+
+    setIsEstimating(true);
+    setEstimate(null);
+    
+    try {
+      // Simulate POST /api/member/food/estimate
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Mock response based on typical Uzbek foods
+      const mockEstimate: FoodEstimate = {
+        name: query.charAt(0).toUpperCase() + query.slice(1),
+        portion: "1 standard serving (approx. 300g)",
+        calories: 550,
+        protein: 18,
+        carbs: 65,
+        fat: 22
+      };
+      
+      setEstimate(mockEstimate);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsEstimating(false);
     }
-    if (lang === "en") {
-      return [
-        { name: "Breakfast", items: "3 boiled eggs, oatmeal, green tea", calories: 480, protein: "32g", time: "08:30" },
-        { name: "Lunch", items: "Traditional Beef Pilaf (300g), cucumber salad", calories: 580, protein: "24g", time: "13:00" },
-        { name: "Snack", items: "Whey Protein Shake, 1 banana", calories: 250, protein: "28g", time: "16:30" },
-        { name: "Dinner", items: "Grilled chicken breast (200g) with steamed veggies", calories: 420, protein: "45g", time: "20:00" },
-      ];
-    }
-    // Default UZ
-    return [
-      { name: "Nonushta (Breakfast)", items: "3 ta qaynatilgan tuxum, suli bo'tqasi, yashil choy", calories: 480, protein: "32g", time: "08:30" },
-      { name: "Tushlik (Lunch)", items: "O'zbekcha Milliy Osh (300g), bodring salat", calories: 580, protein: "24g", time: "13:00" },
-      { name: "Peshindan keyin (Snack)", items: "Protein kokteyli, 1 ta banan", calories: 250, protein: "28g", time: "16:30" },
-      { name: "Kechki taom (Dinner)", items: "Tovuq ko'kragi (200g) va pishirilgan sabzavotlar", calories: 420, protein: "45g", time: "20:00" },
-    ];
   };
 
-  const [meals, setMeals] = useState(getLocalizedMeals());
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      // Simulate POST /api/member/food/log
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setIsSuccess(true);
+      setTimeout(() => {
+        router.push('/member');
+      }, 2000);
+    } catch (error) {
+      console.error(error);
+      setIsSaving(false);
+    }
+  };
 
   return (
-    <div className="p-4 md:p-8 space-y-6 max-w-5xl mx-auto">
-      <div>
-        <h1 className="text-2xl md:text-3xl font-display font-bold text-text-hi flex items-center gap-2">
-          <Utensils className="w-7 h-7 text-accent" /> {t("foodJournal")}
-        </h1>
-        <p className="text-text-dim text-sm mt-1">
-          {lang === 'ru' ? "Учет калорий, белков и макронутриентов за день" : lang === 'en' ? "Daily calorie, protein, and macronutrient tracking" : "Kunlik kaloriya, protein va makronutrientlar hisobi"}
-        </p>
+    <div className="p-4 space-y-6">
+      <div className="space-y-2">
+        <h1 className="text-2xl font-bold font-unbounded text-white">Log Food</h1>
+        <p className="text-gray-400 text-sm">Tell AI what you ate (e.g., "osh", "somsa", "manti")</p>
       </div>
 
-      {/* Macro Summary Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl bg-surface border border-border flex flex-col items-center text-center">
-          <div className="text-[10px] font-mono text-text-dim uppercase">
-            {lang === 'ru' ? "КАЛОРИИ" : lang === 'en' ? "CALORIES" : "KALORIYA"}
-          </div>
-          <div className="text-2xl font-display font-bold text-accent mt-1">1,730</div>
-          <div className="text-[10px] font-mono text-text-dim mt-0.5">/ 2,400 kcal</div>
-        </div>
+      <form onSubmit={handleSearch} className="relative">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="I had 2 somsa for lunch..."
+          className="w-full bg-[#13131c] border border-[#2a2a3a] rounded-2xl py-4 pl-4 pr-12 text-white placeholder-gray-500 focus:outline-none focus:border-[#E8FF47] transition-colors"
+        />
+        <button 
+          type="submit"
+          disabled={!query.trim() || isEstimating}
+          className="absolute right-2 top-2 bottom-2 w-10 bg-[#E8FF47] rounded-xl flex items-center justify-center text-black disabled:opacity-50 disabled:bg-gray-700 disabled:text-gray-400 transition-colors"
+        >
+          {isEstimating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Search className="w-5 h-5" />}
+        </button>
+      </form>
 
-        <div className="p-4 rounded-xl bg-surface border border-border flex flex-col items-center text-center">
-          <div className="text-[10px] font-mono text-text-dim uppercase">
-            {lang === 'ru' ? "БЕЛОК" : lang === 'en' ? "PROTEIN" : "PROTEIN"}
+      {/* AI Processing State */}
+      {isEstimating && (
+        <div className="bg-[#13131c] rounded-2xl border border-[#1e1e2c] p-8 flex flex-col items-center justify-center text-center space-y-4 animate-pulse">
+          <div className="w-16 h-16 bg-[#1a1a26] rounded-full flex items-center justify-center">
+            <Utensils className="w-8 h-8 text-[#E8FF47] animate-bounce" />
           </div>
-          <div className="text-2xl font-display font-bold text-good mt-1">129g</div>
-          <div className="text-[10px] font-mono text-text-dim mt-0.5">/ 160g {lang === 'ru' ? "цель" : lang === 'en' ? "target" : "maqsad"}</div>
-        </div>
-
-        <div className="p-4 rounded-xl bg-surface border border-border flex flex-col items-center text-center">
-          <div className="text-[10px] font-mono text-text-dim uppercase">
-            {lang === 'ru' ? "УГЛЕВОДЫ" : lang === 'en' ? "CARBS" : "UGLEVODLAR"}
+          <div>
+            <p className="text-white font-medium">AI is analyzing...</p>
+            <p className="text-gray-500 text-sm">Estimating nutritional value</p>
           </div>
-          <div className="text-2xl font-display font-bold text-warn mt-1">185g</div>
-          <div className="text-[10px] font-mono text-text-dim mt-0.5">/ 220g {lang === 'ru' ? "цель" : lang === 'en' ? "target" : "maqsad"}</div>
         </div>
+      )}
 
-        <div className="p-4 rounded-xl bg-surface border border-border flex flex-col items-center text-center">
-          <div className="text-[10px] font-mono text-text-dim uppercase">
-            {lang === 'ru' ? "ЖИРЫ" : lang === 'en' ? "FATS" : "YOG'LAR"}
-          </div>
-          <div className="text-2xl font-display font-bold text-info mt-1">52g</div>
-          <div className="text-[10px] font-mono text-text-dim mt-0.5">/ 65g {lang === 'ru' ? "цель" : lang === 'en' ? "target" : "maqsad"}</div>
-        </div>
-      </div>
-
-      {/* Meals Log List */}
-      <Card className="bg-surface border-border">
-        <CardHeader className="flex flex-row items-center justify-between pb-3 border-b border-border">
-          <CardTitle className="text-base font-display font-bold text-text-hi">
-            {lang === 'ru' ? "Список приемов пищи за сегодня" : lang === 'en' ? "Today's Meal Log" : "Bugungi Ovqatlar Ro'yxati"}
-          </CardTitle>
-          <button className="px-3 py-1.5 bg-accent text-bg font-semibold text-xs rounded-xl flex items-center gap-1 cursor-pointer">
-            <Plus className="w-3.5 h-3.5" /> {lang === 'ru' ? "Добавить прием пищи" : lang === 'en' ? "Add Meal" : "Ovqat Qo'shish"}
-          </button>
-        </CardHeader>
-        <CardContent className="p-4 space-y-3">
-          {meals.map((m, idx) => (
-            <div key={idx} className="p-3.5 rounded-xl bg-surface-2 border border-border-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <div className="text-xs font-bold text-text-hi flex items-center gap-2">
-                  <span>{m.name}</span>
-                  <span className="text-[10px] font-mono text-text-dim">({m.time})</span>
-                </div>
-                <div className="text-xs text-text-mid mt-1">{m.items}</div>
-              </div>
-              <div className="flex items-center gap-3 font-mono text-xs text-right">
-                <span className="text-accent font-semibold">{m.calories} kcal</span>
-                <span className="text-good font-semibold">{m.protein} protein</span>
-              </div>
+      {/* Result Modal / Card */}
+      {estimate && !isSuccess && (
+        <div className="bg-[#13131c] rounded-2xl border border-[#E8FF47]/30 p-5 shadow-[0_0_30px_rgba(232,255,71,0.05)] animate-in slide-in-from-bottom-4 duration-300">
+          <div className="flex justify-between items-start mb-6">
+            <div>
+              <h2 className="text-xl font-bold text-white mb-1">{estimate.name}</h2>
+              <p className="text-sm text-gray-400">{estimate.portion}</p>
             </div>
-          ))}
-        </CardContent>
-      </Card>
+            <div className="bg-[#1a1a26] px-3 py-1.5 rounded-lg border border-[#2a2a3a]">
+              <span className="font-bold text-[#E8FF47]">{estimate.calories}</span>
+              <span className="text-xs text-gray-400 ml-1">kcal</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3 mb-6">
+            <div className="bg-[#1a1a26] p-3 rounded-xl border border-[#2a2a3a] text-center">
+              <div className="text-lg font-bold text-[#5DCAA5] mb-1">{estimate.protein}g</div>
+              <div className="text-xs text-gray-400">Protein</div>
+            </div>
+            <div className="bg-[#1a1a26] p-3 rounded-xl border border-[#2a2a3a] text-center">
+              <div className="text-lg font-bold text-[#7BB6E8] mb-1">{estimate.carbs}g</div>
+              <div className="text-xs text-gray-400">Carbs</div>
+            </div>
+            <div className="bg-[#1a1a26] p-3 rounded-xl border border-[#2a2a3a] text-center">
+              <div className="text-lg font-bold text-[#E24B4A] mb-1">{estimate.fat}g</div>
+              <div className="text-xs text-gray-400">Fat</div>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-2 mb-6 p-3 bg-[#1a1a26] rounded-xl text-sm text-gray-300">
+            <Info className="w-5 h-5 text-[#E8C547] shrink-0 mt-0.5" />
+            <p>This is an AI estimate based on standard Uzbek recipes. Macros may vary.</p>
+          </div>
+
+          <button
+            onClick={handleSave}
+            disabled={isSaving}
+            className="w-full py-3.5 bg-[#E8FF47] text-black font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-[#d4ed33] transition-colors"
+          >
+            {isSaving ? (
+              <><Loader2 className="w-5 h-5 animate-spin" /> Saving...</>
+            ) : (
+              'Save & Log Food'
+            )}
+          </button>
+        </div>
+      )}
+
+      {/* Success State */}
+      {isSuccess && (
+        <div className="bg-[#13131c] rounded-2xl border border-[#5DCAA5]/50 p-8 flex flex-col items-center justify-center text-center space-y-4 animate-in zoom-in duration-300">
+          <div className="w-16 h-16 bg-[#5DCAA5]/20 rounded-full flex items-center justify-center">
+            <CheckCircle2 className="w-8 h-8 text-[#5DCAA5]" />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-white mb-1">Food Logged!</h2>
+            <p className="text-[#5DCAA5] font-bold">+5 XP Earned</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

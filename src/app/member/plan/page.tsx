@@ -1,200 +1,165 @@
 "use client";
 
-import React, { useState } from "react";
-import { Dumbbell, CheckCircle2, Flame, Calendar, Clock, ArrowRight } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Pill } from "@/components/ui/pill";
-import { useLanguage } from "@/context/language-context";
+import { useState } from 'react';
+import { CheckCircle2, Circle, ChevronLeft, ChevronRight, Trophy } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-export default function MemberPlanPage() {
-  const { lang, t } = useLanguage();
+interface Exercise {
+  id: string;
+  name: string;
+  sets: number;
+  reps: string;
+  weight?: string;
+  completedSets: number;
+}
 
-  const getLocalizedWorkouts = () => {
-    if (lang === "ru") {
-      return [
-        {
-          day: "Понедельник",
-          title: "Грудь и Трицепс (Chest & Triceps)",
-          duration: "60 минут",
-          completed: true,
-          exercises: [
-            { name: "Жим штанги лежа", sets: "4 сета × 10 повт", weight: "75 кг", done: true },
-            { name: "Жим гантелей на наклонной", sets: "3 сета × 12 повт", weight: "26 кг", done: true },
-            { name: "Кроссовер на блоке", sets: "3 сета × 15 повт", weight: "15 кг", done: true },
-            { name: "Разгибание рук на трицепс", sets: "4 сета × 12 повт", weight: "35 кг", done: true },
-          ]
-        },
-        {
-          day: "Среда",
-          title: "Спина и Бицепс (Back & Biceps)",
-          duration: "65 минут",
-          completed: false,
-          exercises: [
-            { name: "Тяга верхнего блока", sets: "4 сета × 10 повт", weight: "60 кг", done: false },
-            { name: "Тяга штанги в наклоне", sets: "3 сета × 12 повт", weight: "50 кг", done: false },
-            { name: "Сгибание рук с гантелями", sets: "4 сета × 12 повт", weight: "14 кг", done: false },
-          ]
-        },
-        {
-          day: "Пятница",
-          title: "Ноги и Плечи (Legs & Shoulders)",
-          duration: "70 минут",
-          completed: false,
-          exercises: [
-            { name: "Приседания со штангой", sets: "4 сета × 8 повт", weight: "90 кг", done: false },
-            { name: "Жим ногами в тренажере", sets: "3 сета × 12 повт", weight: "140 кг", done: false },
-            { name: "Жим гантелей сидя", sets: "4 сета × 10 повт", weight: "20 кг", done: false },
-          ]
+export default function WorkoutPlanPage() {
+  const router = useRouter();
+  const [selectedDay, setSelectedDay] = useState(2); // Wednesday (0-6)
+  const [isCompleting, setIsCompleting] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  
+  const [exercises, setExercises] = useState<Exercise[]>([
+    { id: '1', name: 'Barbell Bench Press', sets: 4, reps: '8-10', weight: '60kg', completedSets: 0 },
+    { id: '2', name: 'Incline Dumbbell Press', sets: 3, reps: '10-12', weight: '22kg', completedSets: 0 },
+    { id: '3', name: 'Cable Crossovers', sets: 3, reps: '15', weight: '15kg', completedSets: 0 },
+    { id: '4', name: 'Tricep Pushdowns', sets: 4, reps: '12-15', weight: '25kg', completedSets: 0 },
+  ]);
+
+  const toggleSet = (exerciseId: string, setIndex: number) => {
+    setExercises(prev => prev.map(ex => {
+      if (ex.id === exerciseId) {
+        // Simple toggle logic: if clicking the next available set, mark it completed. 
+        // If clicking the last completed set, unmark it.
+        let newCompleted = ex.completedSets;
+        if (setIndex === ex.completedSets) {
+          newCompleted = ex.completedSets + 1;
+        } else if (setIndex === ex.completedSets - 1) {
+          newCompleted = ex.completedSets - 1;
         }
-      ];
-    }
-    if (lang === "en") {
-      return [
-        {
-          day: "Monday",
-          title: "Chest & Triceps Focus",
-          duration: "60 min",
-          completed: true,
-          exercises: [
-            { name: "Flat Barbell Bench Press", sets: "4 sets × 10 reps", weight: "75 kg", done: true },
-            { name: "Incline Dumbbell Press", sets: "3 sets × 12 reps", weight: "26 kg", done: true },
-            { name: "Cable Fly Crossover", sets: "3 sets × 15 reps", weight: "15 kg", done: true },
-            { name: "Triceps Rope Pushdown", sets: "4 sets × 12 reps", weight: "35 kg", done: true },
-          ]
-        },
-        {
-          day: "Wednesday",
-          title: "Back & Biceps Pull",
-          duration: "65 min",
-          completed: false,
-          exercises: [
-            { name: "Lat Pulldown Wide Grip", sets: "4 sets × 10 reps", weight: "60 kg", done: false },
-            { name: "Bent-Over Barbell Row", sets: "3 sets × 12 reps", weight: "50 kg", done: false },
-            { name: "Dumbbell Biceps Curl", sets: "4 sets × 12 reps", weight: "14 kg", done: false },
-          ]
-        },
-        {
-          day: "Friday",
-          title: "Legs & Shoulders Power",
-          duration: "70 min",
-          completed: false,
-          exercises: [
-            { name: "Barbell Back Squats", sets: "4 sets × 8 reps", weight: "90 kg", done: false },
-            { name: "Leg Press Machine", sets: "3 sets × 12 reps", weight: "140 kg", done: false },
-            { name: "Seated Dumbbell Shoulder Press", sets: "4 sets × 10 reps", weight: "20 kg", done: false },
-          ]
-        }
-      ];
-    }
-    // Default UZ
-    return [
-      {
-        day: "Dushanba",
-        title: "Ko'krak va Triceps (Chest & Triceps)",
-        duration: "60 daqiqa",
-        completed: true,
-        exercises: [
-          { name: "Bench Press (Shtanga siqish)", sets: "4 set × 10 rep", weight: "75 kg", done: true },
-          { name: "Incline Dumbbell Press", sets: "3 set × 12 rep", weight: "26 kg", done: true },
-          { name: "Cable Crossover", sets: "3 set × 15 rep", weight: "15 kg", done: true },
-          { name: "Triceps Pushdown", sets: "4 set × 12 rep", weight: "35 kg", done: true },
-        ]
-      },
-      {
-        day: "Chorshanba",
-        title: "Orqa va Biceps (Back & Biceps)",
-        duration: "65 daqiqa",
-        completed: false,
-        exercises: [
-          { name: "Lat Pulldown (Keng tortish)", sets: "4 set × 10 rep", weight: "60 kg", done: false },
-          { name: "Bent-Over Barbell Row", sets: "3 set × 12 rep", weight: "50 kg", done: false },
-          { name: "Biceps Curl (Gantel)", sets: "4 set × 12 rep", weight: "14 kg", done: false },
-        ]
-      },
-      {
-        day: "Juma",
-        title: "Oyoq va Yelka (Legs & Shoulders)",
-        duration: "70 daqiqa",
-        completed: false,
-        exercises: [
-          { name: "Barbell Squat (Oyoq bukish)", sets: "4 set × 8 rep", weight: "90 kg", done: false },
-          { name: "Leg Press Machine", sets: "3 set × 12 rep", weight: "140 kg", done: false },
-          { name: "Seated Dumbbell Press", sets: "4 set × 10 rep", weight: "20 kg", done: false },
-        ]
+        return { ...ex, completedSets: newCompleted };
       }
-    ];
+      return ex;
+    }));
   };
 
-  const [workouts, setWorkouts] = useState(getLocalizedWorkouts());
-
-  const toggleExercise = (wIndex: number, eIndex: number) => {
-    setWorkouts(prev => {
-      const next = [...prev];
-      next[wIndex].exercises[eIndex].done = !next[wIndex].exercises[eIndex].done;
-      return next;
-    });
+  const finishWorkout = async () => {
+    setIsCompleting(true);
+    try {
+      // Simulate API call
+      // await fetch('/api/member/workouts/complete', { method: 'POST' });
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setShowConfetti(true);
+      setTimeout(() => {
+        router.push('/member');
+      }, 3000);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsCompleting(false);
+    }
   };
+
+  const allCompleted = exercises.every(ex => ex.completedSets === ex.sets);
+  const someCompleted = exercises.some(ex => ex.completedSets > 0);
+
+  if (showConfetti) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] p-4 text-center space-y-6 animate-in fade-in zoom-in duration-500">
+        <div className="w-24 h-24 bg-[#E8FF47]/20 rounded-full flex items-center justify-center mb-4">
+          <Trophy className="w-12 h-12 text-[#E8FF47]" />
+        </div>
+        <h1 className="text-3xl font-bold font-unbounded text-white">Workout Complete!</h1>
+        <p className="text-[#5DCAA5] text-xl font-bold">+30 XP Earned</p>
+        <p className="text-gray-400">Your progress has been saved. Redirecting to home...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="p-4 md:p-8 space-y-6 max-w-5xl mx-auto">
-      <div>
-        <h1 className="text-2xl md:text-3xl font-display font-bold text-text-hi flex items-center gap-2">
-          <Dumbbell className="w-7 h-7 text-accent" /> {t("workoutPlan")}
-        </h1>
-        <p className="text-text-dim text-sm mt-1">
-          {lang === 'ru' ? "Еженедельный план тренировок от вашего личного тренера" : lang === 'en' ? "Weekly workout program assigned by your personal coach" : "Shaxsiy murabbiyingiz tomonidan belgilangan haftalik trenirovka rejasi"}
-        </p>
+    <div className="p-4 space-y-6">
+      {/* Weekly Schedule */}
+      <div className="bg-[#13131c] rounded-2xl border border-[#1e1e2c] p-4">
+        <div className="flex justify-between items-center mb-4">
+          <button className="p-1 text-gray-400 hover:text-white"><ChevronLeft className="w-5 h-5" /></button>
+          <span className="font-bold text-white">This Week</span>
+          <button className="p-1 text-gray-400 hover:text-white"><ChevronRight className="w-5 h-5" /></button>
+        </div>
+        <div className="flex justify-between">
+          {days.map((day, idx) => (
+            <button
+              key={day}
+              onClick={() => setSelectedDay(idx)}
+              className={\`flex flex-col items-center gap-2 p-2 rounded-xl transition-colors \${selectedDay === idx ? 'bg-[#E8FF47] text-black' : 'text-gray-400 hover:bg-[#1a1a26]'}\`}
+            >
+              <span className="text-xs font-medium">{day}</span>
+              <span className={\`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold \${idx < 2 ? 'bg-[#5DCAA5] text-[#080810]' : selectedDay === idx ? 'bg-black text-[#E8FF47]' : 'bg-[#1a1a26] text-gray-300'}\`}>
+                {idx + 14}
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="space-y-6">
-        {workouts.map((w, wIdx) => (
-          <Card key={wIdx} className="bg-surface border-border">
-            <CardHeader className="flex flex-row items-center justify-between pb-3 border-b border-border">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center font-mono text-accent text-xs font-bold">
-                  {w.day.substring(0, 2)}
-                </div>
+      {/* Workout Details */}
+      <div className="space-y-4">
+        <div className="flex justify-between items-end">
+          <div>
+            <h2 className="text-2xl font-bold text-white font-unbounded">Chest & Triceps</h2>
+            <p className="text-gray-400 text-sm">4 exercises • 45 min</p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          {exercises.map((exercise) => (
+            <div key={exercise.id} className="bg-[#13131c] rounded-2xl border border-[#1e1e2c] p-4">
+              <div className="flex justify-between items-start mb-4">
                 <div>
-                  <CardTitle className="text-base font-display font-bold text-text-hi">{w.title}</CardTitle>
-                  <div className="text-xs text-text-dim font-mono mt-0.5 flex items-center gap-2">
-                    <Clock className="w-3 h-3 text-accent" /> {w.duration}
-                  </div>
+                  <h3 className="font-bold text-white text-lg">{exercise.name}</h3>
+                  <p className="text-gray-400 text-sm">{exercise.sets} sets x {exercise.reps} {exercise.weight && \`• \${exercise.weight}\`}</p>
                 </div>
               </div>
-              <Pill variant={w.completed ? "success" : "default"}>
-                {w.completed 
-                  ? (lang === 'ru' ? "Выполнено" : lang === 'en' ? "Completed" : "Bajarildi")
-                  : (lang === 'ru' ? "Ожидает" : lang === 'en' ? "Upcoming" : "Kutilmoqda")
-                }
-              </Pill>
-            </CardHeader>
-            <CardContent className="p-4 space-y-2.5">
-              {w.exercises.map((ex, eIdx) => (
-                <div
-                  key={eIdx}
-                  onClick={() => toggleExercise(wIdx, eIdx)}
-                  className="flex items-center justify-between p-3 rounded-xl bg-surface-2 border border-border-2 hover:border-accent/30 transition-colors cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors ${
-                      ex.done ? "bg-good border-good text-bg" : "border-border-2"
-                    }`}>
-                      {ex.done && <CheckCircle2 className="w-3.5 h-3.5" />}
-                    </div>
-                    <div>
-                      <div className={`text-xs font-medium ${ex.done ? "line-through text-text-dim" : "text-text-hi"}`}>
-                        {ex.name}
-                      </div>
-                      <div className="text-[10px] font-mono text-text-dim mt-0.5">{ex.sets}</div>
-                    </div>
-                  </div>
-                  <div className="text-xs font-mono text-accent font-semibold">{ex.weight}</div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        ))}
+              
+              <div className="flex gap-3 overflow-x-auto pb-2">
+                {Array.from({ length: exercise.sets }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => toggleSet(exercise.id, idx)}
+                    className={\`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center border-2 transition-all \${idx < exercise.completedSets ? 'bg-[#5DCAA5]/20 border-[#5DCAA5] text-[#5DCAA5]' : 'bg-[#1a1a26] border-[#2a2a3a] text-gray-500 hover:border-gray-400'}\`}
+                  >
+                    {idx < exercise.completedSets ? (
+                      <CheckCircle2 className="w-6 h-6" />
+                    ) : (
+                      <span className="font-bold">{idx + 1}</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+
+      {/* Finish Button */}
+      {(someCompleted || allCompleted) && (
+        <div className="fixed bottom-24 left-0 right-0 px-4 max-w-md mx-auto z-30">
+          <button
+            onClick={finishWorkout}
+            disabled={isCompleting}
+            className={\`w-full py-4 rounded-2xl font-bold text-lg flex items-center justify-center shadow-lg transition-all \${allCompleted ? 'bg-[#5DCAA5] text-[#080810] shadow-[0_4px_20px_rgba(93,202,165,0.4)]' : 'bg-[#E8FF47] text-black shadow-[0_4px_20px_rgba(232,255,71,0.3)]'}\`}
+          >
+            {isCompleting ? (
+              <span className="animate-pulse">Saving...</span>
+            ) : allCompleted ? (
+              'Finish Workout'
+            ) : (
+              'Finish Early'
+            )}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
