@@ -148,7 +148,7 @@ export default function WorkoutPlanPage() {
           <button
             onClick={finishWorkout}
             disabled={isCompleting}
-            className={\`w-full py-4 rounded-2xl font-bold text-lg flex items-center justify-center shadow-lg transition-all \${allCompleted ? 'bg-[#5DCAA5] text-[#080810] shadow-[0_4px_20px_rgba(93,202,165,0.4)]' : 'bg-[#E8FF47] text-black shadow-[0_4px_20px_rgba(232,255,71,0.3)]'}\`}
+            className={`w-full py-4 rounded-2xl font-bold text-lg flex items-center justify-center shadow-lg transition-all ${allCompleted ? 'bg-[#5DCAA5] text-[#080810] shadow-[0_4px_20px_rgba(93,202,165,0.4)]' : 'bg-[#E8FF47] text-black shadow-[0_4px_20px_rgba(232,255,71,0.3)]'}`}
           >
             {isCompleting ? (
               <span className="animate-pulse">Saving...</span>

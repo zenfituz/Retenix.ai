@@ -190,7 +190,7 @@ export default function MemberDashboard() {
         <div className="h-2 w-full bg-[#1a1a26] rounded-full overflow-hidden">
           <div 
             className="h-full bg-gradient-to-r from-[#E8C547] to-[#E8FF47]" 
-            style={{ width: \`\${(data.activeChallenge.progress / data.activeChallenge.total) * 100}%\` }}
+            style={{ width: `${(data.activeChallenge.progress / data.activeChallenge.total) * 100}%` }}
           ></div>
         </div>
       </div>
